@@ -1,6 +1,7 @@
 package it.unica.checkengine;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -32,10 +33,12 @@ public class GarageActivity extends ActionBarActivity {
     // Hashmap for ListView
     private ArrayList<HashMap<String, String>> listaAuto;
 
-    // URL to get contacts JSON
+    // URL to get JSON
     private static String url = "http://is0eir.altervista.org/ium/json.php";
 
     private ListView lista;
+
+    public final static String EXTRA_MESSAGE = "it.unica.checkengine.TARGA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,7 @@ public class GarageActivity extends ActionBarActivity {
         lista.setAdapter(adapter);*/
 
         lista = (ListView) findViewById(R.id.listAuto);
-        new getJson().execute();
+        new GetJson().execute();
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -58,6 +61,10 @@ public class GarageActivity extends ActionBarActivity {
                 try {
                     JSONObject autoScelta = auto.getJSONObject(position);
                     Log.d("garage", "targa: " + autoScelta.getString("targa"));
+                    Intent intent = new Intent(parent.getContext(), MyCarActivity.class);
+                    String message = autoScelta.getString("targa");
+                    intent.putExtra(EXTRA_MESSAGE, message);
+                    startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -66,7 +73,7 @@ public class GarageActivity extends ActionBarActivity {
 
     }
 
-    private class getJson extends AsyncTask<Void, Void, Void> {
+    private class GetJson extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {

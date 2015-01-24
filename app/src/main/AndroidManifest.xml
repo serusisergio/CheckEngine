@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="it.unica.checkengine" >
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -23,6 +25,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="it.unica.checkengine.Iniziale" />
+        </activity>
+        <activity
+            android:name=".MyCarActivity"
+            android:label="@string/title_activity_my_car"
+            android:parentActivityName=".GarageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="it.unica.checkengine.GarageActivity" />
         </activity>
     </application>
 

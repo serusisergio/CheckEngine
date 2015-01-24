@@ -4,5 +4,9 @@
     <string name="app_name">CheckEngine</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_garage">Il mio garage</string>
+    <string name="title_activity_my_car">MyCarActivity</string>
+    <string name="titolo_vista_macchina">Vista Macchina</string>
+    <string name="titolo_vista_lista">Vista Lista</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
