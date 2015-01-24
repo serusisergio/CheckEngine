@@ -1,12 +1,20 @@
 package it.unica.checkengine;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 
-public class Iniziale extends ActionBarActivity {
+
+public class Iniziale extends Activity {
+
+    private ImageButton login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +43,10 @@ public class Iniziale extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void apriGarage(View view) {
+        Intent intent = new Intent(this, GarageActivity.class);
+        this.startActivity(intent);
     }
 }

@@ -8,6 +8,7 @@ public class Auto {
     private int carburante ;/*possimamo farlo statico, direi che varia tra 0 e 47 litri*/
     private int livelloOlio ; /*la macchina ha sui 4 litri di olio */
     private int km ;
+    private String nome;
 
     public Auto(){
         this.setCarburante(25);
