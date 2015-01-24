@@ -18,9 +18,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +33,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
     private static String url = "http://is0eir.altervista.org/ium/json.php?targa=";
     private String targa;
     private ProgressDialog pDialog;
+    private JSONObject auto;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -97,6 +100,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
         targa = getIntent().getStringExtra(GarageActivity.EXTRA_MESSAGE);
         Log.d("mycar","targa: " + targa);
+        new GetJson().execute();
     }
 
 
@@ -207,7 +211,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
     }
 
 
-    /*private class GetJson extends AsyncTask<Void, Void, Void> {
+    private class GetJson extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -226,7 +230,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
             ServiceHandler sh = new ServiceHandler();
 
             // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
+            String jsonStr = sh.makeServiceCall(url+targa, ServiceHandler.GET);
 
             Log.d("Response: ", "> " + jsonStr);
 
@@ -234,31 +238,10 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
 
-                    // Getting JSON Array node
-                    garage = jsonObj.getJSONObject("garage");
+                    auto = jsonObj.getJSONObject("auto");
 
-                    auto = garage.getJSONArray("auto");
-                    Log.d("Response: ", "> " + auto);
+                    Log.d("Response 1: ", "> " + auto);
 
-                    // looping through All Contacts
-                    for (int i = 0; i < auto.length(); i++) {
-                        JSONObject c = auto.getJSONObject(i);
-
-                        String nomeAuto = c.getString("nome");
-                        String targaAuto = c.getString("targa");
-
-                        // tmp hashmap for single contact
-                        HashMap<String, String> mappaAuto = new HashMap<String, String>();
-
-                        // adding each child node to HashMap key => value
-                        mappaAuto.put("nome", nomeAuto);
-                        mappaAuto.put("targa", targaAuto);
-
-
-                        // adding contact to contact list
-                        listaAuto.add(mappaAuto);
-                        Log.d("bcktask", "iterazione " + i);
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -275,16 +258,16 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
-            /*ListAdapter adapter = new SimpleAdapter(
-                    GarageActivity.this, listaAuto,
-                    R.layout.list_item, new String[]{"nome", "targa"},
-                    new int[]{R.id.nome, R.id.targa});
-            Log.d("postexecute", listaAuto.toString());
-            lista.setAdapter(adapter);
+            try {
+                String nome = auto.getString("nome");
+                String modello = auto.getString("modello");
+                setTitle(modello + " - " + nome);
+                Button bottone = (Button) findViewById(R.id.button);
+                bottone.setText(targa);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
-    }*/
+    }
 }
