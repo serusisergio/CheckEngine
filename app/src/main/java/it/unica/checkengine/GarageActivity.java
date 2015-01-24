@@ -62,7 +62,7 @@ public class GarageActivity extends ActionBarActivity {
 
             // Showing progress dialog
             pDialog = new ProgressDialog(GarageActivity.this);
-            pDialog.setMessage("Please wait...");
+            pDialog.setMessage("Attendi...");
             pDialog.setCancelable(false);
             pDialog.show();
 
@@ -75,24 +75,6 @@ public class GarageActivity extends ActionBarActivity {
 
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
-            String jsonStr2 = "{\n" +
-                    "  \"garage\": {\n" +
-                    "    \"auto\": [\n" +
-                    "      {\n" +
-                    "        \"nome\": \"Sergia\",\n" +
-                    "        \"targa\": \"DP523AN\"\n" +
-                    "      },\n" +
-                    "      {\n" +
-                    "        \"nome\": \"Kakkina\",\n" +
-                    "        \"targa\": \"AA001FE\"\n" +
-                    "      },\n" +
-                    "      {\n" +
-                    "        \"nome\": \"Giannya\",\n" +
-                    "        \"targa\": \"FE666NU\"\n" +
-                    "      }\n" +
-                    "    ]\n" +
-                    "  }\n" +
-                    "}";
 
             Log.d("Response: ", "> " + jsonStr);
 
