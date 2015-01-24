@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -23,16 +25,17 @@ import java.util.HashMap;
 
 public class GarageActivity extends ActionBarActivity {
 
-    ProgressDialog pDialog;
+    private ProgressDialog pDialog;
 
-    JSONObject garage = null;
+    private JSONObject garage;
+    private JSONArray auto;
     // Hashmap for ListView
-    ArrayList<HashMap<String, String>> listaAuto;
+    private ArrayList<HashMap<String, String>> listaAuto;
 
     // URL to get contacts JSON
     private static String url = "http://is0eir.altervista.org/ium/json.php";
 
-    ListView lista;
+    private ListView lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,18 @@ public class GarageActivity extends ActionBarActivity {
 
         lista = (ListView) findViewById(R.id.listAuto);
         new getJson().execute();
-
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("garage", "auto: " + position);
+                try {
+                    JSONObject autoScelta = auto.getJSONObject(position);
+                    Log.d("garage", "targa: " + autoScelta.getString("targa"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
 
@@ -85,7 +99,7 @@ public class GarageActivity extends ActionBarActivity {
                     // Getting JSON Array node
                     garage = jsonObj.getJSONObject("garage");
 
-                    JSONArray auto = garage.getJSONArray("auto");
+                    auto = garage.getJSONArray("auto");
                     Log.d("Response: ", "> " + auto);
 
                     // looping through All Contacts
