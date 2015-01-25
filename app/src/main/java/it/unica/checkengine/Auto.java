@@ -17,11 +17,19 @@ public class Auto {
     private List<Avaria> avarie;
     private int kmGiornalieri;
 
-    public Auto(){
-        this.setCarburante(25);
-        this.setLivelloOlio(4);
-        this.setKm(0); /*supponiamo che l'abbia ppena comprata? */
+    public Auto(int carburante, int livelloOlio, int km, String nome, int kmGiornalieri){
+        this.setCarburante(carburante);
+        this.setLivelloOlio(livelloOlio);
+        this.setKm(km);
+        this.setNome(nome);
+        this.setKmGiornalieri(kmGiornalieri);
 
+        this.manutenzioni = new LinkedList<>();
+        this .tributi = new LinkedList<>();
+        this.avarie = new LinkedList<>();
+    }
+
+    public Auto(){
         this.manutenzioni = new LinkedList<>();
         this .tributi = new LinkedList<>();
         this.avarie = new LinkedList<>();
@@ -85,5 +93,13 @@ public class Auto {
 
     public List<Avaria> getAvarie() {
         return avarie;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }
