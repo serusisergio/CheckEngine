@@ -8,6 +8,7 @@ import java.util.Date;
 public class Tributo {
     private String tipo;
     private String messaggio;
+    private String importo;
     private Date ultimaRicorrenza;
     private int intervalloPagameto;
 
@@ -34,5 +35,13 @@ public class Tributo {
 
     public void setIntervalloPagameto(int intervalloPagameto) {
         this.intervalloPagameto = intervalloPagameto;
+    }
+
+    public String getImporto() {
+        return importo;
+    }
+
+    public void setImporto(String importo) {
+        this.importo = importo;
     }
 }
