@@ -1,31 +1,24 @@
 package it.unica.checkengine;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-
 import android.app.ProgressDialog;
-import android.media.Image;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Locale;
 
 
 public class MyCarActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -157,7 +150,25 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+
+            //Permette di creare, a seconda della pagina che stiamo utilizzando, una nuova istanza della classe necessaria da visualizzare
+            Bundle args = new Bundle();
+            switch (position) {
+                case 0:
+                    Fragment fragment = new VistaMacchinaFragment();
+                    args.putInt(VistaMacchinaFragment.ARG_SECTION_NUMBER, position + 1);
+                    fragment.setArguments(args);
+                    return fragment;
+
+                case 1:
+                    Fragment fragment2 = new VistaListaFragment();
+                    args.putInt(VistaListaFragment.ARG_SECTION_NUMBER, position + 2);
+                    fragment2.setArguments(args);
+                    return fragment2;
+
+                default:
+                    return null;
+            }
         }
 
         @Override
