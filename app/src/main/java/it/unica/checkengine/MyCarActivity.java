@@ -32,6 +32,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
     // URL to get JSON
     private static String url = "http://checkengine.matta.ga/json.php?targa=";
+    //
     private String targa;
     private ProgressDialog pDialog;
     private JSONObject auto;
