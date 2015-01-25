@@ -107,7 +107,7 @@ public class GarageActivity extends ActionBarActivity {
                     // Getting JSON Array node
                     garage = jsonObj.getJSONObject("garage");
 
-                    auto = garage.getJSONArray("auto");
+                    auto = jsonObj.getJSONArray("auto");
                     Log.d("Response: ", "> " + auto);
 
                     // looping through All Contacts
