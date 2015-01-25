@@ -28,7 +28,6 @@ public class GarageActivity extends ActionBarActivity {
 
     private ProgressDialog pDialog;
 
-    private JSONObject garage;
     private JSONArray auto;
     // Hashmap for ListView
     private ArrayList<HashMap<String, String>> listaAuto;
@@ -100,39 +99,36 @@ public class GarageActivity extends ActionBarActivity {
 
             Log.d("Response: ", "> " + jsonStr);
 
-            if (jsonStr != null) {
-                try {
-                    JSONObject jsonObj = new JSONObject(jsonStr);
+            if (jsonStr != null) try {
+                JSONObject jsonObj = new JSONObject(jsonStr);
 
-                    // Getting JSON Array node
-                    garage = jsonObj.getJSONObject("garage");
+                // Getting JSON Array node
+                auto = jsonObj.getJSONArray("auto");
+                Log.d("Response: ", "> " + auto);
 
-                    auto = jsonObj.getJSONArray("auto");
-                    Log.d("Response: ", "> " + auto);
+                // looping through All Contacts
+                for (int i = 0; i < auto.length(); i++) {
+                    JSONObject c = auto.getJSONObject(i);
 
-                    // looping through All Contacts
-                    for (int i = 0; i < auto.length(); i++) {
-                        JSONObject c = auto.getJSONObject(i);
+                    String nomeAuto = c.getString("nome");
+                    String targaAuto = c.getString("targa");
 
-                        String nomeAuto = c.getString("nome");
-                        String targaAuto = c.getString("targa");
+                    // tmp hashmap for single contact
+                    HashMap<String, String> mappaAuto = new HashMap<String, String>();
 
-                        // tmp hashmap for single contact
-                        HashMap<String, String> mappaAuto = new HashMap<String, String>();
-
-                        // adding each child node to HashMap key => value
-                        mappaAuto.put("nome", nomeAuto);
-                        mappaAuto.put("targa", targaAuto);
+                    // adding each child node to HashMap key => value
+                    mappaAuto.put("nome", nomeAuto);
+                    mappaAuto.put("targa", targaAuto);
 
 
-                        // adding contact to contact list
-                        listaAuto.add(mappaAuto);
-                        Log.d("bcktask", "iterazione " + i);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    // adding contact to contact list
+                    listaAuto.add(mappaAuto);
+                    Log.d("bcktask", "iterazione " + i);
                 }
-            } else {
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            else {
                 Log.e("ServiceHandler", "Couldn't get any data from the url");
             }
 
