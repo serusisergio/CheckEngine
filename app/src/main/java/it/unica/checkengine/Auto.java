@@ -25,7 +25,7 @@ public class Auto {
         this.setKmGiornalieri(kmGiornalieri);
 
         this.manutenzioni = new LinkedList<>();
-        this .tributi = new LinkedList<>();
+        this.tributi = new LinkedList<>();
         this.avarie = new LinkedList<>();
     }
 
