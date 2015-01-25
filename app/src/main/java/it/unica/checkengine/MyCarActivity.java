@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.ProgressDialog;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -262,8 +263,6 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
                 String nome = auto.getString("nome");
                 String modello = auto.getString("modello");
                 setTitle(modello + " - " + nome);
-                Button bottone = (Button) findViewById(R.id.button);
-                bottone.setText(targa);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
