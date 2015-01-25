@@ -31,7 +31,7 @@ import org.json.JSONObject;
 public class MyCarActivity extends ActionBarActivity implements ActionBar.TabListener {
 
     // URL to get JSON
-    private static String url = "http://is0eir.altervista.org/ium/json.php?targa=";
+    private static String url = "http://checkengine.matta.ga/json.php?targa=";
     private String targa;
     private ProgressDialog pDialog;
     private JSONObject auto;

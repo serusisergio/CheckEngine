@@ -34,7 +34,7 @@ public class GarageActivity extends ActionBarActivity {
     private ArrayList<HashMap<String, String>> listaAuto;
 
     // URL to get JSON
-    private static String url = "http://is0eir.altervista.org/ium/json.php";
+    private static String url = "http://checkengine.matta.ga/json.php";
 
     private ListView lista;
 
