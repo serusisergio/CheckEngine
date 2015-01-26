@@ -1,11 +1,10 @@
 package it.unica.checkengine;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -21,6 +20,10 @@ public class JSONParser {
         Manutenzione manutenzione;
 
         try {
+            if(json==null){
+                Log.d("JSONparser", "è null");
+            }
+
             JSONObject jGarage = new JSONObject(json);
             garage = new Garage(jGarage.getString("nGommista"), jGarage.getString("nMeccanico"));
 

@@ -1,11 +1,12 @@
 package it.unica.checkengine;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Stefano on 23/01/2015.
  */
-public class Tributo {
+public class Tributo implements Serializable{
     private String tipo;
     private String messaggio;
     private double importo;

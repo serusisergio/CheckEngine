@@ -16,6 +16,7 @@ public class VistaListaFragment extends Fragment {
      * fragment.
      */
     public static final String ARG_SECTION_NUMBER = "section_number";
+    public static final String ARG_GARAGE = "garage";
 
     public VistaListaFragment() {
     }
