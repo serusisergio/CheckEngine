@@ -1,10 +1,102 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$PlaceholderFragment"
     android:background="@drawable/auto_image">
+
+    <GridLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/grigliaAvarie"
+        android:columnCount="3"
+        android:rowCount="3">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconMotore"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:src="@drawable/icon_motore"
+            android:paddingLeft="30dp"
+            android:paddingTop="50dp"
+            android:paddingRight="30dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconRuotaSxUP"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:src="@drawable/icon_ruote"
+            android:paddingLeft="26dp"
+            android:paddingTop="50dp"
+            android:paddingRight="30dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/IocnRuotaDxUp"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:src="@drawable/icon_ruote"
+            android:paddingLeft="30dp"
+            android:paddingTop="50dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconTributi"
+            android:layout_below="@+id/iconTributi"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/icon_tributi"
+            android:paddingTop="110dp"
+            android:paddingLeft="35dp"
+            android:layout_row="1"
+            android:layout_column="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconRuotaSxDown"
+            android:src="@drawable/icon_ruote"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:layout_alignTop="@+id/imageView6"
+            android:layout_toEndOf="@+id/imageView6"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:paddingRight="10dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconFuel"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:src="@drawable/icon_fuel"
+            android:paddingTop="80dp"
+            android:paddingLeft="37dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconRuotaDxDown"
+            android:src="@drawable/icon_ruote"
+            android:paddingRight="30dp"
+            android:layout_below="@+id/iconTributi"
+            android:layout_alignParentStart="true"
+            android:paddingTop="10dp"
+            android:paddingLeft="35dp"
+            android:layout_row="2"
+            android:layout_column="2" />
+
+    </GridLayout>
 
 </RelativeLayout>
