@@ -8,6 +8,15 @@ public class Avaria {
     private String messaggio;
     private int urgenza;
 
+    public Avaria(){
+
+    }
+
+    public Avaria(String tipo, int urgenza){
+        setTipo(tipo);
+        setUrgenza(urgenza);
+    }
+
 
     public String getTipo() {
         return tipo;

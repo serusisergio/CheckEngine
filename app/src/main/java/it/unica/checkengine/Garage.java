@@ -9,20 +9,14 @@ import java.util.List;
 public class Garage {
     private String numMeccanico;
     private String numGommista;
-    private List<Auto> auto;
+    private Auto auto;
 
     public Garage(){
-        this.auto = new LinkedList<>();
-    }
+        }
 
     public Garage(String numGommista, String numMeccanico){
-        this.auto = new LinkedList<>();
         this.setNumGommista(numGommista);
         this.setNumMeccanico(numMeccanico);
-    }
-
-    public void addAuto(Auto a){
-        this.auto.add(a);
     }
 
     public String getNumMeccanico() {
@@ -41,7 +35,11 @@ public class Garage {
         this.numGommista = numGommista;
     }
 
-    public List<Auto> getAuto() {
+    public Auto getAuto() {
         return auto;
+    }
+
+    public void setAuto(Auto auto) {
+        this.auto = auto;
     }
 }
