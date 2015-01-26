@@ -1,12 +1,13 @@
 package it.unica.checkengine;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by Stefano on 23/01/2015.
  */
-public class Auto {
+public class Auto implements Serializable{
 
     private double carburante ;/*possimamo farlo statico, direi che varia tra 0 e 47 litri*/
     private double livelloOlio ; /*la macchina ha sui 4 litri di olio */
