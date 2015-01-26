@@ -59,13 +59,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager()){
-            @Override
-            public int getCount() {
-                // Show 2 total pages.
-                return 2;
-            }
-        };
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -173,8 +167,8 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 2 total pages.
+            return 2;
         }
 
         @Override
