@@ -5,7 +5,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Isadora on 25/01/2015.
@@ -23,9 +27,28 @@ public class VistaMacchinaFragment extends Fragment {
 
     //richiama il file .xml in cui è definito il suo stile e il suo id
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.vistamacchina_tab, container, false);
+        //creo i nomi per le varie immagini
+        ImageView iconMotore = (ImageView) rootView.findViewById(R.id.iconMotore);
+        ImageView iconFuel = (ImageView) rootView.findViewById(R.id.iconFuel);
+        ImageView iconTributi = (ImageView) rootView.findViewById(R.id.iconTributi);
+        List<ImageView> iconRuote = new ArrayList<ImageView>();
+        iconRuote.add((ImageView) rootView.findViewById(R.id.iconRuota1));
+        iconRuote.add((ImageView) rootView.findViewById(R.id.iconRuota2));
+        iconRuote.add((ImageView) rootView.findViewById(R.id.iconRuota3));
+        iconRuote.add((ImageView) rootView.findViewById(R.id.iconRuota4));
+
+        iconMotore.setVisibility(View.INVISIBLE);
+        iconFuel.setVisibility(View.INVISIBLE);
+        iconTributi.setVisibility(View.INVISIBLE);
+        for( ImageView ruota : iconRuote ) {
+            ruota.setVisibility(View.INVISIBLE);
+        }
+
         return rootView;
     }
+
+
+
 }

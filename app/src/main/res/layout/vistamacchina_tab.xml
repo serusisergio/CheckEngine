@@ -27,7 +27,7 @@
         <ImageView
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView2"
+            android:id="@+id/iconTributi"
             android:layout_gravity="center"
             android:src="@drawable/icon_tributi"
             android:paddingTop="50dp" />
@@ -42,7 +42,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:id="@+id/iconRuotaSxUp"
+            android:id="@+id/iconRuota1"
             android:src="@drawable/icon_ruote"
             android:paddingTop="60dp"
             android:paddingLeft="50dp"
@@ -51,7 +51,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:id="@+id/iconRuotaDxUp"
+            android:id="@+id/iconRuota2"
             android:layout_gravity="right|top"
             android:src="@drawable/icon_ruote"
             android:paddingTop="60dp"
@@ -60,7 +60,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:id="@+id/iconRuotaSxDown"
+            android:id="@+id/iconRuota4"
             android:layout_gravity="left|bottom"
             android:src="@drawable/icon_ruote"
             android:paddingBottom="70dp"
@@ -69,7 +69,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:id="@+id/iconRuotaDxDown"
+            android:id="@+id/iconRuota3"
             android:layout_gravity="right|bottom"
             android:src="@drawable/icon_ruote"
             android:paddingBottom="70dp"
