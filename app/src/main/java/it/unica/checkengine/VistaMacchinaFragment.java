@@ -32,13 +32,15 @@ public class VistaMacchinaFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.vistamacchina_tab, container, false);
         Bundle bundle = getArguments();
         Garage garage = (Garage)bundle.getSerializable(ARG_GARAGE);
-
+        Auto auto = garage.getAuto();
+        Boolean flagAvaria = false;
 
         //creo i nomi per le varie immagini
         ImageView iconMotore = (ImageView) rootView.findViewById(R.id.iconMotore);
         ImageView iconFuel = (ImageView) rootView.findViewById(R.id.iconFuel);
         ImageView iconTributi = (ImageView) rootView.findViewById(R.id.iconTributi);
         ImageView iconOk = (ImageView) rootView.findViewById(R.id.iconOk);
+        ImageView iconKey = (ImageView) rootView.findViewById(R.id.iconKey);
         //Creo una List che contiene tutte e 4 le ruote
         List<ImageView> iconRuote = new ArrayList<ImageView>();
         iconRuote.add((ImageView) rootView.findViewById(R.id.iconRuota1));
@@ -47,14 +49,31 @@ public class VistaMacchinaFragment extends Fragment {
         iconRuote.add((ImageView) rootView.findViewById(R.id.iconRuota4));
 
         //Nascondo tutte le icon delle avarie
+
         iconMotore.setVisibility(View.INVISIBLE);
         iconFuel.setVisibility(View.INVISIBLE);
         iconTributi.setVisibility(View.INVISIBLE);
+        iconKey.setVisibility(View.INVISIBLE);
         for( ImageView ruota : iconRuote ) {
             ruota.setVisibility(View.INVISIBLE);
         }
 
-        Log.d("vistaMacchinaFragment",garage.getNumMeccanico());
+        Log.d("vistaMacchinaFragment","numMeccanico:" + garage.getNumMeccanico());
+
+        //Verifico lo stato delle avarie - Inizio dei controlli
+        //i valori sono da valutare
+        if(auto.getLivelloOlio() < 10){
+            iconMotore.setVisibility(View.VISIBLE);
+            flagAvaria = true;
+        }
+        if(auto.getCarburante() < 10){
+            iconFuel.setVisibility(View.VISIBLE);
+            flagAvaria = true;
+        }
+
+
+        if(flagAvaria) iconOk.setVisibility(View.INVISIBLE);
+
 
         return rootView;
     }
