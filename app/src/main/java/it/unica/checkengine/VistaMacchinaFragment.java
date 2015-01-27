@@ -2,6 +2,7 @@ package it.unica.checkengine;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +30,15 @@ public class VistaMacchinaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.vistamacchina_tab, container, false);
+        Bundle bundle = getArguments();
+        Garage garage = (Garage)bundle.getSerializable(ARG_GARAGE);
+        garage = new Garage("GIANNI","FENU");
+
         //creo i nomi per le varie immagini
         ImageView iconMotore = (ImageView) rootView.findViewById(R.id.iconMotore);
         ImageView iconFuel = (ImageView) rootView.findViewById(R.id.iconFuel);
         ImageView iconTributi = (ImageView) rootView.findViewById(R.id.iconTributi);
+        ImageView iconOk = (ImageView) rootView.findViewById(R.id.iconOk);
         //Creo una List che contiene tutte e 4 le ruote
         List<ImageView> iconRuote = new ArrayList<ImageView>();
         iconRuote.add((ImageView) rootView.findViewById(R.id.iconRuota1));
@@ -48,9 +54,9 @@ public class VistaMacchinaFragment extends Fragment {
             ruota.setVisibility(View.INVISIBLE);
         }
 
+        Log.d("vistaMacchinaFragment",garage.getNumMeccanico());
+
         return rootView;
     }
-
-
 
 }
