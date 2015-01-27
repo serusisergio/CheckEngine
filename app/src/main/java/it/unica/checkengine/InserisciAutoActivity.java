@@ -84,36 +84,41 @@ public class InserisciAutoActivity extends ActionBarActivity {
         }
 
         url = "http://checkengine.matta.ga/inserisciauto.php?masterkey=98HT984RH34R0834H984TH&targa=" + targa + "&modello=" + modello + "&nome=" + nome + "&kmGiornalieri=" + kmGiornalieri + "&consumoMedio=" + consumoMedio;
-
-        new InsertAuto().execute();
+        url = url.replace(" ", "%20");
+        new InsertAuto(this).execute();
 
 
         Log.d("InserisciAutoActivity: ", "Ho invocato il thread");
 
 
-        while(output == null) {
+    }
+    private void rispostaRichiesta() {
 
-        }
-
-        if (new String("error").equals("ok")) {
-            Toast.makeText(this, output, Toast.LENGTH_LONG).show();
+        if (new String("ok").equals(output)) {
+            Toast.makeText(this, "Inserita!", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, GarageActivity.class);
             this.startActivity(intent);
 
         } else {
-            Toast.makeText(this, "Errore, riprova!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Errore: "+output, Toast.LENGTH_LONG).show();
         }
+
     }
 
-
     private class InsertAuto extends AsyncTask<Void, Void, Void> {
+
+        InserisciAutoActivity parent;
+
+        public InsertAuto(InserisciAutoActivity parent){
+            this.parent = parent;
+        }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
             // Showing progress dialog
-            ProgressDialog pDialog = new ProgressDialog(InserisciAutoActivity.this);
+            pDialog = new ProgressDialog(InserisciAutoActivity.this);
             pDialog.setMessage("Attendi...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -141,7 +146,14 @@ public class InserisciAutoActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(Void result) {
+            Log.d("InserisciAutoActivity output", ">Prepre draw<");
+
             if (pDialog.isShowing())
                 pDialog.dismiss();
+
+            Log.d("InserisciAutoActivity output", ">Pre draw<");
+            parent.rispostaRichiesta();
         }
-    }}
+    }
+}
+
