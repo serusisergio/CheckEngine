@@ -1,14 +1,32 @@
 package it.unica.checkengine;
 
+import java.io.Serializable;
+
 /**
  * Created by Stefano on 23/01/2015.
  */
-public class Manutenzione {
+public class Manutenzione implements Serializable{
     private String tipo;
     private String messaggio;
     private int kmUltimaRicorrenza;
     private int intervalloRicorrenza;
 
+    public Manutenzione(String tipo, String messaggio, int kmUltimaRicorrenza, int intervalloRicorrenza){
+        setTipo(tipo);
+        setMessaggio(messaggio);
+        setKmUltimaRicorrenza(kmUltimaRicorrenza);
+        setIntervalloRicorrenza(intervalloRicorrenza);
+    }
+
+    public Manutenzione(String tipo, int kmUltimaRicorrenza, int intervalloRicorrenza){
+        setTipo(tipo);
+        setKmUltimaRicorrenza(kmUltimaRicorrenza);
+        setIntervalloRicorrenza(intervalloRicorrenza);
+    }
+
+    public Manutenzione(){
+
+    }
 
     public String getTipo() {
         return tipo;

@@ -1,28 +1,31 @@
 package it.unica.checkengine;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by Stefano on 23/01/2015.
  */
-public class Auto {
+public class Auto implements Serializable{
 
-    private int carburante ;/*possimamo farlo statico, direi che varia tra 0 e 47 litri*/
-    private int livelloOlio ; /*la macchina ha sui 4 litri di olio */
+    private double carburante ;/*possimamo farlo statico, direi che varia tra 0 e 47 litri*/
+    private double livelloOlio ; /*la macchina ha sui 4 litri di olio */
     private int km ;
     private String nome;
     private List<Manutenzione> manutenzioni;
     private List<Tributo> tributi;
     private List<Avaria> avarie;
     private int kmGiornalieri;
+    private double consumoMedio;
 
-    public Auto(int carburante, int livelloOlio, int km, String nome, int kmGiornalieri){
+    public Auto(double carburante, double livelloOlio, int km, String nome, int kmGiornalieri, double consumoMedio){
         this.setCarburante(carburante);
         this.setLivelloOlio(livelloOlio);
         this.setKm(km);
         this.setNome(nome);
         this.setKmGiornalieri(kmGiornalieri);
+        this.setConsumoMedio(consumoMedio);
 
         this.manutenzioni = new LinkedList<>();
         this.tributi = new LinkedList<>();
@@ -47,21 +50,21 @@ public class Auto {
         this.getAvarie().add(a);
     }
 
-    public int getCarburante() {
+    public double getCarburante() {
         return carburante;
     }
 
-    public void setCarburante(int carburante) {
+    public void setCarburante(double carburante) {
         if(carburante>0&carburante<47 ) {
             this.carburante = carburante;
         }
     }
 
-    public int getLivelloOlio() {
+    public double getLivelloOlio() {
         return livelloOlio;
     }
 
-    public void setLivelloOlio(int livelloOlio) {
+    public void setLivelloOlio(double livelloOlio) {
         if(livelloOlio>0&livelloOlio<4) {
             this.livelloOlio = livelloOlio;
         }
@@ -101,5 +104,13 @@ public class Auto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public double getConsumoMedio() {
+        return consumoMedio;
+    }
+
+    public void setConsumoMedio(double consumoMedio) {
+        this.consumoMedio = consumoMedio;
     }
 }

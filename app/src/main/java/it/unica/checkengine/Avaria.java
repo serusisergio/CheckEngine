@@ -1,12 +1,23 @@
 package it.unica.checkengine;
 
+import java.io.Serializable;
+
 /**
  * Created by Stefano on 23/01/2015.
  */
-public class Avaria {
+public class Avaria implements Serializable{
     private String tipo;
     private String messaggio;
     private int urgenza;
+
+    public Avaria(){
+
+    }
+
+    public Avaria(String tipo, int urgenza){
+        setTipo(tipo);
+        setUrgenza(urgenza);
+    }
 
 
     public String getTipo() {
