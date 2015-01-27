@@ -92,6 +92,7 @@ public class JSONParser {
                 auto.addTributo(tributo);
             }
 
+            garage.setAuto(auto);
 
             return garage;
 
