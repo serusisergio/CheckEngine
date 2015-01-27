@@ -16,13 +16,15 @@
         android:paddingBottom="2dip"
         android:paddingTop="6dip"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@android:color/black"/>
  
     <!-- Targa label -->
     <TextView
         android:id="@+id/targa"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="2dip" />
+        android:paddingBottom="2dip"
+        android:textColor="#4c4c4c"/>
  
 </LinearLayout>

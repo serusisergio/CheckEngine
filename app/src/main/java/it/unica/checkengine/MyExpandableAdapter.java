@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,10 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
         ((CheckedTextView) convertView).setText(parentItems.get(groupPosition));
         ((CheckedTextView) convertView).setChecked(isExpanded);
+
+        ExpandableListView eLV = (ExpandableListView) parent;
+        eLV.expandGroup(groupPosition);
+        super.onGroupExpanded(groupPosition);
 
         return convertView;
     }
