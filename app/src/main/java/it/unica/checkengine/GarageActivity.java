@@ -6,14 +6,12 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +40,8 @@ public class GarageActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Toast.makeText(this, "Bentornato!", Toast.LENGTH_LONG).show();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_garage);
 
@@ -152,6 +152,13 @@ public class GarageActivity extends ActionBarActivity {
             lista.setAdapter(adapter);
         }
 
+
+
+    }
+
+    public void apriInserisciAuto(View view) {
+        Intent intent = new Intent(this, InserisciAutoActivity.class);
+        this.startActivity(intent);
     }
 
 }

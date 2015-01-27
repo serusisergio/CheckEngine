@@ -34,6 +34,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="it.unica.checkengine.GarageActivity" />
         </activity>
+        <activity
+            android:name=".InserisciAutoActivity"
+            android:label="@string/title_activity_inserisci_auto" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="it.unica.checkengine.GarageActivity" />
+        </activity>
     </application>
 
 </manifest>

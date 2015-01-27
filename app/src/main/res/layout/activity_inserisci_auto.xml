@@ -1,0 +1,105 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="it.unica.checkengine.InserisciAutoActivity" >
+
+    <TextView android:text="Da qui potrai inserire una nuova auto!" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2" />
+
+    <TextView android:text="Targa:" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/targaAutoText"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/targaAuto"
+        android:layout_below="@+id/targaAutoText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Nome:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/targaAuto"
+        android:id="@+id/nomeAutoText"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nomeAuto"
+        android:layout_below="@+id/nomeAutoText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Modello:"
+        android:layout_below="@+id/nomeAuto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/modelloAutoText"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/modelloAuto"
+        android:layout_below="@+id/modelloAutoText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Consumo Medio:"
+        android:layout_below="@+id/modelloAuto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/consumoAutoText"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/consumoAuto"
+        android:layout_below="@+id/consumoAutoText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="KM Giornalieri:"
+        android:layout_below="@+id/consumoAuto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/kmGiornalieriAutoText"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/kmGiornalieriAuto"
+        android:layout_below="@+id/kmGiornalieriAutoText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Inserisci!"
+        android:id="@+id/button"
+        android:layout_below="@+id/kmGiornalieriAuto"
+        android:layout_marginTop="35dp"
+        android:layout_alignEnd="@+id/kmGiornalieriAuto"
+        android:layout_alignParentStart="true"
+        android:nestedScrollingEnabled="true"
+        android:onClick="inserisciAuto" />
+</RelativeLayout>
