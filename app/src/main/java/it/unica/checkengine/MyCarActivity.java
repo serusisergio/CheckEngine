@@ -49,12 +49,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
      */
     ViewPager mViewPager;
 
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_car);
+    private void disegnaUI(){
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -90,10 +85,17 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
                             .setTabListener(this));
         }
 
+    }
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_car);
         targa = getIntent().getStringExtra(GarageActivity.EXTRA_MESSAGE);
         Log.d("mycar","targa: " + targa);
-
-        new GetJson().execute();
+        new GetJson(this).execute();
     }
 
 
@@ -162,8 +164,8 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
                 case 0:
                     Fragment fragment = new VistaMacchinaFragment();
                     args.putInt(VistaMacchinaFragment.ARG_SECTION_NUMBER, position + 1);
-                    fragment.setArguments(args);
                     args.putSerializable(VistaMacchinaFragment.ARG_GARAGE, garage);
+                    fragment.setArguments(args);
                     return fragment;
 
                 case 1:
@@ -199,6 +201,12 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
     private class GetJson extends AsyncTask<Void, Void, Void> {
 
+        MyCarActivity parent;
+
+        public GetJson(MyCarActivity parent){
+            this.parent = parent;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -218,6 +226,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url+targa, ServiceHandler.GET);
 
+            Log.d("doInbackground", targa);
             Log.d("Response: ", "> " + jsonStr);
 
             if (jsonStr != null) {
@@ -254,9 +263,13 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
             super.onPostExecute(result);
 
             try {
+                // Dismiss the progress dialog
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
                 String nome = auto.getString("nome");
                 String modello = auto.getString("modello");
                 setTitle(modello + " - " + nome);
+                parent.disegnaUI();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -1,5 +1,7 @@
 package it.unica.checkengine;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,7 +24,7 @@ public class Tributo implements Serializable{
         setTipo(tipo);
         setImporto(importo);
         setUltimaRicorrenza(ultimaRicorrenza);
-        setImporto(intervalloPagameto);
+        setIntervalloPagameto(intervalloPagameto);
     }
 
     public String getTipo() {
@@ -71,5 +73,15 @@ public class Tributo implements Serializable{
 
     public void setGiorniAllScadenza(int giorniAllScadenza) {
         this.giorniAllScadenza = giorniAllScadenza;
+    }
+
+    public boolean isScaduto(){
+        Date dataOggi = new Date();
+        Date dataScadenza = new Date(getUltimaRicorrenza().getTime() + getIntervalloPagameto()*86400000l);
+        //return dataOggi.after(dataScadenza);
+        Log.d("dataoggi", ""+dataOggi.getTime());
+        Log.d("datascadenza", ""+dataScadenza.getTime());
+        Log.d("intervallopagamento", ""+getIntervalloPagameto());
+        return dataOggi.getTime()>dataScadenza.getTime();
     }
 }

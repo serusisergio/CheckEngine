@@ -5,6 +5,9 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -71,6 +74,7 @@ public class JSONParser {
             for(int i=0; i<jTributi.length(); i++){
                 JSONObject t = jTributi.getJSONObject(i);
                 tributo = new Tributo(t.getString("nome"), t.getDouble("costo"), parseDate(t.getString("ultimaRicorrenza")), t.getInt("cadenza"));
+                Log.d("parseTributo", t.getInt("cadenza")+"");
 
                 Date dataOggi = new Date();
 
@@ -104,11 +108,13 @@ public class JSONParser {
     }
 
     private Date parseDate(String sData){
-        String[] el = sData.split("-");
-        Integer year = new Integer(el[0]);
-        Integer month = new Integer(el[1]);
-        Integer day = new Integer(el[2]);
-        Date data = new Date(year, month, day);
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        Date data = null;
+        try {
+            data = sf.parse(sData);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return data;
     }
 }

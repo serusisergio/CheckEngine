@@ -25,21 +25,6 @@
             android:layout_gravity="center_horizontal|top" />
 
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/iconTributi"
-            android:layout_gravity="center"
-            android:src="@drawable/icon_tributi"
-            android:paddingTop="50dp" />
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/iconFuel"
-            android:layout_gravity="center_horizontal|bottom"
-            android:src="@drawable/icon_fuel" />
-
-        <ImageView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:id="@+id/iconRuota1"
@@ -82,5 +67,29 @@
             android:layout_gravity="center"
             android:src="@drawable/icon_ok"
             android:paddingTop="50dp" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconFuel"
+            android:layout_gravity="right|center_vertical"
+            android:src="@drawable/icon_fuel"
+            android:paddingBottom="5dp" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconTributi"
+            android:layout_gravity="left|center_vertical"
+            android:src="@drawable/icon_tributi"
+            android:paddingBottom="5dp" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconManutenzioni"
+            android:layout_gravity="center_horizontal|bottom"
+            android:src="@drawable/icon_englishkey"
+            android:paddingBottom="20dp" />
     </FrameLayout>
 </RelativeLayout>

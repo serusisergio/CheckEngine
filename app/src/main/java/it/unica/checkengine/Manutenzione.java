@@ -59,4 +59,7 @@ public class Manutenzione implements Serializable{
     public void setIntervalloRicorrenza(int intervalloRicorrenza) {
         this.intervalloRicorrenza = intervalloRicorrenza;
     }
+    public boolean isScaduto(int km){
+        return km>(getKmUltimaRicorrenza()+getIntervalloRicorrenza());
+    }
 }
