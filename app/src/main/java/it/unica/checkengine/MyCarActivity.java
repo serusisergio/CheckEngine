@@ -153,9 +153,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
             //Permette di creare, a seconda della pagina che stiamo utilizzando, una nuova istanza della classe necessaria da visualizzare
             Bundle args = new Bundle();
-            while(garage==null){
-                //SystemClock.sleep(400);
-            }
+
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
