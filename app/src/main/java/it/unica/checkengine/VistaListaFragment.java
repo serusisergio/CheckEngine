@@ -49,9 +49,8 @@ public class VistaListaFragment extends Fragment {
      */
     public static final String ARG_SECTION_NUMBER = "section_number";
 
-    public VistaListaFragment(Context context) {
-        this.context=context;
-    }
+    public VistaListaFragment() {
+   }
 
     //richiama il file .xml in cui è definito il suo stile e il suo id
     @Override
@@ -67,7 +66,7 @@ public class VistaListaFragment extends Fragment {
         setGroupParents();
         setChildData();
 
-        MyExpandableAdapter adapter = new MyExpandableAdapter(parentItems, childItems);
+        MyExpandableAdapter adapter = new MyExpandableAdapter(getActivity(), parentItems, childItems);
 
         expandableList.setAdapter(adapter);
 

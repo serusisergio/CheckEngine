@@ -5,6 +5,8 @@ package it.unica.checkengine;
  */
 import java.util.ArrayList;
 import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,17 +20,15 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
     private Activity activity;
     private ArrayList<Object> childtems;
-    private LayoutInflater inflater;
     private ArrayList<String> parentItems, child;
+    private Context context;
+    private final LayoutInflater inf;
 
-    public MyExpandableAdapter(ArrayList<String> parents, ArrayList<Object> children) {
+    public MyExpandableAdapter(Activity context, ArrayList<String> parents, ArrayList<Object> children) {
         this.parentItems = parents;
         this.childtems = children;
-    }
-
-    public void setInflater(LayoutInflater inflater, Activity activity) {
-        this.inflater = inflater;
-        this.activity = activity;
+        this.context = context;
+        inf = LayoutInflater.from(context);
     }
 
     @Override
@@ -36,10 +36,13 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
         child = (ArrayList<String>) childtems.get(groupPosition);
 
+        LayoutInflater infalInflater = (LayoutInflater) this.context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         TextView textView = null;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.group, null);
+          convertView = inf.inflate(R.layout.group, null);
         }
 
         textView = (TextView) convertView.findViewById(R.id.textView1);
@@ -61,7 +64,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.row, null);
+            convertView = inf.inflate(R.layout.row, null);
         }
 
         ((CheckedTextView) convertView).setText(parentItems.get(groupPosition));
@@ -117,7 +120,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 
 }
