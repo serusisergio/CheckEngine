@@ -23,7 +23,8 @@
         android:id="@+id/targaAuto"
         android:layout_below="@+id/targaAutoText"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:singleLine="true" />
 
     <TextView
         android:text="Nome:"
@@ -39,7 +40,8 @@
         android:id="@+id/nomeAuto"
         android:layout_below="@+id/nomeAutoText"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:singleLine="true" />
 
     <TextView
         android:text="Modello:"
@@ -55,7 +57,8 @@
         android:id="@+id/modelloAuto"
         android:layout_below="@+id/modelloAutoText"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:singleLine="true" />
 
     <TextView
         android:text="Consumo Medio:"
@@ -72,7 +75,8 @@
         android:id="@+id/consumoAuto"
         android:layout_below="@+id/consumoAutoText"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:singleLine="true" />
 
     <TextView
         android:text="KM Giornalieri:"
@@ -89,7 +93,8 @@
         android:id="@+id/kmGiornalieriAuto"
         android:layout_below="@+id/kmGiornalieriAutoText"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:singleLine="true" />
 
     <Button
         android:layout_width="wrap_content"
