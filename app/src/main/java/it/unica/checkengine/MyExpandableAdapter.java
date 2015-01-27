@@ -72,7 +72,6 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         ((CheckedTextView) convertView).setChecked(isExpanded);
 
         ExpandableListView eLV = (ExpandableListView) parent;
-        eLV.expandGroup(groupPosition);
         super.onGroupExpanded(groupPosition);
 
         return convertView;
