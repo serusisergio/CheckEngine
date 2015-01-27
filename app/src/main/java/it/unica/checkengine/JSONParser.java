@@ -24,10 +24,11 @@ public class JSONParser {
                 Log.d("JSONparser", "è null");
             }
 
-            JSONObject jGarage = new JSONObject(json);
+            JSONObject JSON = new JSONObject(json);
+            JSONObject jGarage = JSON.getJSONObject("garage");
             garage = new Garage(jGarage.getString("nGommista"), jGarage.getString("nMeccanico"));
 
-            JSONObject jAuto = jGarage.getJSONObject("auto");
+            JSONObject jAuto = JSON.getJSONObject("auto");
             auto = new Auto(jAuto.getDouble("carburante"),
                             jAuto.getDouble("olio"),
                             jAuto.getInt("km"),
