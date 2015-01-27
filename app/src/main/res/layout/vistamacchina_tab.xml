@@ -87,7 +87,7 @@
         <ImageView
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:id="@+id/iconKey"
+            android:id="@+id/iconManutenzioni"
             android:layout_gravity="center_horizontal|bottom"
             android:src="@drawable/icon_englishkey"
             android:paddingBottom="20dp" />

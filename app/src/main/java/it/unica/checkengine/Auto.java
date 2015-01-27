@@ -55,9 +55,9 @@ public class Auto implements Serializable{
     }
 
     public void setCarburante(double carburante) {
-        if(carburante>0&carburante<47 ) {
+
             this.carburante = carburante;
-        }
+
     }
 
     public double getLivelloOlio() {
@@ -65,9 +65,9 @@ public class Auto implements Serializable{
     }
 
     public void setLivelloOlio(double livelloOlio) {
-        if(livelloOlio>0&livelloOlio<4) {
+
             this.livelloOlio = livelloOlio;
-        }
+
     }
 
     public int getKm() {

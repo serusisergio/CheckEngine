@@ -40,7 +40,7 @@ public class VistaMacchinaFragment extends Fragment {
         ImageView iconFuel = (ImageView) rootView.findViewById(R.id.iconFuel);
         ImageView iconTributi = (ImageView) rootView.findViewById(R.id.iconTributi);
         ImageView iconOk = (ImageView) rootView.findViewById(R.id.iconOk);
-        ImageView iconKey = (ImageView) rootView.findViewById(R.id.iconKey);
+        ImageView iconManutenzioni = (ImageView) rootView.findViewById(R.id.iconManutenzioni);
         //Creo una List che contiene tutte e 4 le ruote
         List<ImageView> iconRuote = new ArrayList<ImageView>();
         iconRuote.add((ImageView) rootView.findViewById(R.id.iconRuota1));
@@ -53,7 +53,7 @@ public class VistaMacchinaFragment extends Fragment {
         iconMotore.setVisibility(View.INVISIBLE);
         iconFuel.setVisibility(View.INVISIBLE);
         iconTributi.setVisibility(View.INVISIBLE);
-        iconKey.setVisibility(View.INVISIBLE);
+        iconManutenzioni.setVisibility(View.INVISIBLE);
         for( ImageView ruota : iconRuote ) {
             ruota.setVisibility(View.INVISIBLE);
         }
@@ -62,16 +62,37 @@ public class VistaMacchinaFragment extends Fragment {
 
         //Verifico lo stato delle avarie - Inizio dei controlli
         //i valori sono da valutare
-        if(auto.getLivelloOlio() < 10){
+        if(auto.getLivelloOlio() < 2){
             iconMotore.setVisibility(View.VISIBLE);
             flagAvaria = true;
         }
-        if(auto.getCarburante() < 10){
+        if(auto.getCarburante() < 5){
             iconFuel.setVisibility(View.VISIBLE);
             flagAvaria = true;
         }
 
+        for(Avaria t : auto.getAvarie()){
+            iconMotore.setVisibility(View.VISIBLE);
+            flagAvaria = true;
+        }
 
+        for(Tributo t : auto.getTributi()){
+            if (t.isScaduto()) iconTributi.setVisibility(View.VISIBLE);
+        }
+        for(Manutenzione t : auto.getManutenzioni()){
+            if (t.isScaduto(auto.getKm())){
+                if(t.getTipo().equals("Gomme")){
+                    for( ImageView ruota : iconRuote ) {
+                        ruota.setVisibility(View.VISIBLE);
+                        flagAvaria = true;
+                    }
+                } else {
+                    iconManutenzioni.setVisibility(View.VISIBLE);
+                    flagAvaria = true;
+                }
+            }
+        }
+        Log.d("vistaMacchinaFragment","Livello Olio " +auto.getLivelloOlio());
         if(flagAvaria) iconOk.setVisibility(View.INVISIBLE);
 
 

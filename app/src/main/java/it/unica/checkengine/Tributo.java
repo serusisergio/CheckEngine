@@ -72,4 +72,10 @@ public class Tributo implements Serializable{
     public void setGiorniAllScadenza(int giorniAllScadenza) {
         this.giorniAllScadenza = giorniAllScadenza;
     }
+
+    public boolean isScaduto(){
+        Date dataOggi = new Date();
+        Date dataScadenza = new Date(getUltimaRicorrenza().getTime() + getIntervalloPagameto()*86400000l);
+        return dataOggi.after(dataScadenza);
+    }
 }
