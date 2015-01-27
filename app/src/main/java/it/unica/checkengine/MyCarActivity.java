@@ -3,6 +3,7 @@ package it.unica.checkengine;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -150,6 +151,13 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
             //Permette di creare, a seconda della pagina che stiamo utilizzando, una nuova istanza della classe necessaria da visualizzare
             Bundle args = new Bundle();
+            while(garage==null){
+                //SystemClock.sleep(400);
+            }
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+
             switch (position) {
                 case 0:
                     Fragment fragment = new VistaMacchinaFragment();
@@ -222,6 +230,15 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
                     Log.d("Response 1: ", "> " + auto);
 
+                    JSONParser parser = new JSONParser();
+                    garage = parser.parse(jsonS);
+                    Log.d("mycaractivity-doinbackground", "prima del parse");
+                    if(garage==null){
+                        Log.d("mycaractivity-parse", "ho parsato il json ma è null");
+                    } else {
+                        Log.d("mycaractivity-parse", "ho parsato il json e non è null padre pio");
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -235,16 +252,11 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            // Dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
+
             try {
                 String nome = auto.getString("nome");
                 String modello = auto.getString("modello");
                 setTitle(modello + " - " + nome);
-                JSONParser parser = new JSONParser();
-                garage = parser.parse(jsonS);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

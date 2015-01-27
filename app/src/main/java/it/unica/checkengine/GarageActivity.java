@@ -148,7 +148,7 @@ public class GarageActivity extends ActionBarActivity {
                     GarageActivity.this, listaAuto,
                     R.layout.list_item, new String[] { "nome", "targa" },
                     new int[] { R.id.nome, R.id.targa});
-            Log.d("postexecute", listaAuto.toString());
+            Log.d("GarageActivity-postexecute", listaAuto.toString());
             lista.setAdapter(adapter);
         }
 

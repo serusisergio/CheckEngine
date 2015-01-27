@@ -32,7 +32,7 @@ public class VistaMacchinaFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.vistamacchina_tab, container, false);
         Bundle bundle = getArguments();
         Garage garage = (Garage)bundle.getSerializable(ARG_GARAGE);
-        garage = new Garage("GIANNI","FENU");
+
 
         //creo i nomi per le varie immagini
         ImageView iconMotore = (ImageView) rootView.findViewById(R.id.iconMotore);
