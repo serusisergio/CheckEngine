@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,9 @@ public class VistaListaFragment extends Fragment {
      */
     public static final String ARG_SECTION_NUMBER = "section_number";
     public static final String ARG_GARAGE = "garage";
+    public static final String ARG_SEZIONE = "sezione";
+
+    ExpandableListView expandableList;
 
     public VistaListaFragment() {
    }
@@ -32,14 +36,13 @@ public class VistaListaFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.vistalista_tab, container, false);
 
-        ExpandableListView expandableList = (ExpandableListView) rootView.findViewById(R.id.list);
+        expandableList = (ExpandableListView) rootView.findViewById(R.id.list);
         expandableList.setDividerHeight(2);
         expandableList.setGroupIndicator(null);
         expandableList.setClickable(true);
 
         Bundle bundle = getArguments();
         Garage garage = (Garage) bundle.getSerializable(ARG_GARAGE);
-
 
         MyExpandableAdapter adapter = new MyExpandableAdapter(getActivity());
 
@@ -57,24 +60,6 @@ public class VistaListaFragment extends Fragment {
             }
         });
 
-        // Listview Group expanded listener
-        expandableList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getActivity().getApplicationContext()," Expanded", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Listview Group collasped listener
-        expandableList.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getActivity().getApplicationContext()," Collapsed",Toast.LENGTH_SHORT).show();
-            }
-        });
-
         // Listview on child click listener
         expandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
@@ -86,7 +71,38 @@ public class VistaListaFragment extends Fragment {
             }
         });
 
+        settaSezioni(-1);
+
         return rootView;
+    }
+
+    public void settaSezioni(int sezioneDaAprire){
+
+        Log.d("VistaListaFragment", "Tento di aprire la sezione "+sezioneDaAprire);
+
+        //apro la sezione richiesta
+        switch (sezioneDaAprire){
+            case 0:
+                expandableList.expandGroup(0);
+                expandableList.collapseGroup(1);
+                expandableList.collapseGroup(2);
+                break;
+            case 1:
+                expandableList.expandGroup(1);
+                expandableList.collapseGroup(0);
+                expandableList.collapseGroup(2);
+                break;
+            case 2:
+                expandableList.expandGroup(2);
+                expandableList.collapseGroup(1);
+                expandableList.collapseGroup(0);
+                break;
+            default:
+                expandableList.expandGroup(0);
+                expandableList.expandGroup(1);
+                expandableList.expandGroup(2);
+        }
+
     }
 
 }

@@ -27,50 +27,37 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
 
     private Activity context;
-    private Map<String, List<String>> laptopCollections;
-    private List<String> laptops;
+    private Map<String, List<String>> messageCollections;
+    private List<String> messaggi;
     ArrayList<String> childList;
 
-    public MyExpandableAdapter(Activity context){//}, List<String> laptops, Map<String, List<String>> laptopCollections) {
+    public MyExpandableAdapter(Activity context){//}, List<String> messaggi, Map<String, List<String>> messageCollections) {
         this.context = context;
 
         ArrayList<String> groupList = new ArrayList<String>();
-        groupList.add("HP");
-        groupList.add("Dell");
-        groupList.add("Lenovo");
-        groupList.add("Sony");
-        groupList.add("HCL");
-        groupList.add("Samsung");
+        groupList.add("Segnalazioni");
+        groupList.add("Manutenzioni");
+        groupList.add("Tributi");
 
-        // preparing laptops collection(child)
-        String[] hpModels = { "HP Pavilion G6-2014TX", "ProBook HP 4540",
-                "HP Envy 4-1025TX" };
-        String[] hclModels = { "HCL S2101", "HCL L2102", "HCL V2002" };
-        String[] lenovoModels = { "IdeaPad Z Series", "Essential G Series",
-                "ThinkPad X Series", "Ideapad Z Series" };
-        String[] sonyModels = { "VAIO E Series", "VAIO Z Series",
-                "VAIO S Series", "VAIO YB Series" };
-        String[] dellModels = { "Inspiron", "Vostro", "XPS" };
-        String[] samsungModels = { "NP Series", "Series 5", "SF Series" };
 
-        laptopCollections = new LinkedHashMap<String, List<String>>();
+        // preparing messaggi collection(child)
+        String[] segnalazioni = { "Livello Carburante" };
+        String[] manutenzioni = { "Cambio Olio", "Tagliando", "Cambio Gomme" };
+        String[] tributi = { "Assicurazione", "Bollo"};
+
+
+        messageCollections = new LinkedHashMap<String, List<String>>();
 
         for (String laptop : groupList) {
-            if (laptop.equals("HP")) {
-                loadChild(hpModels);
-            } else if (laptop.equals("Dell"))
-                loadChild(dellModels);
-            else if (laptop.equals("Sony"))
-                loadChild(sonyModels);
-            else if (laptop.equals("HCL"))
-                loadChild(hclModels);
-            else if (laptop.equals("Samsung"))
-                loadChild(samsungModels);
-            else
-                loadChild(lenovoModels);
+            if (laptop.equals("Segnalazioni")) {
+                loadChild(segnalazioni);
+            } else if (laptop.equals("Manutenzioni"))
+                loadChild(manutenzioni);
+            else if (laptop.equals("Tributi"))
+                loadChild(tributi);
 
-            laptopCollections.put(laptop, childList);
-            this.laptops = groupList;
+            messageCollections.put(laptop, childList);
+            this.messaggi = groupList;
         }
 
     }
@@ -82,7 +69,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     }
 
     public Object getChild(int groupPosition, int childPosition) {
-        return laptopCollections.get(laptops.get(groupPosition)).get(childPosition);
+        return messageCollections.get(messaggi.get(groupPosition)).get(childPosition);
     }
 
     public long getChildId(int groupPosition, int childPosition) {
@@ -113,7 +100,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 List<String> child =
-                                        laptopCollections.get(laptops.get(groupPosition));
+                                        messageCollections.get(messaggi.get(groupPosition));
                                 child.remove(childPosition);
                                 notifyDataSetChanged();
                             }
@@ -134,15 +121,15 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     }
 
     public int getChildrenCount(int groupPosition) {
-        return laptopCollections.get(laptops.get(groupPosition)).size();
+        return messageCollections.get(messaggi.get(groupPosition)).size();
     }
 
     public Object getGroup(int groupPosition) {
-        return laptops.get(groupPosition);
+        return messaggi.get(groupPosition);
     }
 
     public int getGroupCount() {
-        return laptops.size();
+        return messaggi.size();
     }
 
     public long getGroupId(int groupPosition) {

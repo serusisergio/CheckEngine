@@ -3,7 +3,6 @@ package it.unica.checkengine;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,9 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +39,8 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
+
+    private Fragment fragmentLista;
 
 
     /**
@@ -167,11 +166,11 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
                     return fragment;
 
                 case 1:
-                    Fragment fragment2 = new VistaListaFragment();
+                    fragmentLista = new VistaListaFragment();
                     args.putInt(VistaListaFragment.ARG_SECTION_NUMBER, position + 2);
                     args.putSerializable(VistaListaFragment.ARG_GARAGE, garage);
-                    fragment2.setArguments(args);
-                    return fragment2;
+                    fragmentLista.setArguments(args);
+                    return fragmentLista;
 
                 default:
                     return null;
@@ -195,6 +194,12 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
             }
             return null;
         }
+    }
+
+    public void switchFragment(int target, int sezioneDaAprire){
+        Log.d("SwitchFragment", "Voglio aprire la sezione " + sezioneDaAprire);
+        ((VistaListaFragment)fragmentLista).settaSezioni(sezioneDaAprire);
+        mViewPager.setCurrentItem(target);
     }
 
     private class GetJson extends AsyncTask<Void, Void, Void> {

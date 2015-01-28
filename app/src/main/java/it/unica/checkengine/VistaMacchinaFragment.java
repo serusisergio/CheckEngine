@@ -1,15 +1,14 @@
 package it.unica.checkengine;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,9 +30,10 @@ public class VistaMacchinaFragment extends Fragment {
     //richiama il file .xml in cui è definito il suo stile e il suo id
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.vistamacchina_tab, container, false);
+        final View rootView = inflater.inflate(R.layout.vistamacchina_tab, container, false);
         Bundle bundle = getArguments();
         Garage garage = (Garage)bundle.getSerializable(ARG_GARAGE);
+
         Auto auto = garage.getAuto();
         Boolean flagAvaria = false;
 
@@ -69,7 +69,7 @@ public class VistaMacchinaFragment extends Fragment {
             iconFuel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Metti benzina tanalla miserabile", Toast.LENGTH_SHORT).show();
+                    ((MyCarActivity)getActivity()).switchFragment(1,0);
                 }
             });
 
@@ -80,7 +80,7 @@ public class VistaMacchinaFragment extends Fragment {
             iconMotore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Sta finendo l'olio, OLIOOOO!", Toast.LENGTH_SHORT).show();
+                    ((MyCarActivity)getActivity()).switchFragment(1,0);
                 }
             });
         }
@@ -91,7 +91,7 @@ public class VistaMacchinaFragment extends Fragment {
             iconMotore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Avaria! Avaria!", Toast.LENGTH_SHORT).show();
+                    ((MyCarActivity)getActivity()).switchFragment(1,0);
                 }
             });
             //se trova un'avaria illumina l'icona e esce subito per evitare che richiami piu di una volta l'onClick
@@ -103,7 +103,7 @@ public class VistaMacchinaFragment extends Fragment {
             iconTributi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Paga le tasse!", Toast.LENGTH_SHORT).show();
+                    ((MyCarActivity)getActivity()).switchFragment(1,2);
                 }
             });
         }
@@ -115,7 +115,7 @@ public class VistaMacchinaFragment extends Fragment {
                         ruota.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(getActivity().getApplicationContext(), "Ruota a terra!", Toast.LENGTH_SHORT).show();
+                                ((MyCarActivity)getActivity()).switchFragment(1,1);
                             }
                         });
                     }
@@ -124,7 +124,7 @@ public class VistaMacchinaFragment extends Fragment {
                     iconManutenzioni.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Manutienimi!", Toast.LENGTH_SHORT).show();
+                            ((MyCarActivity)getActivity()).switchFragment(1,1);
                         }
                     });
                 }
