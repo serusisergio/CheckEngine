@@ -14,35 +14,7 @@ import android.widget.Toast;
 
 public class VistaListaFragment extends Fragment {
 
-    private ArrayList<String> parentItems = new ArrayList<String>();
-    private ArrayList<Object> childItems = new ArrayList<Object>();
-    private Context context;
     private Garage garage;
-
-   /* @Override
-    public void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-        // this is not really  necessary as ExpandableListActivity contains an ExpandableList
-        //setContentView(R.layout.vistalista_tab);
-
-        ExpandableListView expandableList = (ExpandableListView) rootView.findViewById(R.id.list);
-        ExpandableListView expandableList = (ExpandableListView) findV
-
-        expandableList.setDividerHeight(2);
-        expandableList.setGroupIndicator(null);
-        expandableList.setClickable(true);
-
-        setGroupParents();
-        setChildData();
-
-        MyExpandableAdapter adapter = new MyExpandableAdapter(parentItems, childItems);
-
-        adapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
-        expandableList.setAdapter(adapter);
-        expandableList.setOnChildClickListener(this);
-    }*/
 
     /**
      * The fragment argument representing the section number for this
@@ -68,10 +40,8 @@ public class VistaListaFragment extends Fragment {
         Bundle bundle = getArguments();
         Garage garage = (Garage) bundle.getSerializable(ARG_GARAGE);
 
-        setGroupParents();
-        setChildData();
 
-        MyExpandableAdapter adapter = new MyExpandableAdapter(getActivity(), parentItems, childItems);
+        MyExpandableAdapter adapter = new MyExpandableAdapter(getActivity());
 
         expandableList.setAdapter(adapter);
 
@@ -117,39 +87,6 @@ public class VistaListaFragment extends Fragment {
         });
 
         return rootView;
-    }
-
-    public void setGroupParents() {
-        parentItems.add("Segnalazioni");
-        parentItems.add("Manutenzioni");
-        parentItems.add("Tributi");
-    }
-
-    public void setChildData() {
-
-        // Android
-        ArrayList<String> child = new ArrayList<String>();
-        child.add("Core");
-        child.add("Games");
-        childItems.add(child);
-
-        // Core Java
-        child = new ArrayList<String>();
-        child.add("Apache");
-        child.add("Applet");
-        child.add("AspectJ");
-        child.add("Beans");
-        child.add("Crypto");
-        childItems.add(child);
-
-        // Desktop Java
-        child = new ArrayList<String>();
-        child.add("Accessibility");
-        child.add("AWT");
-        child.add("ImageIO");
-        child.add("Print");
-        childItems.add(child);
-
     }
 
 }
