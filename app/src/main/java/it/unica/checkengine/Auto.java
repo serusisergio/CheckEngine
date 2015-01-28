@@ -49,6 +49,10 @@ public class Auto implements Serializable{
         return (carburante<CARBURANTE_RISERVA);
     }
 
+    public boolean isOlioRed(){
+        return (livelloOlio<OLIO_MIN);
+    }
+
     public void addManutenzione(Manutenzione m){
         this.getManutenzioni().add(m);
     }

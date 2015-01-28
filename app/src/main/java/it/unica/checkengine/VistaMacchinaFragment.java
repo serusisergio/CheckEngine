@@ -61,12 +61,11 @@ public class VistaMacchinaFragment extends Fragment {
         Log.d("vistaMacchinaFragment","numMeccanico:" + garage.getNumMeccanico());
 
         //Verifico lo stato delle avarie - Inizio dei controlli
-        //i valori sono da valutare
-        if(auto.getLivelloOlio() < 2){
+        if(auto.isCarburanteOrange() || auto.isCarburanteRed()){
             iconMotore.setVisibility(View.VISIBLE);
             flagAvaria = true;
         }
-        if(auto.getCarburante() < 5){
+        if(auto.isOlioRed()){
             iconFuel.setVisibility(View.VISIBLE);
             flagAvaria = true;
         }
