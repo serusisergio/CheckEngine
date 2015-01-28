@@ -17,6 +17,7 @@ public class VistaListaFragment extends Fragment {
     private ArrayList<String> parentItems = new ArrayList<String>();
     private ArrayList<Object> childItems = new ArrayList<Object>();
     private Context context;
+    private Garage garage;
 
    /* @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class VistaListaFragment extends Fragment {
      * fragment.
      */
     public static final String ARG_SECTION_NUMBER = "section_number";
+    public static final String ARG_GARAGE = "garage";
 
     public VistaListaFragment() {
    }
@@ -62,6 +64,9 @@ public class VistaListaFragment extends Fragment {
         expandableList.setDividerHeight(2);
         expandableList.setGroupIndicator(null);
         expandableList.setClickable(true);
+
+        Bundle bundle = getArguments();
+        Garage garage = (Garage) bundle.getSerializable(ARG_GARAGE);
 
         setGroupParents();
         setChildData();
@@ -117,7 +122,7 @@ public class VistaListaFragment extends Fragment {
     public void setGroupParents() {
         parentItems.add("Segnalazioni");
         parentItems.add("Manutenzioni");
-        parentItems.add("Pagamenti");
+        parentItems.add("Tributi");
     }
 
     public void setChildData() {

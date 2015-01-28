@@ -169,8 +169,8 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
                 case 1:
                     Fragment fragment2 = new VistaListaFragment();
                     args.putInt(VistaListaFragment.ARG_SECTION_NUMBER, position + 2);
+                    args.putSerializable(VistaListaFragment.ARG_GARAGE, garage);
                     fragment2.setArguments(args);
-                    //args.putSerializable(VistaListaFragment.ARG_GARAGE, garage);
                     return fragment2;
 
                 default:
