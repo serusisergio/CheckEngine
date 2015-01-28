@@ -83,12 +83,11 @@ public class VistaMacchinaFragment extends Fragment {
                 if(t.getTipo().equals("Gomme")){
                     for( ImageView ruota : iconRuote ) {
                         ruota.setVisibility(View.VISIBLE);
-                        flagAvaria = true;
                     }
                 } else {
                     iconManutenzioni.setVisibility(View.VISIBLE);
-                    flagAvaria = true;
                 }
+                flagAvaria = true;
             }
         }
         Log.d("vistaMacchinaFragment","Livello Olio " +auto.getLivelloOlio());
