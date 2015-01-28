@@ -61,6 +61,7 @@ public class VistaMacchinaFragment extends Fragment {
         }
 
         //Verifico lo stato delle avarie - Inizio dei controlli
+        //nel caso ci siano problemi viene visualizzata l'icona che diventa cliccabile
         if(auto.isCarburanteOrange() || auto.isCarburanteRed()){
             iconFuel.setVisibility(View.VISIBLE);
             Log.d("Vista macchina", "il carburante è rosso o arancione e il valore è :"+auto.getCarburante());
