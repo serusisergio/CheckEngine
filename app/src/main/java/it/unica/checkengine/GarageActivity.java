@@ -123,7 +123,6 @@ public class GarageActivity extends ActionBarActivity {
 
                     // adding contact to contact list
                     listaAuto.add(mappaAuto);
-                    Log.d("bcktask", "iterazione " + i);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
