@@ -2,14 +2,11 @@ package it.unica.checkengine;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +41,7 @@ public class VistaMacchinaFragment extends Fragment {
         ImageView iconOk = (ImageView) rootView.findViewById(R.id.iconOk);
         ImageView iconManutenzioni = (ImageView) rootView.findViewById(R.id.iconManutenzioni);
         //Creo una List che contiene tutte e 4 le ruote
-        List<ImageView> iconRuote = new ArrayList<ImageView>();
+        List<ImageView> iconRuote = new ArrayList<>();
         iconRuote.add((ImageView) rootView.findViewById(R.id.iconRuota1));
         iconRuote.add((ImageView) rootView.findViewById(R.id.iconRuota2));
         iconRuote.add((ImageView) rootView.findViewById(R.id.iconRuota3));
@@ -85,7 +82,8 @@ public class VistaMacchinaFragment extends Fragment {
             });
         }
 
-        for(Avaria t : auto.getAvarie()){
+
+        if(!auto.getAvarie().isEmpty()){
             iconMotore.setVisibility(View.VISIBLE);
             flagAvaria = true;
             iconMotore.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +93,6 @@ public class VistaMacchinaFragment extends Fragment {
                 }
             });
             //se trova un'avaria illumina l'icona e esce subito per evitare che richiami piu di una volta l'onClick
-            break;
         }
 
         for(Tributo t : auto.getTributi()){

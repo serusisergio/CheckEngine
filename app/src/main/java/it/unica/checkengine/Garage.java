@@ -1,8 +1,6 @@
 package it.unica.checkengine;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by Stefano on 23/01/2015.

@@ -13,7 +13,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,7 +33,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     public MyExpandableAdapter(Activity context){//}, List<String> messaggi, Map<String, List<String>> messageCollections) {
         this.context = context;
 
-        ArrayList<String> groupList = new ArrayList<String>();
+        ArrayList<String> groupList = new ArrayList<>();
         groupList.add("Segnalazioni");
         groupList.add("Manutenzioni");
         groupList.add("Tributi");
@@ -46,7 +45,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         String[] tributi = { "Assicurazione", "Bollo"};
 
 
-        messageCollections = new LinkedHashMap<String, List<String>>();
+        messageCollections = new LinkedHashMap<>();
 
         for (String laptop : groupList) {
             if (laptop.equals("Segnalazioni")) {
@@ -63,7 +62,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     }
 
     private void loadChild(String[] laptopModels) {
-        childList = new ArrayList<String>();
+        childList = new ArrayList<>();
         for (String model : laptopModels)
             childList.add(model);
     }
