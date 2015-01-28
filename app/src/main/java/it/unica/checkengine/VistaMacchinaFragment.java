@@ -1,13 +1,16 @@
 package it.unica.checkengine;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +26,7 @@ public class VistaMacchinaFragment extends Fragment {
     public static final String ARG_SECTION_NUMBER = "section_number";
     public static final String ARG_GARAGE = "garage";
 
-    public VistaMacchinaFragment() {
-    }
+    public VistaMacchinaFragment() { }
 
     //richiama il file .xml in cui è definito il suo stile e il suo id
     @Override
@@ -58,45 +60,81 @@ public class VistaMacchinaFragment extends Fragment {
             ruota.setVisibility(View.INVISIBLE);
         }
 
-        Log.d("vistaMacchinaFragment","numMeccanico:" + garage.getNumMeccanico());
-
         //Verifico lo stato delle avarie - Inizio dei controlli
-        //i valori sono da valutare
-        if(auto.getLivelloOlio() < 2){
+        //nel caso ci siano problemi viene visualizzata l'icona che diventa cliccabile
+        if(auto.isCarburanteOrange() || auto.isCarburanteRed()){
+            iconFuel.setVisibility(View.VISIBLE);
+            Log.d("Vista macchina", "il carburante è rosso o arancione e il valore è :"+auto.getCarburante());
+            flagAvaria = true;
+            iconFuel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Metti benzina tanalla miserabile", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+        if(auto.isOlioRed()){
             iconMotore.setVisibility(View.VISIBLE);
             flagAvaria = true;
-        }
-        if(auto.getCarburante() < 5){
-            iconFuel.setVisibility(View.VISIBLE);
-            flagAvaria = true;
+            iconMotore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Sta finendo l'olio, OLIOOOO!", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         for(Avaria t : auto.getAvarie()){
             iconMotore.setVisibility(View.VISIBLE);
             flagAvaria = true;
+            iconMotore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Avaria! Avaria!", Toast.LENGTH_SHORT).show();
+                }
+            });
+            //se trova un'avaria illumina l'icona e esce subito per evitare che richiami piu di una volta l'onClick
+            break;
         }
 
         for(Tributo t : auto.getTributi()){
             if (t.isScaduto()) iconTributi.setVisibility(View.VISIBLE);
+            iconTributi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Paga le tasse!", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
         for(Manutenzione t : auto.getManutenzioni()){
             if (t.isScaduto(auto.getKm())){
                 if(t.getTipo().equals("Gomme")){
                     for( ImageView ruota : iconRuote ) {
                         ruota.setVisibility(View.VISIBLE);
-                        flagAvaria = true;
+                        ruota.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(getActivity().getApplicationContext(), "Ruota a terra!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 } else {
                     iconManutenzioni.setVisibility(View.VISIBLE);
-                    flagAvaria = true;
+                    iconManutenzioni.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Manutienimi!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
+                flagAvaria = true;
             }
         }
-        Log.d("vistaMacchinaFragment","Livello Olio " +auto.getLivelloOlio());
         if(flagAvaria) iconOk.setVisibility(View.INVISIBLE);
 
-
         return rootView;
+
     }
 
 }
