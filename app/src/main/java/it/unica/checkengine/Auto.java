@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class Auto implements Serializable{
 
+    private static final int OLIO_MIN = 3;
+    private static final int KM_MIN = 100;
+    private static final int CARBURANTE_RISERVA = 5;
     private double carburante ;/*possimamo farlo statico, direi che varia tra 0 e 47 litri*/
     private double livelloOlio ; /*la macchina ha sui 4 litri di olio */
     private int km ;
@@ -36,6 +39,14 @@ public class Auto implements Serializable{
         this.manutenzioni = new LinkedList<>();
         this .tributi = new LinkedList<>();
         this.avarie = new LinkedList<>();
+    }
+
+    public boolean isCarburanteOrange(){
+        return (carburante*consumoMedio < KM_MIN);
+    }
+
+    public boolean isCarburanteRed(){
+        return (carburante<CARBURANTE_RISERVA);
     }
 
     public void addManutenzione(Manutenzione m){
