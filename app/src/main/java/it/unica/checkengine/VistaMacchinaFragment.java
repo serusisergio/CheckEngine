@@ -1,13 +1,16 @@
 package it.unica.checkengine;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +26,7 @@ public class VistaMacchinaFragment extends Fragment {
     public static final String ARG_SECTION_NUMBER = "section_number";
     public static final String ARG_GARAGE = "garage";
 
-    public VistaMacchinaFragment() {
-    }
+    public VistaMacchinaFragment() { }
 
     //richiama il file .xml in cui è definito il suo stile e il suo id
     @Override
@@ -58,12 +60,18 @@ public class VistaMacchinaFragment extends Fragment {
             ruota.setVisibility(View.INVISIBLE);
         }
 
-        Log.d("vistaMacchinaFragment","numMeccanico:" + garage.getNumMeccanico());
-
         //Verifico lo stato delle avarie - Inizio dei controlli
         if(auto.isCarburanteOrange() || auto.isCarburanteRed()){
             iconMotore.setVisibility(View.VISIBLE);
             flagAvaria = true;
+            iconFuel.setOnClickListener(new AdapterView.OnItemClickListener(){
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(, "Click sull'icona Carburante!", Toast.LENGTH_LONG).show();
+                }
+            });
+
         }
         if(auto.isOlioRed()){
             iconFuel.setVisibility(View.VISIBLE);
@@ -90,11 +98,10 @@ public class VistaMacchinaFragment extends Fragment {
                 flagAvaria = true;
             }
         }
-        Log.d("vistaMacchinaFragment","Livello Olio " +auto.getLivelloOlio());
         if(flagAvaria) iconOk.setVisibility(View.INVISIBLE);
 
-
         return rootView;
+
     }
 
 }
