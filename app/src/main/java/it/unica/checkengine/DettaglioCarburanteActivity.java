@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -17,15 +18,21 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
     public static final String ARG_GARAGE = "garage";
     //provvisoio fino a che non impostiamo la scrittura sul DB
     public static final int SOGLIA_PREAVVISO = 100;
-    public int valoreSogliaImpostato;
     public static final int DIMENSIONE_SERBATOIO = 40;
-
+    public int valoreSogliaImpostato;
     private Garage garage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettaglio_carburante);
+
+        TextView testoCarburanteResiduo = (TextView) findViewById(R.id.text_carburante_residuo);
+        TextView testoRifornimentoPrevisto = (TextView) findViewById(R.id.text_rifornimento_previsto);
+        TextView testoKmRimanenti = (TextView) findViewById(R.id.text_km_rimamenti);
+        TextView testoSogliaPreavviso = (TextView) findViewById(R.id.text_preavviso);
+        TextView sogliaPreavviso = (EditText) findViewById(R.id.edittext_preavviso);
+        SeekBar seekbarSoglia = (SeekBar) findViewById(R.id.seekBar_preavviso);
 
         garage = (Garage) getIntent().getSerializableExtra(ARG_GARAGE);
         Auto auto = garage.getAuto();
@@ -55,11 +62,6 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
             progBarCarburante.getIndeterminateDrawable().setColorFilter(0x50E828,android.graphics.PorterDuff.Mode.MULTIPLY);
         }
 
-
-        TextView testoCarburanteResiduo = (TextView)findViewById(R.id.text_carburante_residuo);
-        TextView testoRifornimentoPrevisto = (TextView)findViewById(R.id.text_rifornimento_previsto);
-        TextView testoKmRimanenti = (TextView)findViewById(R.id.text_km_rimamenti);
-        TextView testoSogliaPreavviso = (TextView)findViewById(R.id.text_preavviso);
         testoCarburanteResiduo.setText("Residuo: " + auto.getCarburante() + " litri");
 
         if (giorniRimanenti == 1) {
