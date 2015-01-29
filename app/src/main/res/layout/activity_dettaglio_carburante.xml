@@ -8,73 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="it.unica.checkengine.DettaglioCarburanteActivity">
 
-    <TextView
-        android:id="@+id/text_residuo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:paddingBottom="20dp"
-        android:text="Residuo: 4.5 litri"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/text_prevrifornimento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/text_residuo"
-        android:paddingBottom="20dp"
-        android:text="Rifornimento previsto tra: 2 giorni"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/text_kmrimanenti"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/text_prevrifornimento"
-        android:layout_below="@+id/text_prevrifornimento"
-        android:paddingBottom="20dp"
-        android:text="Km rimanenti stimati: 76 Km"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/text_soglia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/text_kmrimanenti"
-        android:layout_below="@+id/text_kmrimanenti"
-        android:paddingBottom="40dp"
-        android:text="Soglia preavviso: "
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <EditText
-        android:id="@+id/km_field"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_kmrimanenti"
-        android:layout_toEndOf="@+id/text_soglia"
-        android:ems="10"
-        android:inputType="number"
-        android:text="100" />
-
-    <TextView
-        android:id="@+id/text_km"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_kmrimanenti"
-        android:layout_toEndOf="@+id/km_field"
-        android:paddingBottom="20dp"
-        android:text=" Km"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/text_soglia"
-        android:layout_below="@+id/text_soglia" />
-
     <Button
         android:id="@+id/buttonBack"
         style="?android:attr/buttonStyleSmall"
@@ -84,5 +17,80 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="59dp"
         android:text="Indietro" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Livello carburante"
+        android:id="@+id/text_livello_carburante"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/text_livello_carburante"
+        android:src="@drawable/semaforo_rosso"
+        android:paddingLeft="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Residuo: 4.5 litri"
+        android:id="@+id/text_carburante_residuo"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="47dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Rifornimento previsto tra: 2 giorni"
+        android:id="@+id/text_rifornimento_previsto"
+        android:layout_below="@+id/text_carburante_residuo"
+        android:layout_alignParentStart="true"
+        android:paddingTop="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Km rimanenti stimati: 76 Km"
+        android:id="@+id/text_km_rimamenti"
+        android:layout_below="@+id/text_rifornimento_previsto"
+        android:layout_alignParentStart="true"
+        android:paddingTop="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Soglia preavviso: "
+        android:id="@+id/text_preavviso"
+        android:layout_below="@+id/text_km_rimamenti"
+        android:layout_alignParentStart="true"
+        android:paddingTop="25dp" />
+
+    <EditText
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_alignBottom="@+id/text_preavviso"
+        android:layout_toEndOf="@+id/text_preavviso" />
+
+    <SeekBar
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar"
+        android:layout_below="@+id/text_preavviso"
+        android:layout_alignParentStart="true"
+        android:paddingTop="25dp" />
 
 </RelativeLayout>

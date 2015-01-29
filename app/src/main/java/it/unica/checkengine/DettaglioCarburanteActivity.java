@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 public class DettaglioCarburanteActivity extends ActionBarActivity {
@@ -20,8 +21,25 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         setContentView(R.layout.activity_dettaglio_carburante);
 
         garage = (Garage) getIntent().getSerializableExtra(ARG_GARAGE);
-        Log.d("DettaglioCarburante", garage.getAuto().getNome());
+        Auto auto = garage.getAuto();
+        Log.d("DettaglioCarburante", auto.getNome());
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        setTitle(auto.getModello() + " - " + auto.getNome());
+
+
+
+        TextView testoCarburanteResiduo = (TextView)findViewById(R.id.text_carburante_residuo);
+        TextView testoRifornimentoPrevisto = (TextView)findViewById(R.id.text_rifornimento_previsto);
+        TextView testoKmRimanenti = (TextView)findViewById(R.id.text_km_rimamenti);
+        TextView testoSogliaPreavviso = (TextView)findViewById(R.id.text_preavviso);
+        testoCarburanteResiduo.setText("Carburante residuo: " + auto.getCarburante() + "litri");
+        testoRifornimentoPrevisto.setText("Rifornimento previsto tra: " + auto.getCarburante() + "giorni");
+        testoKmRimanenti.setText("Rifornimento previsto tra: " + auto.getCarburante() + "Km");
+        testoSogliaPreavviso.setText("Soglia preavviso:          Km");
+
+
+
 
         Button indietro = (Button) findViewById(R.id.buttonBack);
         indietro.setOnClickListener(new View.OnClickListener() {

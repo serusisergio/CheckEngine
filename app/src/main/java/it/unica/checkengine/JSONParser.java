@@ -33,7 +33,8 @@ public class JSONParser {
 
             JSONObject jAuto = JSON.getJSONObject("auto");
             auto = new Auto(jAuto.getString("targa"),
-                    jAuto.getDouble("carburante"),
+                            jAuto.getString("modello"),
+                            jAuto.getDouble("carburante"),
                             jAuto.getDouble("olio"),
                             jAuto.getInt("km"),
                             jAuto.getString("nome"),

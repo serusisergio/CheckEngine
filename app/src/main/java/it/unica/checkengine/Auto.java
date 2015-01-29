@@ -22,9 +22,11 @@ public class Auto implements Serializable{
     private int kmGiornalieri;
     private double consumoMedio;
     private String targa;
+    private String modello;
 
-    public Auto(String targa, double carburante, double livelloOlio, int km, String nome, int kmGiornalieri, double consumoMedio) {
+    public Auto(String targa, String modello, double carburante, double livelloOlio, int km, String nome, int kmGiornalieri, double consumoMedio) {
         this.setTarga(targa);
+        this.setModello(modello);
         this.setCarburante(carburante);
         this.setLivelloOlio(livelloOlio);
         this.setKm(km);
@@ -137,5 +139,13 @@ public class Auto implements Serializable{
 
     public void setTarga(String targa) {
         this.targa = targa;
+    }
+
+    public String getModello() {
+        return modello;
+    }
+
+    public void setModello(String modello) {
+        this.modello = modello;
     }
 }
