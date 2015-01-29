@@ -14,8 +14,8 @@ import android.widget.TextView;
 public class DettaglioCarburanteActivity extends ActionBarActivity {
 
     public static final String ARG_GARAGE = "garage";
-    public static final int DIMENSIONE_SERBATOIO = 70;
-    public static final int KM_GIORNALIERI = 50;
+    public static final int DIMENSIONE_SERBATOIO = 40;
+
 
     private Garage garage;
 
@@ -31,10 +31,12 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
 
         setTitle(auto.getModello() + " - " + auto.getNome());
 
+        int giorniRimanenti = (int) (auto.getCarburante() / auto.getConsumoMedio() * 100) / auto.getKmGiornalieri();
+        int kmRimanenti = (int) (auto.getCarburante() / auto.getConsumoMedio() * 100);
 
         ImageView semaforo = (ImageView)findViewById(R.id.semaforo);
         ProgressBar progBarCarburante = (ProgressBar)findViewById(R.id.progressBar_carburante);
-        progBarCarburante.setProgress((int)(DIMENSIONE_SERBATOIO*auto.getCarburante())/100);
+        progBarCarburante.setProgress((int) (auto.getCarburante()) * 100 / DIMENSIONE_SERBATOIO);
         if(auto.isCarburanteRed()){
             semaforo.setImageDrawable(this.getResources().getDrawable(R.drawable.semaforo_rosso));
             progBarCarburante.getIndeterminateDrawable().setColorFilter(0xFF0000,android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -53,9 +55,14 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         TextView testoRifornimentoPrevisto = (TextView)findViewById(R.id.text_rifornimento_previsto);
         TextView testoKmRimanenti = (TextView)findViewById(R.id.text_km_rimamenti);
         TextView testoSogliaPreavviso = (TextView)findViewById(R.id.text_preavviso);
-        testoCarburanteResiduo.setText("Carburante residuo: " + auto.getCarburante() + " litri");
-        testoRifornimentoPrevisto.setText("Rifornimento previsto tra: " + auto.getCarburante() + " giorni");
-        testoKmRimanenti.setText("Rifornimento previsto tra: " + auto.getCarburante() + " Km");
+        testoCarburanteResiduo.setText("Residuo: " + auto.getCarburante() + " litri");
+
+        if (giorniRimanenti == 1) {
+            testoRifornimentoPrevisto.setText("Rifornimento previsto tra: 1 giorno");
+        } else {
+            testoRifornimentoPrevisto.setText("Rifornimento previsto tra: " + giorniRimanenti + " giorni");
+        }
+        testoKmRimanenti.setText("Rifornimento previsto tra: " + kmRimanenti + " Km");
         testoSogliaPreavviso.setText("Soglia preavviso: ");
 
 

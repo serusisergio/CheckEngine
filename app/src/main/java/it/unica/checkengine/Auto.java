@@ -46,7 +46,7 @@ public class Auto implements Serializable{
     }
 
     public boolean isCarburanteOrange(){
-        return (carburante*consumoMedio < KM_MIN);
+        return (carburante / consumoMedio * 100 < KM_MIN) && !isCarburanteRed();
     }
 
     public boolean isCarburanteRed(){

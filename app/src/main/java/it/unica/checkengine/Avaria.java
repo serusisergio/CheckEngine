@@ -37,7 +37,7 @@ public class Avaria implements Serializable{
     }
 
     public boolean isUrgenzaOrange(){
-        return urgenza==1;
+        return urgenza == 1 && !isUrgenzaRed();
     }
 
     public boolean isUrgenzaRed(){

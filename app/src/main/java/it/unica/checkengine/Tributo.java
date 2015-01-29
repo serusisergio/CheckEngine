@@ -89,6 +89,6 @@ public class Tributo implements Serializable{
         Date dataOggi = new Date();
         //2592000000l = 30 giorni in unix time
         Date dataAvviso = new Date(getUltimaRicorrenza().getTime() + getIntervalloPagameto()*86400000l - 2592000000l);
-        return dataOggi.getTime()>dataAvviso.getTime();
+        return dataOggi.getTime() > dataAvviso.getTime() && !isRed();
     }
 }

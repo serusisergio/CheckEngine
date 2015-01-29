@@ -74,7 +74,11 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
         for(Avaria a : auto.getAvarie()){
             segnalazioni.add(a.getTipo());
-            semaforiSegnalazioni.add("red");
+            if (a.isUrgenzaRed()) {
+                semaforiSegnalazioni.add("red");
+            } else {
+                semaforiSegnalazioni.add("orange");
+            }
         }
 
         //Popolo la lista di manutenzioni

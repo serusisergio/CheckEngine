@@ -96,7 +96,10 @@ public class VistaMacchinaFragment extends Fragment {
         }
 
         for(Tributo t : auto.getTributi()){
-            if (t.isRed()) iconTributi.setVisibility(View.VISIBLE);
+            if (t.isRed()) {
+                iconTributi.setVisibility(View.VISIBLE);
+                flagAvaria = true;
+            }
             iconTributi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -104,6 +107,7 @@ public class VistaMacchinaFragment extends Fragment {
                 }
             });
         }
+
         for(Manutenzione t : auto.getManutenzioni()){
             if (t.isRed(auto.getKm())){
                 if(t.getTipo().equals("Gomme")){
@@ -128,6 +132,7 @@ public class VistaMacchinaFragment extends Fragment {
                 flagAvaria = true;
             }
         }
+
         if(flagAvaria) iconOk.setVisibility(View.INVISIBLE);
 
         return rootView;

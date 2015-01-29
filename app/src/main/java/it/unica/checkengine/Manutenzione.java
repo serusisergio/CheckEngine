@@ -6,12 +6,11 @@ import java.io.Serializable;
  * Created by Stefano on 23/01/2015.
  */
 public class Manutenzione implements Serializable{
+    private static final int SOGLIA_AVVISO = 200;
     private String tipo;
     private String messaggio;
     private int kmUltimaRicorrenza;
     private int intervalloRicorrenza;
-
-    private static final int SOGLIA_AVVISO = 200;
 
     public Manutenzione(String tipo, String messaggio, int kmUltimaRicorrenza, int intervalloRicorrenza){
         setTipo(tipo);
@@ -67,7 +66,7 @@ public class Manutenzione implements Serializable{
     }
 
     public boolean isOrange(int km){
-        return km>(getKmUltimaRicorrenza()+getIntervalloRicorrenza()-SOGLIA_AVVISO);
+        return km > (getKmUltimaRicorrenza() + getIntervalloRicorrenza() - SOGLIA_AVVISO) && !isRed(km);
     }
 
 
