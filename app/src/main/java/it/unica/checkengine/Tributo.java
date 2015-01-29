@@ -75,7 +75,7 @@ public class Tributo implements Serializable{
         this.giorniAllScadenza = giorniAllScadenza;
     }
 
-    public boolean isScaduto(){
+    public boolean isRed(){
         Date dataOggi = new Date();
         Date dataScadenza = new Date(getUltimaRicorrenza().getTime() + getIntervalloPagameto()*86400000l);
         //return dataOggi.after(dataScadenza);
@@ -83,5 +83,12 @@ public class Tributo implements Serializable{
         Log.d("datascadenza", ""+dataScadenza.getTime());
         Log.d("intervallopagamento", ""+getIntervalloPagameto());
         return dataOggi.getTime()>dataScadenza.getTime();
+    }
+
+    public boolean isOrange(){
+        Date dataOggi = new Date();
+        //2592000000l = 30 giorni in unix time
+        Date dataAvviso = new Date(getUltimaRicorrenza().getTime() + getIntervalloPagameto()*86400000l - 2592000000l);
+        return dataOggi.getTime()>dataAvviso.getTime();
     }
 }

@@ -41,7 +41,7 @@ public class VistaListaFragment extends Fragment {
         Bundle bundle = getArguments();
         Garage garage = (Garage) bundle.getSerializable(ARG_GARAGE);
 
-        MyExpandableAdapter adapter = new MyExpandableAdapter(getActivity());
+        MyExpandableAdapter adapter = new MyExpandableAdapter(getActivity(), garage);
 
         expandableList.setAdapter(adapter);
 

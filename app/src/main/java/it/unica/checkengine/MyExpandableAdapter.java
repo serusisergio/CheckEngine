@@ -27,10 +27,11 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
     private Activity context;
     private Map<String, List<String>> messageCollections;
+    private Map<String, List<String>> semaforiCollections;
     private List<String> messaggi;
     ArrayList<String> childList;
 
-    public MyExpandableAdapter(Activity context){//}, List<String> messaggi, Map<String, List<String>> messageCollections) {
+    public MyExpandableAdapter(Activity context, Garage garage) {
         this.context = context;
 
         ArrayList<String> groupList = new ArrayList<>();
@@ -39,38 +40,104 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         groupList.add("Tributi");
 
 
-        // preparing messaggi collection(child)
+       /* // preparing messaggi collection(child)
         String[] segnalazioni = { "Livello Carburante" };
         String[] manutenzioni = { "Cambio Olio", "Tagliando", "Cambio Gomme" };
-        String[] tributi = { "Assicurazione", "Bollo"};
+        String[] tributi = { "Assicurazione", "Bollo"};*/
 
+        ArrayList<String> segnalazioni = new ArrayList<>();
+        ArrayList<String> semaforiSegnalazioni = new ArrayList<>();
+
+        ArrayList<String> manutenzioni = new ArrayList<>();
+        ArrayList<String> semaforiManutenzioni = new ArrayList<>();
+
+        ArrayList<String> tributi = new ArrayList<>();
+        ArrayList<String> semaforiTributi = new ArrayList<>();
+
+        Auto auto = garage.getAuto();
+
+        //Popolo la lista di segnalazioni
+
+        segnalazioni.add("Livello Carburante");
+        if(auto.isCarburanteOrange()){
+            semaforiSegnalazioni.add("orange");
+        } else if(auto.isCarburanteRed()){
+            semaforiSegnalazioni.add("red");
+        } else {
+            semaforiSegnalazioni.add("green");
+        }
+
+        segnalazioni.add("Livello Olio");
+        if(auto.isOlioRed()){
+            semaforiSegnalazioni.add("red");
+        } else {
+            semaforiSegnalazioni.add("green");
+        }
+
+        for(Avaria a : auto.getAvarie()){
+            segnalazioni.add(a.getTipo());
+            semaforiSegnalazioni.add("red");
+        }
+
+        //Popolo la lista di manutenzioni
+        for(Manutenzione m : auto.getManutenzioni()){
+            manutenzioni.add(m.getTipo());
+            if(m.isOrange(auto.getKm())){
+                semaforiManutenzioni.add("orange");
+            } else if(m.isRed(auto.getKm())){
+                semaforiManutenzioni.add("red");
+            } else {
+                semaforiManutenzioni.add("green");
+            }
+        }
+
+        //popolo la lista dei tributi
+        for(Tributo t : auto.getTributi()){
+            tributi.add(t.getTipo());
+            if(t.isOrange()){
+                semaforiTributi.add("orange");
+            } else if(t.isRed()){
+                semaforiTributi.add("red");
+            } else {
+                semaforiTributi.add("green");
+            }
+        }
 
         messageCollections = new LinkedHashMap<>();
+        semaforiCollections = new LinkedHashMap<>();
 
-        for (String laptop : groupList) {
-            if (laptop.equals("Segnalazioni")) {
-                loadChild(segnalazioni);
-            } else if (laptop.equals("Manutenzioni"))
-                loadChild(manutenzioni);
-            else if (laptop.equals("Tributi"))
-                loadChild(tributi);
+        ArrayList<String> items = new ArrayList<>();
+        ArrayList<String> semafori = new ArrayList<>();
 
-            messageCollections.put(laptop, childList);
+        for (String sezione : groupList) {
+            if (sezione.equals("Segnalazioni")) {
+                items = segnalazioni;
+                semafori = semaforiSegnalazioni;
+            } else if (sezione.equals("Manutenzioni")){
+                items = manutenzioni;
+                semafori = semaforiManutenzioni;
+            } else if (sezione.equals("Tributi")){
+                items = tributi;
+                semafori = semaforiTributi;
+            }
+
+            messageCollections.put(sezione, items);
+            semaforiCollections.put(sezione, semafori);
+            items = new ArrayList<>();
             this.messaggi = groupList;
         }
 
     }
 
-    private void loadChild(String[] laptopModels) {
-        childList = new ArrayList<>();
-        for (String model : laptopModels)
-            childList.add(model);
-    }
+
 
     public Object getChild(int groupPosition, int childPosition) {
         return messageCollections.get(messaggi.get(groupPosition)).get(childPosition);
     }
 
+    public String getSemaforo(int groupPosition, int childPosition) {
+        return semaforiCollections.get(messaggi.get(groupPosition)).get(childPosition);
+    }
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
@@ -78,7 +145,9 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
     public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        final String laptop = (String) getChild(groupPosition, childPosition);
+        final String riga = (String) getChild(groupPosition, childPosition);
+        final String semaforo = getSemaforo(groupPosition, childPosition);
+
         LayoutInflater inflater = context.getLayoutInflater();
 
         if (convertView == null) {
@@ -87,9 +156,21 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
         TextView item = (TextView) convertView.findViewById(R.id.nomeRiga);
 
-        ImageView delete = (ImageView) convertView.findViewById(R.id.semaforo);
-        delete.setImageDrawable(convertView.getResources().getDrawable(R.drawable.semaforo_rosso));
-        delete.setOnClickListener(new OnClickListener() {
+        ImageView ImageSemaforo = (ImageView) convertView.findViewById(R.id.semaforo);
+
+        switch(semaforo){
+            case "red":
+                ImageSemaforo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.semaforo_rosso));
+                break;
+            case "orange":
+            ImageSemaforo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.semaforo_arancio));
+                break;
+            case "green":
+                ImageSemaforo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.semaforo_verde));
+                break;
+        }
+
+        ImageSemaforo.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -115,7 +196,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
             }
         });
 
-        item.setText(laptop);
+        item.setText(riga);
         return convertView;
     }
 
