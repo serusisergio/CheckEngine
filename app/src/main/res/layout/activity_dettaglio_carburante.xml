@@ -30,7 +30,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
+        android:id="@+id/semaforo"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/text_livello_carburante"
         android:src="@drawable/semaforo_rosso"
@@ -40,9 +40,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Residuo: 4.5 litri"
+        android:text="Carburante residuo: 70.5 litri"
         android:id="@+id/text_carburante_residuo"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/semaforo"
         android:layout_alignParentStart="true"
         android:layout_marginTop="47dp" />
 
@@ -92,5 +92,16 @@
         android:layout_below="@+id/text_preavviso"
         android:layout_alignParentStart="true"
         android:paddingTop="25dp" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar_carburante"
+        android:layout_alignEnd="@+id/seekBar"
+        android:layout_toEndOf="@+id/editText"
+        android:max="100"
+        android:indeterminate="false"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_above="@+id/text_rifornimento_previsto" />
 
 </RelativeLayout>
