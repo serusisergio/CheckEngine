@@ -48,7 +48,8 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         //a seconda della quantità di carburante imposto il colore del semaforo e della progress bar
         ImageView semaforo = (ImageView)findViewById(R.id.semaforo);
         ProgressBar progBarCarburante = (ProgressBar)findViewById(R.id.progressBar_carburante);
-        progBarCarburante.setProgress((int)(DIMENSIONE_SERBATOIO*auto.getCarburante())/100);
+        progBarCarburante.setProgress((int) (auto.getCarburante()) * 100 / DIMENSIONE_SERBATOIO);
+
         if(auto.isCarburanteRed()){
             semaforo.setImageDrawable(this.getResources().getDrawable(R.drawable.semaforo_rosso));
             progBarCarburante.getIndeterminateDrawable().setColorFilter(0xFF0000,android.graphics.PorterDuff.Mode.MULTIPLY);
