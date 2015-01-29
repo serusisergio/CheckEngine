@@ -34,6 +34,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="it.unica.checkengine.GarageActivity" />
         </activity>
+        <activity
+            android:name=".DettaglioCarburante"
+            android:label="@string/title_activity_dettaglio_carburante"
+            android:parentActivityName=".MyCarActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="it.unica.checkengine.MyCarActivity" />
+        </activity>
     </application>
 
 </manifest>
