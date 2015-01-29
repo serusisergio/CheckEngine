@@ -8,6 +8,6 @@
     <string name="titolo_vista_macchina">Vista Macchina</string>
     <string name="titolo_vista_lista">Vista Lista</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_dettaglio_carburante">DettaglioCarburante</string>
+    <string name="title_activity_dettaglio_carburante">Dettaglio Carburante</string>
 
 </resources>

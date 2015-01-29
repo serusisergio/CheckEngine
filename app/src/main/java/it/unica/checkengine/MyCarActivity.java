@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,13 +22,6 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
     // URL to get JSON
     private static String url = "http://checkengine.matta.ga/json.php?targa=";
-    //
-    private String targa;
-    private ProgressDialog pDialog;
-    private String jsonS;
-    private JSONObject auto;
-    private Garage garage;
-
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -39,14 +31,17 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
-
-    private Fragment fragmentLista;
-
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    //
+    private String targa;
+    private ProgressDialog pDialog;
+    private String jsonS;
+    private JSONObject auto;
+    private Garage garage;
+    private Fragment fragmentLista;
 
     private void disegnaUI(){
 
@@ -134,6 +129,25 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
+/*
+    @Override
+    public void onPause(){
+        dismissDialog();
+    }*/
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (pDialog != null && pDialog.isShowing()) {
+            pDialog.dismiss();
+        }
+    }
+
+    public void switchFragment(int target, int sezioneDaAprire){
+        Log.d("SwitchFragment", "Voglio aprire la sezione " + sezioneDaAprire);
+        ((VistaListaFragment) fragmentLista).settaSezioni(sezioneDaAprire);
+        mViewPager.setCurrentItem(target);
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -194,12 +208,6 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
             }
             return null;
         }
-    }
-
-    public void switchFragment(int target, int sezioneDaAprire){
-        Log.d("SwitchFragment", "Voglio aprire la sezione " + sezioneDaAprire);
-        ((VistaListaFragment)fragmentLista).settaSezioni(sezioneDaAprire);
-        mViewPager.setCurrentItem(target);
     }
 
     private class GetJson extends AsyncTask<Void, Void, Void> {

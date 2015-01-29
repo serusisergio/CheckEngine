@@ -3,16 +3,12 @@ package it.unica.checkengine;
 /**
  * Created by sergio on 26/01/2015.
  */
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,29 +17,31 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
 
+    Garage garage;
     private Activity context;
     private Map<String, List<String>> messageCollections;
     private Map<String, List<String>> semaforiCollections;
     private List<String> messaggi;
-    ArrayList<String> childList;
 
     public MyExpandableAdapter(Activity context, Garage garage) {
         this.context = context;
+        this.garage = garage;
+
+        Log.d("creazioneLista", garage.getAuto().getNome());
 
         ArrayList<String> groupList = new ArrayList<>();
         groupList.add("Segnalazioni");
         groupList.add("Manutenzioni");
         groupList.add("Tributi");
-
-
-       /* // preparing messaggi collection(child)
-        String[] segnalazioni = { "Livello Carburante" };
-        String[] manutenzioni = { "Cambio Olio", "Tagliando", "Cambio Gomme" };
-        String[] tributi = { "Assicurazione", "Bollo"};*/
 
         ArrayList<String> segnalazioni = new ArrayList<>();
         ArrayList<String> semaforiSegnalazioni = new ArrayList<>();
@@ -148,6 +146,8 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         final String riga = (String) getChild(groupPosition, childPosition);
         final String semaforo = getSemaforo(groupPosition, childPosition);
 
+        Log.d("creazioneElementoLista", riga);
+
         LayoutInflater inflater = context.getLayoutInflater();
 
         if (convertView == null) {
@@ -170,7 +170,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
                 break;
         }
 
-        ImageSemaforo.setOnClickListener(new OnClickListener() {
+        /*ImageSemaforo.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -193,6 +193,17 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
                         });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+            }
+        });*/
+
+        convertView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (riga.equals("Livello Carburante")) {
+                    Intent intent = new Intent(context, DettaglioCarburanteActivity.class);
+                    intent.putExtra(DettaglioCarburanteActivity.ARG_GARAGE, garage);
+                    context.startActivity(intent);
+                }
             }
         });
 

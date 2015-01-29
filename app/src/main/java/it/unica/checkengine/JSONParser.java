@@ -32,7 +32,8 @@ public class JSONParser {
             garage = new Garage(jGarage.getString("nGommista"), jGarage.getString("nMeccanico"));
 
             JSONObject jAuto = JSON.getJSONObject("auto");
-            auto = new Auto(jAuto.getDouble("carburante"),
+            auto = new Auto(jAuto.getString("targa"),
+                    jAuto.getDouble("carburante"),
                             jAuto.getDouble("olio"),
                             jAuto.getInt("km"),
                             jAuto.getString("nome"),
