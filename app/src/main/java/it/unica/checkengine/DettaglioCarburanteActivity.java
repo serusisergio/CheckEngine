@@ -25,7 +25,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
 
     public static final String ARG_GARAGE = "garage";
     //provvisoio fino a che non impostiamo la scrittura sul DB
-    public static final int SOGLIA_AVVISO_MAX = 200;
+    public static final int SOGLIA_AVVISO_MAX = 350;
     public static final int DIMENSIONE_SERBATOIO = 40;
     public int valoreSogliaUtente;
     private Garage garage;
