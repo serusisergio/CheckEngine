@@ -52,11 +52,11 @@ public class JSONParser {
                         m.getInt("kmIntervallo"));
 
                 if(manutenzione.getKmUltimaRicorrenza()+manutenzione.getIntervalloRicorrenza()>= auto.getKm() + 200){
-                    manutenzione.setMessaggio(manutenzione.getTipo() + "è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia");
+                    manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia");
                 } else if(manutenzione.getKmUltimaRicorrenza()+manutenzione.getIntervalloRicorrenza()>= auto.getKm()){
-                    manutenzione.setMessaggio(manutenzione.getTipo() + "è da eseguire al più presto possibile. Prendi appuntamento col tuo professionista di fiducia");
+                    manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire al più presto possibile. Prendi appuntamento col tuo professionista di fiducia");
                 } else {
-                    manutenzione.setMessaggio(manutenzione.getTipo() + "è da eseguire tra " + (manutenzione.getIntervalloRicorrenza() - (auto.getKm()-manutenzione.getKmUltimaRicorrenza()))
+                    manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra " + (manutenzione.getIntervalloRicorrenza() - (auto.getKm()-manutenzione.getKmUltimaRicorrenza()))
                                             + " km");
                 }
 
