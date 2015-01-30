@@ -185,7 +185,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
 
             // Showing progress dialog
             pDialog = new ProgressDialog(DettaglioCarburanteActivity.this);
-            pDialog.setMessage("Attendi...1");
+            pDialog.setMessage("Attendi...");
             pDialog.setCancelable(false);
             pDialog.show();
 
