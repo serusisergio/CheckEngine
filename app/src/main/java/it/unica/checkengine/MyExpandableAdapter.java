@@ -32,6 +32,9 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     private Map<String, List<String>> semaforiCollections;
     private List<String> messaggi;
 
+    ArrayList<String> manutenzioni = new ArrayList<>();
+    ArrayList<String> semaforiManutenzioni = new ArrayList<>();
+
     public MyExpandableAdapter(Activity context, Garage garage) {
         this.context = context;
         this.garage = garage;
@@ -46,8 +49,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         ArrayList<String> segnalazioni = new ArrayList<>();
         ArrayList<String> semaforiSegnalazioni = new ArrayList<>();
 
-        ArrayList<String> manutenzioni = new ArrayList<>();
-        ArrayList<String> semaforiManutenzioni = new ArrayList<>();
+
 
         ArrayList<String> tributi = new ArrayList<>();
         ArrayList<String> semaforiTributi = new ArrayList<>();
@@ -214,7 +216,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
                     intent.putExtra("nomeManutenzione", riga);
                     intent.putExtra("coloreSemaforo",semaforo);
                     context.startActivity(intent);
-                    Log.d("nome riga premuta", " " +riga);
+
                 }
 
             }

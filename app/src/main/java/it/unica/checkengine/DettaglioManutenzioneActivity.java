@@ -1,9 +1,13 @@
 package it.unica.checkengine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class DettaglioManutenzioneActivity extends ActionBarActivity {
@@ -46,6 +50,25 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
 
         TextView messaggio = (TextView) findViewById(R.id.text_messaggio);
         messaggio.setText(manutenzione.getMessaggio());
+
+
+        Button indietro = (Button) findViewById(R.id.button_indietro);
+        indietro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyCarActivity.class);
+                intent.putExtra(GarageActivity.EXTRA_MESSAGE, garage.getAuto().getTarga());
+                startActivity(intent);
+            }
+        });
+
+        Button meccanico = (Button) findViewById(R.id.button_meccanico);
+        meccanico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Sto chiamando il meccanico", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
