@@ -48,7 +48,7 @@ public class ServiceHandler {
         try {
             // http client
             DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpEntity httpEntity = null;
+            HttpEntity httpEntity;
             HttpResponse httpResponse = null;
 
             // Checking http request method type
@@ -77,8 +77,6 @@ public class ServiceHandler {
             response = EntityUtils.toString(httpEntity);
 
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();

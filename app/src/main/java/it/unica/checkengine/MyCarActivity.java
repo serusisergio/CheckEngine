@@ -3,7 +3,6 @@ package it.unica.checkengine;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,9 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,13 +22,6 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
     // URL to get JSON
     private static String url = "http://checkengine.matta.ga/json.php?targa=";
-    //
-    private String targa;
-    private ProgressDialog pDialog;
-    private String jsonS;
-    private JSONObject auto;
-    private Garage garage;
-
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -42,19 +31,19 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
-
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    //
+    private String targa;
+    private ProgressDialog pDialog;
+    private String jsonS;
+    private JSONObject auto;
+    private Garage garage;
+    private Fragment fragmentLista;
 
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_car);
+    private void disegnaUI(){
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -90,10 +79,17 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
                             .setTabListener(this));
         }
 
+    }
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_car);
         targa = getIntent().getStringExtra(GarageActivity.EXTRA_MESSAGE);
         Log.d("mycar","targa: " + targa);
-
-        new GetJson().execute();
+        new GetJson(this).execute();
     }
 
 
@@ -133,6 +129,25 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
+/*
+    @Override
+    public void onPause(){
+        dismissDialog();
+    }*/
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (pDialog != null && pDialog.isShowing()) {
+            pDialog.dismiss();
+        }
+    }
+
+    public void switchFragment(int target, int sezioneDaAprire){
+        Log.d("SwitchFragment", "Voglio aprire la sezione " + sezioneDaAprire);
+        ((VistaListaFragment) fragmentLista).settaSezioni(sezioneDaAprire);
+        mViewPager.setCurrentItem(target);
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -151,9 +166,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
             //Permette di creare, a seconda della pagina che stiamo utilizzando, una nuova istanza della classe necessaria da visualizzare
             Bundle args = new Bundle();
-            while(garage==null){
-                //SystemClock.sleep(400);
-            }
+
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
@@ -162,16 +175,16 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
                 case 0:
                     Fragment fragment = new VistaMacchinaFragment();
                     args.putInt(VistaMacchinaFragment.ARG_SECTION_NUMBER, position + 1);
-                    fragment.setArguments(args);
                     args.putSerializable(VistaMacchinaFragment.ARG_GARAGE, garage);
+                    fragment.setArguments(args);
                     return fragment;
 
                 case 1:
-                    Fragment fragment2 = new VistaListaFragment();
+                    fragmentLista = new VistaListaFragment();
                     args.putInt(VistaListaFragment.ARG_SECTION_NUMBER, position + 2);
-                    fragment2.setArguments(args);
-                    //args.putSerializable(VistaListaFragment.ARG_GARAGE, garage);
-                    return fragment2;
+                    args.putSerializable(VistaListaFragment.ARG_GARAGE, garage);
+                    fragmentLista.setArguments(args);
+                    return fragmentLista;
 
                 default:
                     return null;
@@ -199,6 +212,12 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
     private class GetJson extends AsyncTask<Void, Void, Void> {
 
+        MyCarActivity parent;
+
+        public GetJson(MyCarActivity parent){
+            this.parent = parent;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -218,6 +237,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url+targa, ServiceHandler.GET);
 
+            Log.d("doInbackground", targa);
             Log.d("Response: ", "> " + jsonStr);
 
             if (jsonStr != null) {
@@ -254,9 +274,13 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
             super.onPostExecute(result);
 
             try {
+                // Dismiss the progress dialog
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
                 String nome = auto.getString("nome");
                 String modello = auto.getString("modello");
                 setTitle(modello + " - " + nome);
+                parent.disegnaUI();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -36,8 +36,12 @@ public class Avaria implements Serializable{
         this.messaggio = messaggio;
     }
 
-    public int getUrgenza() {
-        return urgenza;
+    public boolean isUrgenzaOrange(){
+        return urgenza == 1 && !isUrgenzaRed();
+    }
+
+    public boolean isUrgenzaRed(){
+        return urgenza==0;
     }
 
     public void setUrgenza(int urgenza) {

@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class Auto implements Serializable{
 
+    private static final int OLIO_MIN = 3;
+    private static final int KM_MIN = 100;
+    private static final int CARBURANTE_RISERVA = 5;
     private double carburante ;/*possimamo farlo statico, direi che varia tra 0 e 47 litri*/
     private double livelloOlio ; /*la macchina ha sui 4 litri di olio */
     private int km ;
@@ -18,8 +21,12 @@ public class Auto implements Serializable{
     private List<Avaria> avarie;
     private int kmGiornalieri;
     private double consumoMedio;
+    private String targa;
+    private String modello;
 
-    public Auto(double carburante, double livelloOlio, int km, String nome, int kmGiornalieri, double consumoMedio){
+    public Auto(String targa, String modello, double carburante, double livelloOlio, int km, String nome, int kmGiornalieri, double consumoMedio) {
+        this.setTarga(targa);
+        this.setModello(modello);
         this.setCarburante(carburante);
         this.setLivelloOlio(livelloOlio);
         this.setKm(km);
@@ -36,6 +43,18 @@ public class Auto implements Serializable{
         this.manutenzioni = new LinkedList<>();
         this .tributi = new LinkedList<>();
         this.avarie = new LinkedList<>();
+    }
+
+    public boolean isCarburanteOrange(){
+        return (carburante / consumoMedio * 100 < KM_MIN) && !isCarburanteRed();
+    }
+
+    public boolean isCarburanteRed(){
+        return (carburante<CARBURANTE_RISERVA);
+    }
+
+    public boolean isOlioRed(){
+        return (livelloOlio<OLIO_MIN);
     }
 
     public void addManutenzione(Manutenzione m){
@@ -55,9 +74,9 @@ public class Auto implements Serializable{
     }
 
     public void setCarburante(double carburante) {
-        if(carburante>0&carburante<47 ) {
+
             this.carburante = carburante;
-        }
+
     }
 
     public double getLivelloOlio() {
@@ -65,9 +84,9 @@ public class Auto implements Serializable{
     }
 
     public void setLivelloOlio(double livelloOlio) {
-        if(livelloOlio>0&livelloOlio<4) {
+
             this.livelloOlio = livelloOlio;
-        }
+
     }
 
     public int getKm() {
@@ -112,5 +131,21 @@ public class Auto implements Serializable{
 
     public void setConsumoMedio(double consumoMedio) {
         this.consumoMedio = consumoMedio;
+    }
+
+    public String getTarga() {
+        return targa;
+    }
+
+    public void setTarga(String targa) {
+        this.targa = targa;
+    }
+
+    public String getModello() {
+        return modello;
+    }
+
+    public void setModello(String modello) {
+        this.modello = modello;
     }
 }

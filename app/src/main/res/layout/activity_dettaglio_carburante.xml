@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="it.unica.checkengine.DettaglioCarburanteActivity">
+
+    <Button
+        android:id="@+id/buttonBack"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="59dp"
+        android:text="Indietro" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Livello carburante"
+        android:id="@+id/text_livello_carburante"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/semaforo"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/text_livello_carburante"
+        android:src="@drawable/semaforo_rosso"
+        android:paddingLeft="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Residuo: 70.5 litri"
+        android:id="@+id/text_carburante_residuo"
+        android:layout_below="@+id/semaforo"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="47dp"
+        android:layout_toStartOf="@+id/semaforo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Rifornimento previsto tra: 2 giorni"
+        android:id="@+id/text_rifornimento_previsto"
+        android:layout_below="@+id/text_carburante_residuo"
+        android:layout_alignParentStart="true"
+        android:paddingTop="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Km rimanenti stimati: 76 Km"
+        android:id="@+id/text_km_rimamenti"
+        android:layout_below="@+id/text_rifornimento_previsto"
+        android:layout_alignParentStart="true"
+        android:paddingTop="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Soglia preavviso: "
+        android:id="@+id/text_preavviso"
+        android:layout_below="@+id/text_km_rimamenti"
+        android:layout_alignParentStart="true"
+        android:paddingTop="25dp" />
+
+    <EditText
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/edittext_preavviso"
+        android:text="100"
+        android:layout_above="@+id/seekBar_preavviso"
+        android:layout_toEndOf="@+id/text_preavviso" />
+
+    <SeekBar
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar_preavviso"
+        android:layout_below="@+id/text_preavviso"
+        android:layout_alignParentStart="true"
+        android:paddingTop="25dp"
+        android:indeterminate="false" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar_carburante"
+        android:layout_alignEnd="@+id/seekBar_preavviso"
+        android:layout_toEndOf="@+id/text_carburante_residuo"
+        android:max="100"
+        android:indeterminate="false"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_above="@+id/text_rifornimento_previsto"
+        android:layout_alignTop="@+id/text_carburante_residuo"/>
+
+</RelativeLayout>

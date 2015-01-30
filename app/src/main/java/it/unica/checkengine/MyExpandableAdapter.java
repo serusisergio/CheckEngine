@@ -3,126 +3,253 @@ package it.unica.checkengine;
 /**
  * Created by sergio on 26/01/2015.
  */
-import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckedTextView;
-import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
-    private Activity activity;
-    private ArrayList<Object> childtems;
-    private ArrayList<String> parentItems, child;
-    private Context context;
-    private final LayoutInflater inf;
 
-    public MyExpandableAdapter(Activity context, ArrayList<String> parents, ArrayList<Object> children) {
-        this.parentItems = parents;
-        this.childtems = children;
+    Garage garage;
+    private Activity context;
+    private Map<String, List<String>> messageCollections;
+    private Map<String, List<String>> semaforiCollections;
+    private List<String> messaggi;
+
+    public MyExpandableAdapter(Activity context, Garage garage) {
         this.context = context;
-        inf = LayoutInflater.from(context);
-    }
+        this.garage = garage;
 
-    @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        Log.d("creazioneLista", garage.getAuto().getNome());
 
-        child = (ArrayList<String>) childtems.get(groupPosition);
+        ArrayList<String> groupList = new ArrayList<>();
+        groupList.add("Segnalazioni");
+        groupList.add("Manutenzioni");
+        groupList.add("Tributi");
 
-        LayoutInflater infalInflater = (LayoutInflater) this.context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ArrayList<String> segnalazioni = new ArrayList<>();
+        ArrayList<String> semaforiSegnalazioni = new ArrayList<>();
 
-        TextView textView = null;
+        ArrayList<String> manutenzioni = new ArrayList<>();
+        ArrayList<String> semaforiManutenzioni = new ArrayList<>();
 
-        if (convertView == null) {
-          convertView = inf.inflate(R.layout.group, null);
+        ArrayList<String> tributi = new ArrayList<>();
+        ArrayList<String> semaforiTributi = new ArrayList<>();
+
+        Auto auto = garage.getAuto();
+
+        //Popolo la lista di segnalazioni
+
+        segnalazioni.add("Livello Carburante");
+        if(auto.isCarburanteOrange()){
+            semaforiSegnalazioni.add("orange");
+        } else if(auto.isCarburanteRed()){
+            semaforiSegnalazioni.add("red");
+        } else {
+            semaforiSegnalazioni.add("green");
         }
 
-        textView = (TextView) convertView.findViewById(R.id.textView1);
-        textView.setText(child.get(childPosition));
+        segnalazioni.add("Livello Olio");
+        if(auto.isOlioRed()){
+            semaforiSegnalazioni.add("red");
+        } else {
+            semaforiSegnalazioni.add("green");
+        }
+
+        for(Avaria a : auto.getAvarie()){
+            segnalazioni.add(a.getTipo());
+            if (a.isUrgenzaRed()) {
+                semaforiSegnalazioni.add("red");
+            } else {
+                semaforiSegnalazioni.add("orange");
+            }
+        }
+
+        //Popolo la lista di manutenzioni
+        for(Manutenzione m : auto.getManutenzioni()){
+            manutenzioni.add(m.getTipo());
+            if(m.isOrange(auto.getKm())){
+                semaforiManutenzioni.add("orange");
+            } else if(m.isRed(auto.getKm())){
+                semaforiManutenzioni.add("red");
+            } else {
+                semaforiManutenzioni.add("green");
+            }
+        }
+
+        //popolo la lista dei tributi
+        for(Tributo t : auto.getTributi()){
+            tributi.add(t.getTipo());
+            if(t.isOrange()){
+                semaforiTributi.add("orange");
+            } else if(t.isRed()){
+                semaforiTributi.add("red");
+            } else {
+                semaforiTributi.add("green");
+            }
+        }
+
+        messageCollections = new LinkedHashMap<>();
+        semaforiCollections = new LinkedHashMap<>();
+
+        ArrayList<String> items = new ArrayList<>();
+        ArrayList<String> semafori = new ArrayList<>();
+
+        for (String sezione : groupList) {
+            if (sezione.equals("Segnalazioni")) {
+                items = segnalazioni;
+                semafori = semaforiSegnalazioni;
+            } else if (sezione.equals("Manutenzioni")){
+                items = manutenzioni;
+                semafori = semaforiManutenzioni;
+            } else if (sezione.equals("Tributi")){
+                items = tributi;
+                semafori = semaforiTributi;
+            }
+
+            messageCollections.put(sezione, items);
+            semaforiCollections.put(sezione, semafori);
+            items = new ArrayList<>();
+            this.messaggi = groupList;
+        }
+
+    }
+
+
+
+    public Object getChild(int groupPosition, int childPosition) {
+        return messageCollections.get(messaggi.get(groupPosition)).get(childPosition);
+    }
+
+    public String getSemaforo(int groupPosition, int childPosition) {
+        return semaforiCollections.get(messaggi.get(groupPosition)).get(childPosition);
+    }
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
+    }
+
+
+    public View getChildView(final int groupPosition, final int childPosition,
+                             boolean isLastChild, View convertView, ViewGroup parent) {
+        final String riga = (String) getChild(groupPosition, childPosition);
+        final String semaforo = getSemaforo(groupPosition, childPosition);
+
+        Log.d("creazioneElementoLista", riga);
+
+        LayoutInflater inflater = context.getLayoutInflater();
+
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.row, null);
+        }
+
+        TextView item = (TextView) convertView.findViewById(R.id.nomeRiga);
+
+        ImageView ImageSemaforo = (ImageView) convertView.findViewById(R.id.semaforo);
+
+        switch(semaforo){
+            case "red":
+                ImageSemaforo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.semaforo_rosso));
+                break;
+            case "orange":
+            ImageSemaforo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.semaforo_arancio));
+                break;
+            case "green":
+                ImageSemaforo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.semaforo_verde));
+                break;
+        }
+
+        /*ImageSemaforo.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Do you want to remove?");
+                builder.setCancelable(false);
+                builder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                List<String> child =
+                                        messageCollections.get(messaggi.get(groupPosition));
+                                child.remove(childPosition);
+                                notifyDataSetChanged();
+                            }
+                        });
+                builder.setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });*/
 
         convertView.setOnClickListener(new OnClickListener() {
-
             @Override
-            public void onClick(View view) {
-                Toast.makeText(activity, child.get(childPosition),
-                        Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                if (riga.equals("Livello Carburante")) {
+                    Intent intent = new Intent(context, DettaglioCarburanteActivity.class);
+                    intent.putExtra(DettaglioCarburanteActivity.ARG_GARAGE, garage);
+                    context.startActivity(intent);
+                }
             }
         });
 
+        item.setText(riga);
         return convertView;
     }
 
-    @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-
-        if (convertView == null) {
-            convertView = inf.inflate(R.layout.row, null);
-        }
-
-        ((CheckedTextView) convertView).setText(parentItems.get(groupPosition));
-        ((CheckedTextView) convertView).setChecked(isExpanded);
-
-        ExpandableListView eLV = (ExpandableListView) parent;
-        super.onGroupExpanded(groupPosition);
-
-        return convertView;
-    }
-
-    @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        return null;
-    }
-
-    @Override
-    public long getChildId(int groupPosition, int childPosition) {
-        return 0;
-    }
-
-    @Override
     public int getChildrenCount(int groupPosition) {
-        return ((ArrayList<String>) childtems.get(groupPosition)).size();
+        return messageCollections.get(messaggi.get(groupPosition)).size();
     }
 
-    @Override
     public Object getGroup(int groupPosition) {
-        return null;
+        return messaggi.get(groupPosition);
     }
 
-    @Override
     public int getGroupCount() {
-        return parentItems.size();
+        return messaggi.size();
     }
 
-    @Override
-    public void onGroupCollapsed(int groupPosition) {
-        super.onGroupCollapsed(groupPosition);
-    }
-
-    @Override
-    public void onGroupExpanded(int groupPosition) {
-        super.onGroupExpanded(groupPosition);
-    }
-
-    @Override
     public long getGroupId(int groupPosition) {
-        return 0;
+        return groupPosition;
     }
 
-    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded,
+                             View convertView, ViewGroup parent) {
+        String laptopName = (String) getGroup(groupPosition);
+        if (convertView == null) {
+            LayoutInflater infalInflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = infalInflater.inflate(R.layout.group,
+                    null);
+        }
+        TextView item = (TextView) convertView.findViewById(R.id.nomeGruppo);
+        item.setTypeface(null, Typeface.BOLD);
+        item.setText(laptopName);
+        return convertView;
+    }
+
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
 
-    @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }

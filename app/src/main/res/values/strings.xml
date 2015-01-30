@@ -9,5 +9,6 @@
     <string name="titolo_vista_lista">Vista Lista</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_inserisci_auto">InserisciAuto</string>
+    <string name="title_activity_dettaglio_carburante">Caricamento...</string>
 
 </resources>

@@ -79,7 +79,7 @@ public class GarageActivity extends ActionBarActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            listaAuto =  new ArrayList<HashMap<String, String>>();
+            listaAuto =  new ArrayList<>();
 
             // Showing progress dialog
             pDialog = new ProgressDialog(GarageActivity.this);
@@ -114,7 +114,7 @@ public class GarageActivity extends ActionBarActivity {
                     String targaAuto = c.getString("targa");
 
                     // tmp hashmap for single contact
-                    HashMap<String, String> mappaAuto = new HashMap<String, String>();
+                    HashMap<String, String> mappaAuto = new HashMap<>();
 
                     // adding each child node to HashMap key => value
                     mappaAuto.put("nome", nomeAuto);
@@ -123,7 +123,6 @@ public class GarageActivity extends ActionBarActivity {
 
                     // adding contact to contact list
                     listaAuto.add(mappaAuto);
-                    Log.d("bcktask", "iterazione " + i);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
