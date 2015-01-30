@@ -42,6 +42,11 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettaglio_carburante);
 
+        // Showing progress dialog
+        pDialog = new ProgressDialog(DettaglioCarburanteActivity.this);
+        pDialog.setMessage("Attendi...");
+        pDialog.setCancelable(false);
+        pDialog.show();
 
         TextView testoCarburanteResiduo = (TextView) findViewById(R.id.text_carburante_residuo);
         TextView testoRifornimentoPrevisto = (TextView) findViewById(R.id.text_rifornimento_previsto);
@@ -100,6 +105,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         valoreSogliaUtente = Integer.parseInt(textSogliaPreavviso.getText().toString());
         seekbarSoglia.setProgress(valoreSogliaUtente);
 
+        // Recuperiamo dal server il valore reale
         new recuperaSogliaThread(this).execute();
 
         seekbarSoglia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -247,13 +253,6 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-            // Showing progress dialog
-            pDialog = new ProgressDialog(DettaglioCarburanteActivity.this);
-            pDialog.setMessage("Attendi...");
-            pDialog.setCancelable(false);
-            pDialog.show();
-
         }
 
         @Override
