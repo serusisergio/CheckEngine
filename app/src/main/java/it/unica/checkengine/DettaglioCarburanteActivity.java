@@ -1,19 +1,16 @@
 package it.unica.checkengine;
 
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -42,11 +39,6 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettaglio_carburante);
 
-        // Showing progress dialog
-        pDialog = new ProgressDialog(DettaglioCarburanteActivity.this);
-        pDialog.setMessage("Attendi...");
-        pDialog.setCancelable(false);
-        pDialog.show();
 
         TextView testoCarburanteResiduo = (TextView) findViewById(R.id.text_carburante_residuo);
         TextView testoRifornimentoPrevisto = (TextView) findViewById(R.id.text_rifornimento_previsto);
@@ -64,8 +56,10 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         //imposto il titolo della actionbar come da prototipo
         setTitle(auto.getModello() + " - " + auto.getNome());
 
-        int giorniRimanenti = (int) (auto.getCarburante() / auto.getConsumoMedio() * 100) / auto.getKmGiornalieri();
-        int kmRimanenti = (int) (auto.getCarburante() / auto.getConsumoMedio() * 100);
+        int giorniRimanenti = auto.getAutonomiaGiorni();
+        int kmRimanenti = auto.getAutonomiaKm();
+
+        valoreSogliaUtente = auto.getSogliaAvvisoCarburante();
 
         //a seconda della quantità di carburante imposto il colore del semaforo e della progress bar
         ImageView semaforo = (ImageView)findViewById(R.id.semaforo);
@@ -105,8 +99,6 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         valoreSogliaUtente = Integer.parseInt(textSogliaPreavviso.getText().toString());
         seekbarSoglia.setProgress(valoreSogliaUtente);
 
-        // Recuperiamo dal server il valore reale
-        new recuperaSogliaThread(this).execute();
 
         seekbarSoglia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -193,7 +185,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
 
             // Showing progress dialog
             pDialog = new ProgressDialog(DettaglioCarburanteActivity.this);
-            pDialog.setMessage("Attendi...");
+            pDialog.setMessage("Attendi...1");
             pDialog.setCancelable(false);
             pDialog.show();
 
@@ -227,49 +219,5 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
             parent.sogliaAggiornata();
         }
     }
-
-    private class recuperaSogliaThread extends AsyncTask<Void, Void, Void>{
-
-        DettaglioCarburanteActivity parent;
-
-        public recuperaSogliaThread(DettaglioCarburanteActivity parent){
-            this.parent = parent;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0) {
-
-            try {
-                // Creating service handler class instance
-                ServiceHandler sh = new ServiceHandler();
-
-                // Making a request to url and getting response
-                url = "http://checkengine.matta.ga/soglia.php?action=recupera&targa="+garage.getAuto().getTarga();
-
-                String valll = sh.makeServiceCall(url, ServiceHandler.GET).toString();
-                Log.d("dettaglioCarburante val recuperato", valll);
-                valoreSogliaUtente = Integer.parseInt(valll);
-                seekbarSoglia.setProgress(valoreSogliaUtente);
-                Log.d("dettaglioCarburante val s ut", url);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            if (pDialog.isShowing())
-                pDialog.dismiss();
-        }
-    }
-
-
 
 }

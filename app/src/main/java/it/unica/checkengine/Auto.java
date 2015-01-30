@@ -10,7 +10,6 @@ import java.util.List;
 public class Auto implements Serializable{
 
     private static final int OLIO_MIN = 3;
-    private static final int KM_MIN = 100;
     private static final int CARBURANTE_RISERVA = 5;
     private double carburante ;/*possimamo farlo statico, direi che varia tra 0 e 47 litri*/
     private double livelloOlio ; /*la macchina ha sui 4 litri di olio */
@@ -23,8 +22,10 @@ public class Auto implements Serializable{
     private double consumoMedio;
     private String targa;
     private String modello;
+    private int sogliaAvvisoCarburante;
 
-    public Auto(String targa, String modello, double carburante, double livelloOlio, int km, String nome, int kmGiornalieri, double consumoMedio) {
+    public Auto(String targa, String modello, double carburante, double livelloOlio,
+                int km, String nome, int kmGiornalieri, double consumoMedio, int sogliaAvvisoCarburante) {
         this.setTarga(targa);
         this.setModello(modello);
         this.setCarburante(carburante);
@@ -33,6 +34,7 @@ public class Auto implements Serializable{
         this.setNome(nome);
         this.setKmGiornalieri(kmGiornalieri);
         this.setConsumoMedio(consumoMedio);
+        this.setSogliaAvvisoCarburante(sogliaAvvisoCarburante);
 
         this.manutenzioni = new LinkedList<>();
         this.tributi = new LinkedList<>();
@@ -46,7 +48,7 @@ public class Auto implements Serializable{
     }
 
     public boolean isCarburanteOrange(){
-        return (carburante / consumoMedio * 100 < KM_MIN) && !isCarburanteRed();
+        return (carburante / consumoMedio * 100 < sogliaAvvisoCarburante) && !isCarburanteRed();
     }
 
     public boolean isCarburanteRed(){
@@ -148,4 +150,21 @@ public class Auto implements Serializable{
     public void setModello(String modello) {
         this.modello = modello;
     }
+
+    public int getSogliaAvvisoCarburante() {
+        return sogliaAvvisoCarburante;
+    }
+
+    public void setSogliaAvvisoCarburante(int sogliaAvvisoCarburante) {
+        this.sogliaAvvisoCarburante = sogliaAvvisoCarburante;
+    }
+
+    public int getAutonomiaGiorni() {
+        return (int) (getCarburante() / getConsumoMedio() * 100) / getKmGiornalieri();
+    }
+
+    public int getAutonomiaKm() {
+        return (int) (getCarburante() / getConsumoMedio() * 100);
+    }
+
 }

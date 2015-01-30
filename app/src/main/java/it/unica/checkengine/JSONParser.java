@@ -39,7 +39,8 @@ public class JSONParser {
                             jAuto.getInt("km"),
                             jAuto.getString("nome"),
                             jAuto.getInt("kmGiornalieri"),
-                            jAuto.getDouble("consumoMedio"));
+                    jAuto.getDouble("consumoMedio"),
+                    jAuto.getInt("sogliaAvvisoCarburante"));
 
             JSONArray jManutenzioni = jAuto.getJSONArray("manutenzioni");
             JSONArray jAvarie = jAuto.getJSONArray("avarie");
