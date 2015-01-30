@@ -31,13 +31,16 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     private Map<String, List<String>> messageCollections;
     private Map<String, List<String>> semaforiCollections;
     private List<String> messaggi;
+    private List<Manutenzione> listaManutenzioni;
 
-    ArrayList<String> manutenzioni = new ArrayList<>();
-    ArrayList<String> semaforiManutenzioni = new ArrayList<>();
+
 
     public MyExpandableAdapter(Activity context, Garage garage) {
         this.context = context;
         this.garage = garage;
+
+
+
 
         Log.d("creazioneLista", garage.getAuto().getNome());
 
@@ -49,12 +52,15 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         ArrayList<String> segnalazioni = new ArrayList<>();
         ArrayList<String> semaforiSegnalazioni = new ArrayList<>();
 
-
+        ArrayList<String> manutenzioni = new ArrayList<>();
+        ArrayList<String> semaforiManutenzioni = new ArrayList<>();
 
         ArrayList<String> tributi = new ArrayList<>();
         ArrayList<String> semaforiTributi = new ArrayList<>();
 
         Auto auto = garage.getAuto();
+        listaManutenzioni = auto.getManutenzioni();
+
 
         //Popolo la lista di segnalazioni
 
@@ -213,8 +219,13 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
                 }else if(gruppo.equals("Manutenzioni")){
                     Intent intent = new Intent(context, DettaglioManutenzioneActivity.class);
                     intent.putExtra(DettaglioManutenzioneActivity.ARG_GARAGE, garage);
-                    intent.putExtra("nomeManutenzione", riga);
                     intent.putExtra("coloreSemaforo",semaforo);
+                    for(Manutenzione man : listaManutenzioni){
+                        if (riga.equals(man.getTipo())){
+                            intent.putExtra("dettagliManutenzione",man);
+                            break;
+                        }
+                    }
                     context.startActivity(intent);
 
                 }

@@ -25,16 +25,16 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
 
         garage = (Garage) getIntent().getSerializableExtra(ARG_GARAGE);
         Auto auto = garage.getAuto();
-        Manutenzione manutenzione = new Manutenzione();
+        Manutenzione manutenzione = (Manutenzione)getIntent().getSerializableExtra("dettagliManutenzione");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //imposto il titolo della actionbar come da prototipo
         setTitle(auto.getModello() + " - " + auto.getNome());
 
+
         TextView sottotitolo = (TextView) findViewById(R.id.text_sottotitolo);
-        String tipoManutenzione = getIntent().getStringExtra("nomeManutenzione");
-        sottotitolo.setText(tipoManutenzione);
+        sottotitolo.setText(manutenzione.getTipo());
 
         ImageView semaforo = (ImageView) findViewById(R.id.semaforo);
         String coloreSemaforo = getIntent().getStringExtra("coloreSemaforo");
