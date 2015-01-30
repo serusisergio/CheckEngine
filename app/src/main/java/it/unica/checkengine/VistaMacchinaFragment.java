@@ -40,6 +40,7 @@ public class VistaMacchinaFragment extends Fragment {
         ImageView iconTributi = (ImageView) rootView.findViewById(R.id.iconTributi);
         ImageView iconOk = (ImageView) rootView.findViewById(R.id.iconOk);
         ImageView iconManutenzioni = (ImageView) rootView.findViewById(R.id.iconManutenzioni);
+
         //Creo una List che contiene tutte e 4 le ruote
         List<ImageView> iconRuote = new ArrayList<>();
         iconRuote.add((ImageView) rootView.findViewById(R.id.iconRuota1));

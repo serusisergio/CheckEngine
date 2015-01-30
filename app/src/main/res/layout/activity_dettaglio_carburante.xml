@@ -107,4 +107,14 @@
         android:layout_above="@+id/text_rifornimento_previsto"
         android:layout_alignTop="@+id/text_carburante_residuo" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AGGIORNA SOGLIA"
+        android:id="@+id/button"
+        android:layout_below="@+id/seekBar_preavviso"
+        android:layout_alignEnd="@+id/seekBar_preavviso"
+        android:layout_marginTop="41dp"
+        android:onClick="aggiornaSoglia" />
+
 </RelativeLayout>

@@ -1,8 +1,10 @@
 package it.unica.checkengine;
 
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DettaglioCarburanteActivity extends ActionBarActivity {
 
@@ -24,16 +27,21 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
     //provvisoio fino a che non impostiamo la scrittura sul DB
     public static final int SOGLIA_AVVISO_MAX = 200;
     public static final int DIMENSIONE_SERBATOIO = 40;
-    public int valoreSogliaUtente = 100;
+    public int valoreSogliaUtente;
     private Garage garage;
     private SeekBar seekbarSoglia;
     private TextView textSogliaPreavviso;
+
+    // Aggiornamento Soglia
+    private ProgressDialog pDialog;
+    private String output, url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettaglio_carburante);
+
 
         TextView testoCarburanteResiduo = (TextView) findViewById(R.id.text_carburante_residuo);
         TextView testoRifornimentoPrevisto = (TextView) findViewById(R.id.text_rifornimento_previsto);
@@ -92,6 +100,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         valoreSogliaUtente = Integer.parseInt(textSogliaPreavviso.getText().toString());
         seekbarSoglia.setProgress(valoreSogliaUtente);
 
+        new recuperaSogliaThread(this).execute();
 
         seekbarSoglia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -138,6 +147,32 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
 
     }
 
+    public void sogliaAggiornata() {
+
+        if (new String("ok").equals(output)) {
+            Toast.makeText(this, "Soglia Aggiornata!", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, GarageActivity.class);
+            this.startActivity(intent);
+
+        } else {
+            Toast.makeText(this, "Errore", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void aggiornaSoglia(View view) {
+        Log.d("dettaglioCarburante", "premuto aggiorna soglia");
+
+        EditText eSoglia = (EditText) findViewById(R.id.edittext_preavviso);
+        String soglia = eSoglia.getText().toString();
+        String targa = garage.getAuto().getTarga();
+
+        url = "http://checkengine.matta.ga/soglia.php?action=aggiorna&targa=" + targa + "&soglia=" + soglia;
+        url = url.replace(" ", "%20");
+
+        new aggiornaSogliaThread(this).execute();
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -152,7 +187,103 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         }
     }
 
+    private class aggiornaSogliaThread extends AsyncTask<Void, Void, Void>{
 
+        DettaglioCarburanteActivity parent;
+
+        public aggiornaSogliaThread(DettaglioCarburanteActivity parent){
+            this.parent = parent;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            // Showing progress dialog
+            pDialog = new ProgressDialog(DettaglioCarburanteActivity.this);
+            pDialog.setMessage("Attendi...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            try {
+                // Creating service handler class instance
+                ServiceHandler sh = new ServiceHandler();
+
+                // Making a request to url and getting response
+                Log.d("dettaglioCarburante url", ">"+url+"<");
+                output =sh.makeServiceCall(url, ServiceHandler.GET).toString();
+
+                Log.d("dettaglioCarburante output", ">"+output+"<");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+
+            parent.sogliaAggiornata();
+        }
+    }
+
+    private class recuperaSogliaThread extends AsyncTask<Void, Void, Void>{
+
+        DettaglioCarburanteActivity parent;
+
+        public recuperaSogliaThread(DettaglioCarburanteActivity parent){
+            this.parent = parent;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            // Showing progress dialog
+            pDialog = new ProgressDialog(DettaglioCarburanteActivity.this);
+            pDialog.setMessage("Attendi...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            try {
+                // Creating service handler class instance
+                ServiceHandler sh = new ServiceHandler();
+
+                // Making a request to url and getting response
+                url = "http://checkengine.matta.ga/soglia.php?action=recupera&targa="+garage.getAuto().getTarga();
+
+                String valll = sh.makeServiceCall(url, ServiceHandler.GET).toString();
+                Log.d("dettaglioCarburante val recuperato", valll);
+                valoreSogliaUtente = Integer.parseInt(valll);
+                seekbarSoglia.setProgress(valoreSogliaUtente);
+                Log.d("dettaglioCarburante val s ut", url);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+        }
+    }
 
 
 
