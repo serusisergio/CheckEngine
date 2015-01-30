@@ -102,10 +102,9 @@
         android:id="@+id/progressBar_carburante"
         android:layout_alignEnd="@+id/seekBar_preavviso"
         android:layout_toEndOf="@+id/text_carburante_residuo"
-        android:max="100"
         android:indeterminate="false"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_above="@+id/text_rifornimento_previsto"
-        android:layout_alignTop="@+id/text_carburante_residuo"/>
+        android:layout_alignTop="@+id/text_carburante_residuo" />
 
 </RelativeLayout>

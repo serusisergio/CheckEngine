@@ -1,8 +1,11 @@
 package it.unica.checkengine;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,15 +15,16 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-
 public class DettaglioCarburanteActivity extends ActionBarActivity {
 
     public static final String ARG_GARAGE = "garage";
     //provvisoio fino a che non impostiamo la scrittura sul DB
-    public static final int SOGLIA_PREAVVISO = 100;
+    public static final int SOGLIA_AVVISO_MAX = 200;
     public static final int DIMENSIONE_SERBATOIO = 40;
-    public int valoreSogliaImpostato;
+    public int valoreSogliaUtente = 100;
     private Garage garage;
+    private SeekBar seekbarSoglia;
+    private TextView textSogliaPreavviso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +35,8 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         TextView testoRifornimentoPrevisto = (TextView) findViewById(R.id.text_rifornimento_previsto);
         TextView testoKmRimanenti = (TextView) findViewById(R.id.text_km_rimamenti);
         TextView testoSogliaPreavviso = (TextView) findViewById(R.id.text_preavviso);
-        TextView sogliaPreavviso = (EditText) findViewById(R.id.edittext_preavviso);
-        SeekBar seekbarSoglia = (SeekBar) findViewById(R.id.seekBar_preavviso);
-
+        textSogliaPreavviso = (EditText) findViewById(R.id.edittext_preavviso);
+        seekbarSoglia = (SeekBar) findViewById(R.id.seekBar_preavviso);
         garage = (Garage) getIntent().getSerializableExtra(ARG_GARAGE);
         Auto auto = garage.getAuto();
         Log.d("DettaglioCarburante", auto.getNome());
@@ -48,19 +51,20 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         //a seconda della quantità di carburante imposto il colore del semaforo e della progress bar
         ImageView semaforo = (ImageView)findViewById(R.id.semaforo);
         ProgressBar progBarCarburante = (ProgressBar)findViewById(R.id.progressBar_carburante);
-        progBarCarburante.setProgress((int) (auto.getCarburante()) * 100 / DIMENSIONE_SERBATOIO);
+        progBarCarburante.setMax(DIMENSIONE_SERBATOIO);
+        progBarCarburante.setProgress((int)auto.getCarburante());
 
         if(auto.isCarburanteRed()){
             semaforo.setImageDrawable(this.getResources().getDrawable(R.drawable.semaforo_rosso));
-            progBarCarburante.getIndeterminateDrawable().setColorFilter(0xFF0000,android.graphics.PorterDuff.Mode.MULTIPLY);
+            progBarCarburante.getProgressDrawable().setColorFilter(Color.RED,android.graphics.PorterDuff.Mode.MULTIPLY);
         }
         else if(auto.isCarburanteOrange()){
             semaforo.setImageDrawable(this.getResources().getDrawable(R.drawable.semaforo_arancio));
-            progBarCarburante.getIndeterminateDrawable().setColorFilter(0xFFA500,android.graphics.PorterDuff.Mode.MULTIPLY);
+            progBarCarburante.getProgressDrawable().setColorFilter(Color.YELLOW,android.graphics.PorterDuff.Mode.MULTIPLY);
         }
         else{
             semaforo.setImageDrawable(this.getResources().getDrawable(R.drawable.semaforo_verde));
-            progBarCarburante.getIndeterminateDrawable().setColorFilter(0x50E828,android.graphics.PorterDuff.Mode.MULTIPLY);
+            progBarCarburante.getProgressDrawable().setColorFilter(Color.GREEN,android.graphics.PorterDuff.Mode.MULTIPLY);
         }
 
         testoCarburanteResiduo.setText("Residuo: " + auto.getCarburante() + " litri");
@@ -72,12 +76,44 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         }
         testoKmRimanenti.setText("Rifornimento previsto tra: " + kmRimanenti + " Km");
         testoSogliaPreavviso.setText("Soglia preavviso: ");
-        sogliaPreavviso.setText(String.valueOf(SOGLIA_PREAVVISO));
+
+        //impostazioni seekbar e editText
+        seekbarSoglia.setMax(SOGLIA_AVVISO_MAX);
+        seekbarSoglia.incrementProgressBy(1);
+        textSogliaPreavviso.setText(String.valueOf(valoreSogliaUtente));
 
         //La seekbar rispecchia il valore della soglia del settext "sogliaPreavviso"
-        //TO DO: quando si agigorna il set text si sposta anche la barra e vice versa
-        valoreSogliaImpostato = Integer.parseInt(sogliaPreavviso.getText().toString());
-        seekbarSoglia.setProgress(valoreSogliaImpostato);
+        valoreSogliaUtente = Integer.parseInt(textSogliaPreavviso.getText().toString());
+        seekbarSoglia.setProgress(valoreSogliaUtente);
+
+
+        seekbarSoglia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                textSogliaPreavviso.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        textSogliaPreavviso.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                valoreSogliaUtente = Integer.parseInt(textSogliaPreavviso.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                seekbarSoglia.setProgress(valoreSogliaUtente);
+            }
+        });
 
 
         //TO DO: bottone salva quando sarà possibile inviare i dati al DB nel caso venisse cambiata la soglia
@@ -92,6 +128,11 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
             }
         });
 
+
+
     }
+
+
+
 
 }
