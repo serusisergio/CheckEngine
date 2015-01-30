@@ -8,16 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="it.unica.checkengine.DettaglioCarburanteActivity">
 
-    <Button
-        android:id="@+id/buttonBack"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="59dp"
-        android:text="Indietro" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -111,10 +101,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="AGGIORNA SOGLIA"
-        android:id="@+id/button"
-        android:layout_below="@+id/seekBar_preavviso"
         android:layout_alignEnd="@+id/seekBar_preavviso"
-        android:layout_marginTop="41dp"
-        android:onClick="aggiornaSoglia" />
+        android:id="@+id/button"
+        android:layout_marginTop="40dp"
+        android:onClick="aggiornaSoglia"
+        android:layout_below="@+id/seekBar_preavviso"
+        android:layout_alignParentStart="true"
+        />
 
 </RelativeLayout>

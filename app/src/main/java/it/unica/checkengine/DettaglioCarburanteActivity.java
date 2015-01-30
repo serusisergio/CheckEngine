@@ -136,19 +136,6 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
             }
         });
 
-
-        //TO DO: bottone salva quando sarà possibile inviare i dati al DB nel caso venisse cambiata la soglia
-        Button indietro = (Button) findViewById(R.id.buttonBack);
-        indietro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("dettaglioCarburante", "premuto back");
-                Intent intent = new Intent(getApplicationContext(), MyCarActivity.class);
-                intent.putExtra(GarageActivity.EXTRA_MESSAGE, garage.getAuto().getTarga());
-                startActivity(intent);
-            }
-        });
-
     }
 
     public void sogliaAggiornata() {
