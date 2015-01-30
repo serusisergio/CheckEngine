@@ -149,16 +149,15 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
             }
         });
 
-
-
     }
 
     public void sogliaAggiornata() {
 
         if (new String("ok").equals(output)) {
             Toast.makeText(this, "Soglia Aggiornata!", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, GarageActivity.class);
-            this.startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(), MyCarActivity.class);
+            intent.putExtra(GarageActivity.EXTRA_MESSAGE, garage.getAuto().getTarga());
+            startActivity(intent);
 
         } else {
             Toast.makeText(this, "Errore", Toast.LENGTH_LONG).show();
@@ -179,7 +178,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
 
     }
 
-    @Override
+   @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
