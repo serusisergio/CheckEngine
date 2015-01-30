@@ -1,12 +1,15 @@
 package it.unica.checkengine;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +31,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettaglio_carburante);
 
@@ -40,7 +44,9 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         garage = (Garage) getIntent().getSerializableExtra(ARG_GARAGE);
         Auto auto = garage.getAuto();
         Log.d("DettaglioCarburante", auto.getNome());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        // Abilito il pulsante indietro
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //imposto il titolo della actionbar come da prototipo
         setTitle(auto.getModello() + " - " + auto.getNome());
@@ -131,6 +137,21 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
 
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; go home
+                Intent intent = new Intent(getApplicationContext(), MyCarActivity.class);
+                intent.putExtra(GarageActivity.EXTRA_MESSAGE, garage.getAuto().getTarga());
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
 
 
