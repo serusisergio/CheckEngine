@@ -148,6 +148,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final String riga = (String) getChild(groupPosition, childPosition);
+        final String gruppo = (String) getGroup(groupPosition);
         final String semaforo = getSemaforo(groupPosition, childPosition);
 
         Log.d("creazioneElementoLista", riga);
@@ -207,7 +208,15 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
                     Intent intent = new Intent(context, DettaglioCarburanteActivity.class);
                     intent.putExtra(DettaglioCarburanteActivity.ARG_GARAGE, garage);
                     context.startActivity(intent);
+                }else if(gruppo.equals("Manutenzioni")){
+                    Intent intent = new Intent(context, DettaglioManutenzioneActivity.class);
+                    intent.putExtra(DettaglioManutenzioneActivity.ARG_GARAGE, garage);
+                    intent.putExtra("nomeManutenzione", riga);
+                    intent.putExtra("coloreSemaforo",semaforo);
+                    context.startActivity(intent);
+                    Log.d("nome riga premuta", " " +riga);
                 }
+
             }
         });
 
