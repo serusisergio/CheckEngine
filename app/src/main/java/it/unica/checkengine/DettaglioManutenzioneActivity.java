@@ -1,10 +1,8 @@
 package it.unica.checkengine;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +24,7 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
         garage = (Garage) getIntent().getSerializableExtra(ARG_GARAGE);
         Auto auto = garage.getAuto();
         Manutenzione manutenzione = (Manutenzione)getIntent().getSerializableExtra("dettagliManutenzione");
+        String tipoManutenzione = manutenzione.getTipo();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -34,7 +33,7 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
 
 
         TextView sottotitolo = (TextView) findViewById(R.id.text_sottotitolo);
-        sottotitolo.setText(manutenzione.getTipo());
+        sottotitolo.setText(tipoManutenzione);
 
         ImageView semaforo = (ImageView) findViewById(R.id.semaforo);
         String coloreSemaforo = getIntent().getStringExtra("coloreSemaforo");
@@ -52,18 +51,40 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
 
         TextView messaggio = (TextView) findViewById(R.id.text_messaggio);
         messaggio.setText(manutenzione.getMessaggio());
+        final Button bottoneChiama = (Button) findViewById(R.id.button_meccanico);
 
-        Button meccanico = (Button) findViewById(R.id.button_meccanico);
-        meccanico.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Sto chiamando il meccanico", Toast.LENGTH_SHORT).show();
-                String numM = "tel:"+garage.getNumMeccanico();
-                Log.d("eh",numM);
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
-                startActivity(intent);
+        switch (tipoManutenzione) {
+            case "Gomme":
+                bottoneChiama.setText("Chiama il gommista");
+                bottoneChiama.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Sto chiamando il gommista", Toast.LENGTH_SHORT).show();
+                    String numM = "tel:" + garage.getNumGommista();
+                    //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
+                    //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
+                    //startActivity(intent);
+                }
+            });
+                break;
+            case "Tagliando":
+            {
+                bottoneChiama.setVisibility(View.INVISIBLE);
+                break;
             }
-        });
+            default:
+                bottoneChiama.setText("Chiama il meccanico");
+                bottoneChiama.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Sto chiamando il meccanico", Toast.LENGTH_SHORT).show();
+                    String numM = "tel:" + garage.getNumMeccanico();
+                    //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
+                    //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
+                    //startActivity(intent);
+                }
+                });
+        }
 
     }
 
