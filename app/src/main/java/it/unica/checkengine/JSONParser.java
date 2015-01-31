@@ -89,11 +89,11 @@ public class JSONParser {
                 tributo.setGiorniAllScadenza(tributo.getIntervalloPagameto() - l.intValue());
 
                 if(dataOggi.after(dataAvviso) && !dataOggi.after(dataScadenza)){
-                    tributo.setMessaggio(tributo.getTipo() + " scadrà tra meno di 30 giorni. Ricordati che l'importo da pagare è "+tributo.getImporto());
+                    tributo.setMessaggio(tributo.getTipo() + " scadrà tra meno di 30 giorni. Ricordati che l'importo da pagare è "+tributo.getImporto()+"€");
                 } else if(dataOggi.after(dataScadenza)){
-                    tributo.setMessaggio(tributo.getTipo() + " è scaduto. Ricordati che l'importo da pagare è "+tributo.getImporto());
+                    tributo.setMessaggio(tributo.getTipo() + " è scaduto. Ricordati che l'importo da pagare è "+tributo.getImporto()+"€");
                 } else {
-                    tributo.setMessaggio(tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllScadenza() + ". Ricordati che l'importo da pagare è "+tributo.getImporto());
+                    tributo.setMessaggio(tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllScadenza() + ". Ricordati che l'importo da pagare è "+tributo.getImporto()+"€");
                 }
 
                 auto.addTributo(tributo);

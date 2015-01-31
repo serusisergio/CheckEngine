@@ -11,5 +11,6 @@
     <string name="title_activity_dettaglio_carburante">Caricamento...</string>
     <string name="title_activity_dettaglio_avarie">DettaglioAvarieActivity</string>
     <string name="title_activity_dettaglio_manutenzione">DettaglioManutenzioneActivity</string>
+    <string name="title_activity_dettaglio_tributi">DettaglioTributiActivity</string>
 
 </resources>

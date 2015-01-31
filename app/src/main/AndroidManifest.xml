@@ -50,6 +50,14 @@
             android:name=".DettaglioManutenzioneActivity"
             android:label="@string/title_activity_dettaglio_manutenzione" >
         </activity>
+        <activity
+            android:name=".DettaglioTributiActivity"
+            android:label="@string/title_activity_dettaglio_tributi"
+            android:parentActivityName=".MyCarActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="it.unica.checkengine.MyCarActivity" />
+        </activity>
     </application>
 
 </manifest>

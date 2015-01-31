@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 public class DettaglioManutenzioneActivity extends ActionBarActivity {
     public static final String ARG_GARAGE = "garage";
-
     private Garage garage;
 
     @Override

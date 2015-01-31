@@ -32,7 +32,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     private Map<String, List<String>> semaforiCollections;
     private List<String> messaggi;
     private List<Manutenzione> listaManutenzioni;
-
+    private List<Tributo> listaTributi;
 
 
     public MyExpandableAdapter(Activity context, Garage garage) {
@@ -60,7 +60,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
         Auto auto = garage.getAuto();
         listaManutenzioni = auto.getManutenzioni();
-
+        listaTributi = auto.getTributi();
 
         //Popolo la lista di segnalazioni
 
@@ -227,7 +227,17 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
                         }
                     }
                     context.startActivity(intent);
-
+                }else if(gruppo.equals("Tributi")) {
+                    Intent intent = new Intent(context, DettaglioTributiActivity.class);
+                    intent.putExtra(DettaglioTributiActivity.ARG_GARAGE, garage);
+                    intent.putExtra("coloreSemaforo",semaforo);
+                    for(Tributo t : listaTributi){
+                        if (riga.equals(t.getTipo())){
+                            intent.putExtra("dettagliTributi",t);
+                            break;
+                        }
+                    }
+                    context.startActivity(intent);
                 }
 
             }
