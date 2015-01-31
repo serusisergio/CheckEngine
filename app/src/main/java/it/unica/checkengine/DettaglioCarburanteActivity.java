@@ -85,7 +85,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         if (giorniRimanenti == 1) {
             testoRifornimentoPrevisto.setText("Rifornimento previsto tra: 1 giorno");
         } else {
-            testoRifornimentoPrevisto.setText("Rifornimento previsto tra: " + giorniRimanenti + " giorni");
+            testoRifornimentoPrevisto.setText("Km rimanenti stimati: " + giorniRimanenti + " giorni");
         }
         testoKmRimanenti.setText("Rifornimento previsto tra: " + kmRimanenti + " Km");
         testoSogliaPreavviso.setText("Soglia preavviso: ");

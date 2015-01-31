@@ -56,6 +56,7 @@ public class DettaglioAvarieActivity extends ActionBarActivity {
 
         Button bottoneChiama = (Button) findViewById(R.id.button_meccanico);
 
+        //Se si tratta di un avaria dell'olio e il suo semaforo è verde il bottone per contattare il meccanico non appare
         if(tipoAvaria.equals("Livello Olio") && coloreSemaforo.equals("green"))
         {
             bottoneChiama.setVisibility(View.INVISIBLE);
