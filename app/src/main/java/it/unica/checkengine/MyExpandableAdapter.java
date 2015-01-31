@@ -34,12 +34,11 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     private List<Manutenzione> listaManutenzioni;
     private List<Tributo> listaTributi;
     private List<Avaria> listaAvarie;
+    private Auto autoEsterna;
 
     public MyExpandableAdapter(Activity context, Garage garage) {
         this.context = context;
         this.garage = garage;
-
-
 
 
         Log.d("creazioneLista", garage.getAuto().getNome());
@@ -59,6 +58,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         ArrayList<String> semaforiTributi = new ArrayList<>();
 
         Auto auto = garage.getAuto();
+        autoEsterna = auto;
         listaManutenzioni = auto.getManutenzioni();
         listaTributi = auto.getTributi();
         listaAvarie = auto.getAvarie();
@@ -218,6 +218,14 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
                         Intent intent = new Intent(context, DettaglioCarburanteActivity.class);
                         intent.putExtra(DettaglioCarburanteActivity.ARG_GARAGE, garage);
                         context.startActivity(intent);
+                    }else if(riga.equals("Livello Olio")) {
+                        Intent intent = new Intent(context, DettaglioAvarieActivity.class);
+                        intent.putExtra(DettaglioAvarieActivity.ARG_GARAGE, garage);
+                        intent.putExtra("coloreSemaforo",semaforo);
+                        Avaria avariaOlio = new Avaria("Livello Olio", autoEsterna.getMessaggioLivelloOlio());
+                        intent.putExtra("dettagliAvarie",avariaOlio);
+                        context.startActivity(intent);
+
                     }else{
                         Intent intent = new Intent(context, DettaglioAvarieActivity.class);
                         intent.putExtra(DettaglioAvarieActivity.ARG_GARAGE, garage);

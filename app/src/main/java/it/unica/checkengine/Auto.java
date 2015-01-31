@@ -91,6 +91,15 @@ public class Auto implements Serializable{
 
     }
 
+    public String getMessaggioLivelloOlio(){
+        if(this.isOlioRed()) {
+            return "Il livello dell'olio è pari a "+this.getLivelloOlio()+". Un valore simile è pericolosamente basso. Ti consiglio di rivolgerti al tuo meccanico di fiducia per un controllo.";
+        }
+        else{
+            return "Il livello dell'olio è pari a "+this.getLivelloOlio()+".";
+        }
+    }
+
     public int getKm() {
         return km;
     }

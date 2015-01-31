@@ -56,17 +56,22 @@ public class DettaglioAvarieActivity extends ActionBarActivity {
 
         Button bottoneChiama = (Button) findViewById(R.id.button_meccanico);
 
-        bottoneChiama.setText("Chiama il meccanico");
-        bottoneChiama.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Sto chiamando il meccanico", Toast.LENGTH_SHORT).show();
-                String numM = "tel:" + garage.getNumMeccanico();
-                //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
-                //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
-                //startActivity(intent);
-            }
-        });
+        if(tipoAvaria.equals("Livello Olio") && coloreSemaforo.equals("green"))
+        {
+            bottoneChiama.setVisibility(View.INVISIBLE);
+        }else{
+            bottoneChiama.setText("Chiama il meccanico");
+            bottoneChiama.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Sto chiamando il meccanico", Toast.LENGTH_SHORT).show();
+                    String numM = "tel:" + garage.getNumMeccanico();
+                    //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
+                    //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
+                    //startActivity(intent);
+                }
+            });
+        }
 
     }
 

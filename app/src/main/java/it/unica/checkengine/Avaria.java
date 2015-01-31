@@ -19,6 +19,10 @@ public class Avaria implements Serializable{
         setUrgenza(urgenza);
     }
 
+    public Avaria(String tipo, String messaggio){
+        setTipo(tipo);
+        setMessaggio(messaggio);
+    }
 
     public String getTipo() {
         return tipo;
