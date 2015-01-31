@@ -11,19 +11,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class DettaglioManutenzioneActivity extends ActionBarActivity {
+public class DettaglioAvarieActivity extends ActionBarActivity {
     public static final String ARG_GARAGE = "garage";
     private Garage garage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dettaglio_manutenzione);
+        setContentView(R.layout.activity_dettaglio_avarie);
+
 
         garage = (Garage) getIntent().getSerializableExtra(ARG_GARAGE);
         Auto auto = garage.getAuto();
-        Manutenzione manutenzione = (Manutenzione)getIntent().getSerializableExtra("dettagliManutenzione");
-        String tipoManutenzione = manutenzione.getTipo();
+        Avaria avaria = (Avaria)getIntent().getSerializableExtra("dettagliAvarie");
+        String tipoAvaria = avaria.getTipo();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -32,7 +33,7 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
 
 
         TextView sottotitolo = (TextView) findViewById(R.id.text_sottotitolo);
-        sottotitolo.setText(tipoManutenzione);
+        sottotitolo.setText(tipoAvaria);
 
         ImageView semaforo = (ImageView) findViewById(R.id.semaforo);
         String coloreSemaforo = getIntent().getStringExtra("coloreSemaforo");
@@ -48,42 +49,24 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                 break;
         }
 
+
         TextView messaggio = (TextView) findViewById(R.id.text_messaggio);
-        messaggio.setText(manutenzione.getMessaggio());
+        messaggio.setText(avaria.getMessaggio());
+
+
         Button bottoneChiama = (Button) findViewById(R.id.button_meccanico);
 
-        switch (tipoManutenzione) {
-            case "Gomme":
-                bottoneChiama.setText("Chiama il gommista");
-                bottoneChiama.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Sto chiamando il gommista", Toast.LENGTH_SHORT).show();
-                    String numM = "tel:" + garage.getNumGommista();
-                    //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
-                    //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
-                    //startActivity(intent);
-                }
-            });
-                break;
-            case "Tagliando":
-            {
-                bottoneChiama.setVisibility(View.INVISIBLE);
-                break;
+        bottoneChiama.setText("Chiama il meccanico");
+        bottoneChiama.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Sto chiamando il meccanico", Toast.LENGTH_SHORT).show();
+                String numM = "tel:" + garage.getNumMeccanico();
+                //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
+                //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
+                //startActivity(intent);
             }
-            default:
-                bottoneChiama.setText("Chiama il meccanico");
-                bottoneChiama.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Sto chiamando il meccanico", Toast.LENGTH_SHORT).show();
-                    String numM = "tel:" + garage.getNumMeccanico();
-                    //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
-                    //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
-                    //startActivity(intent);
-                }
-                });
-        }
+        });
 
     }
 

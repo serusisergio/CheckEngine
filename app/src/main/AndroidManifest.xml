@@ -44,7 +44,11 @@
         </activity>
         <activity
             android:name=".DettaglioAvarieActivity"
-            android:label="@string/title_activity_dettaglio_avarie" >
+            android:label="@string/title_activity_dettaglio_avarie"
+            android:parentActivityName=".MyCarActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="it.unica.checkengine.MyCarActivity" />
         </activity>
         <activity
             android:name=".DettaglioManutenzioneActivity"

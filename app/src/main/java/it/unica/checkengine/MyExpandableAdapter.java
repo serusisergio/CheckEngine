@@ -33,7 +33,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     private List<String> messaggi;
     private List<Manutenzione> listaManutenzioni;
     private List<Tributo> listaTributi;
-
+    private List<Avaria> listaAvarie;
 
     public MyExpandableAdapter(Activity context, Garage garage) {
         this.context = context;
@@ -61,6 +61,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         Auto auto = garage.getAuto();
         listaManutenzioni = auto.getManutenzioni();
         listaTributi = auto.getTributi();
+        listaAvarie = auto.getAvarie();
 
         //Popolo la lista di segnalazioni
 
@@ -212,10 +213,24 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (riga.equals("Livello Carburante")) {
-                    Intent intent = new Intent(context, DettaglioCarburanteActivity.class);
-                    intent.putExtra(DettaglioCarburanteActivity.ARG_GARAGE, garage);
-                    context.startActivity(intent);
+                if (gruppo.equals("Segnalazioni")) {
+                    if(riga.equals("Livello Carburante")) {
+                        Intent intent = new Intent(context, DettaglioCarburanteActivity.class);
+                        intent.putExtra(DettaglioCarburanteActivity.ARG_GARAGE, garage);
+                        context.startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(context, DettaglioAvarieActivity.class);
+                        intent.putExtra(DettaglioAvarieActivity.ARG_GARAGE, garage);
+                        intent.putExtra("coloreSemaforo",semaforo);
+                        for(Avaria a : listaAvarie){
+                            if (riga.equals(a.getTipo())){
+                                intent.putExtra("dettagliAvarie",a);
+                                break;
+                            }
+                        }
+                        context.startActivity(intent);
+
+                    }
                 }else if(gruppo.equals("Manutenzioni")){
                     Intent intent = new Intent(context, DettaglioManutenzioneActivity.class);
                     intent.putExtra(DettaglioManutenzioneActivity.ARG_GARAGE, garage);
@@ -230,10 +245,10 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
                 }else if(gruppo.equals("Tributi")) {
                     Intent intent = new Intent(context, DettaglioTributiActivity.class);
                     intent.putExtra(DettaglioTributiActivity.ARG_GARAGE, garage);
-                    intent.putExtra("coloreSemaforo",semaforo);
-                    for(Tributo t : listaTributi){
-                        if (riga.equals(t.getTipo())){
-                            intent.putExtra("dettagliTributi",t);
+                    intent.putExtra("coloreSemaforo", semaforo);
+                    for (Tributo t : listaTributi) {
+                        if (riga.equals(t.getTipo())) {
+                            intent.putExtra("dettagliTributi", t);
                             break;
                         }
                     }
