@@ -25,15 +25,17 @@
             android:id="@+id/imageButton"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/ripple"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+
+            />
 
     <TextView
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:textSize="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
         android:text="+"
         android:textColor="#fff"
         android:id="@+id/textView"
