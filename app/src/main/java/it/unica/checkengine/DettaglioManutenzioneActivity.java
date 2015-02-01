@@ -54,14 +54,14 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
 
         switch (tipoManutenzione) {
             case "Gomme":
-                bottoneChiama.setText("Chiama il gommista");
+                bottoneChiama.setText("CHIAMA IL GOMMISTA");
                 bottoneChiama.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getApplicationContext(), "Sto chiamando il gommista", Toast.LENGTH_SHORT).show();
-                    String numM = "tel:" + garage.getNumGommista();
+                    String numG = "tel:" + garage.getNumGommista();
                     //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
-                    //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
+                    //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numG));
                     //startActivity(intent);
                 }
             });
@@ -72,7 +72,7 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                 break;
             }
             default:
-                bottoneChiama.setText("Chiama il meccanico");
+                bottoneChiama.setText("CHIAMA IL MECCANICO");
                 bottoneChiama.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

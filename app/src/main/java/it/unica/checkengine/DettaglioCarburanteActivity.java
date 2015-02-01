@@ -99,7 +99,6 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         valoreSogliaUtente = Integer.parseInt(textSogliaPreavviso.getText().toString());
         seekbarSoglia.setProgress(valoreSogliaUtente);
 
-
         seekbarSoglia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

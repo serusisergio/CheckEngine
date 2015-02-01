@@ -61,7 +61,7 @@ public class DettaglioAvarieActivity extends ActionBarActivity {
         {
             bottoneChiama.setVisibility(View.INVISIBLE);
         }else{
-            bottoneChiama.setText("Chiama il meccanico");
+            bottoneChiama.setText("CHIAMA IL MECCANICO");
             bottoneChiama.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
