@@ -81,19 +81,20 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
             }else{
                 bottoneChiama.setVisibility(View.INVISIBLE);
             }
-        }else
-                bottoneChiama.setText("CHIAMA IL MECCANICO");
-                bottoneChiama.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+        }else {
+            bottoneChiama.setText("CHIAMA IL MECCANICO");
+            bottoneChiama.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     Toast.makeText(getApplicationContext(), "Sto chiamando il meccanico", Toast.LENGTH_SHORT).show();
                     String numM = "tel:" + garage.getNumMeccanico();
                     //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
                     //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
                     //startActivity(intent);
                 }
-                });
+            });
         }
+    }
 
 
 
