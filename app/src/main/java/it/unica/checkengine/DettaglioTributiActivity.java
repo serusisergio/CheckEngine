@@ -1,11 +1,16 @@
 package it.unica.checkengine;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class DettaglioTributiActivity extends ActionBarActivity {
@@ -50,6 +55,15 @@ public class DettaglioTributiActivity extends ActionBarActivity {
         messaggio.setText(tributo.getMessaggio());
 
 
+
+        Button bottone_paga = (Button) findViewById(R.id.button_paga);
+        bottone_paga.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAlert(v);
+            }
+        });
+
     }
 
     @Override
@@ -64,5 +78,53 @@ public class DettaglioTributiActivity extends ActionBarActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+    }
+
+    private void openAlert(View view) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DettaglioTributiActivity.this);
+
+        alertDialogBuilder.setTitle(this.getTitle()+ " decision");
+
+        alertDialogBuilder.setMessage("Are you sure?");
+
+        // set positive button: Yes message
+
+        alertDialogBuilder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int id) {
+                // go to a new activity of the app
+                Intent positveActivity = new Intent(getApplicationContext(),
+                        PagaTributoAlertDialogActivity.class);
+                startActivity(positveActivity);
+            }
+        });
+        // set negative button: No message
+
+        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int id) {
+                // cancel the alert box and put a Toast to the user
+                dialog.cancel();
+                Toast.makeText(getApplicationContext(), "You chose a negative answer",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+        // set neutral button: Exit the app message
+
+        alertDialogBuilder.setNeutralButton("Exit the app",new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog,int id) {
+
+                // exit the app and go to the HOME
+
+                DettaglioTributiActivity.this.finish();
+
+            }
+
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }
+
+

@@ -62,6 +62,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="it.unica.checkengine.MyCarActivity" />
         </activity>
+        <activity
+            android:name=".PagaTributoAlertDialogActivity"
+            android:label="@string/title_activity_paga_tributo_alert_dialog"
+            android:parentActivityName=".DettaglioTributiActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="it.unica.checkengine.DettaglioTributiActivity" />
+        </activity>
     </application>
 
 </manifest>

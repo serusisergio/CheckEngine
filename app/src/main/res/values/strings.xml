@@ -12,5 +12,6 @@
     <string name="title_activity_dettaglio_avarie">DettaglioAvarieActivity</string>
     <string name="title_activity_dettaglio_manutenzione">DettaglioManutenzioneActivity</string>
     <string name="title_activity_dettaglio_tributi">DettaglioTributiActivity</string>
+    <string name="title_activity_paga_tributo_alert_dialog">PagaTributoAlertDialogActivity</string>
 
 </resources>
