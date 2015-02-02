@@ -69,8 +69,18 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
             else{
                 bottoneChiama.setVisibility(View.INVISIBLE);
             }
-        }else if(tipoManutenzione.equals("Tagliando")){
-            bottoneChiama.setVisibility(View.INVISIBLE);
+        }else if(tipoManutenzione.equals("Tagliando")) {
+            if(coloreSemaforo.equals("red")){
+                bottoneChiama.setText("SEGNALA TAGLIANDO ESEGUITO");
+                bottoneChiama.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "Salvo i km attuali", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }else{
+                bottoneChiama.setVisibility(View.INVISIBLE);
+            }
         }else
                 bottoneChiama.setText("CHIAMA IL MECCANICO");
                 bottoneChiama.setOnClickListener(new View.OnClickListener() {
