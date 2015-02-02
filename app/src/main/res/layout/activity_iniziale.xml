@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonLogin"
                 android:layout_gravity="center"
-                android:src="@drawable/login_google_default"
+                android:src="@drawable/login_google"
                 android:scaleType="fitCenter"
                 android:background="@drawable/login_google_custom"
                 android:onClick="apriGarage" />

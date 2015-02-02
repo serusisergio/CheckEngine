@@ -82,12 +82,15 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
 
         testoCarburanteResiduo.setText("Residuo: " + auto.getCarburante() + " litri");
 
-        if (giorniRimanenti == 1) {
+
+        if (giorniRimanenti < 1) {
+            testoRifornimentoPrevisto.setText("Rifornimento previsto oggi!");
+        } else if (giorniRimanenti == 1) {
             testoRifornimentoPrevisto.setText("Rifornimento previsto tra: 1 giorno");
         } else {
-            testoRifornimentoPrevisto.setText("Km rimanenti stimati: " + giorniRimanenti + " giorni");
+            testoRifornimentoPrevisto.setText("Rifornimento previsto tra: " + giorniRimanenti + " giorni");
         }
-        testoKmRimanenti.setText("Rifornimento previsto tra: " + kmRimanenti + " Km");
+        testoKmRimanenti.setText("Km rimanenti stimati: " + kmRimanenti + " Km");
         testoSogliaPreavviso.setText("Soglia preavviso: ");
 
         //impostazioni seekbar e editText
@@ -163,6 +166,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(getApplicationContext(), MyCarActivity.class);
                 intent.putExtra(GarageActivity.EXTRA_MESSAGE, garage.getAuto().getTarga());
+                intent.putExtra("sezione", 1);
                 startActivity(intent);
                 return true;
             default:

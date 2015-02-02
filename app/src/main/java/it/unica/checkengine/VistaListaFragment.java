@@ -1,8 +1,8 @@
 package it.unica.checkengine;
 
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 public class VistaListaFragment extends Fragment {
 
-    private Garage garage;
-
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -21,11 +19,11 @@ public class VistaListaFragment extends Fragment {
     public static final String ARG_SECTION_NUMBER = "section_number";
     public static final String ARG_GARAGE = "garage";
     public static final String ARG_SEZIONE = "sezione";
-
     ExpandableListView expandableList;
+    private Garage garage;
 
     public VistaListaFragment() {
-   }
+    }
 
     //richiama il file .xml in cui è definito il suo stile e il suo id
     @Override
@@ -49,7 +47,7 @@ public class VistaListaFragment extends Fragment {
         expandableList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
             @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,int groupPosition, long id) {
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 // Toast.makeText(getApplicationContext(),
                 // "Group Clicked " + listDataHeader.get(groupPosition),
                 // Toast.LENGTH_SHORT).show();
@@ -73,12 +71,12 @@ public class VistaListaFragment extends Fragment {
         return rootView;
     }
 
-    public void settaSezioni(int sezioneDaAprire){
+    public void settaSezioni(int sezioneDaAprire) {
 
-        Log.d("VistaListaFragment", "Tento di aprire la sezione "+sezioneDaAprire);
+        Log.d("VistaListaFragment", "Tento di aprire la sezione " + sezioneDaAprire);
 
         //apro la sezione richiesta
-        switch (sezioneDaAprire){
+        switch (sezioneDaAprire) {
             case 0:
                 expandableList.expandGroup(0);
                 expandableList.collapseGroup(1);
@@ -100,6 +98,12 @@ public class VistaListaFragment extends Fragment {
                 expandableList.expandGroup(2);
         }
 
+    }
+
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        if (visible == true)
+            Toast.makeText(getActivity().getApplicationContext(), "Clicca sugli elementi della lista per aprire il dettaglio", Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -52,10 +52,10 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
         messaggio.setText(manutenzione.getMessaggio());
         Button bottoneChiama = (Button) findViewById(R.id.button_meccanico);
 
-        switch (tipoManutenzione) {
-            case "Gomme":
-                bottoneChiama.setText("CHIAMA IL GOMMISTA");
-                bottoneChiama.setOnClickListener(new View.OnClickListener() {
+        if (tipoManutenzione.equals("Cambio gomme")){
+            if(coloreSemaforo.equals("red")|| coloreSemaforo.equals("orange")){
+            bottoneChiama.setText("CHIAMA IL GOMMISTA");
+            bottoneChiama.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getApplicationContext(), "Sto chiamando il gommista", Toast.LENGTH_SHORT).show();
@@ -65,27 +65,39 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                     //startActivity(intent);
                 }
             });
-                break;
-            case "Tagliando":
-            {
-                bottoneChiama.setVisibility(View.INVISIBLE);
-                break;
             }
-            default:
-                bottoneChiama.setText("CHIAMA IL MECCANICO");
+            else{
+                bottoneChiama.setVisibility(View.INVISIBLE);
+            }
+        }else if(tipoManutenzione.equals("Tagliando")) {
+            if(coloreSemaforo.equals("red")){
+                bottoneChiama.setText("SEGNALA TAGLIANDO ESEGUITO");
                 bottoneChiama.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "Salvo i km attuali", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }else{
+                bottoneChiama.setVisibility(View.INVISIBLE);
+            }
+        }else {
+            bottoneChiama.setText("CHIAMA IL MECCANICO");
+            bottoneChiama.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     Toast.makeText(getApplicationContext(), "Sto chiamando il meccanico", Toast.LENGTH_SHORT).show();
                     String numM = "tel:" + garage.getNumMeccanico();
                     //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
                     //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
                     //startActivity(intent);
                 }
-                });
+            });
         }
-
     }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -94,6 +106,7 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(getApplicationContext(), MyCarActivity.class);
                 intent.putExtra(GarageActivity.EXTRA_MESSAGE, garage.getAuto().getTarga());
+                intent.putExtra("sezione", 1);
                 startActivity(intent);
                 return true;
             default:

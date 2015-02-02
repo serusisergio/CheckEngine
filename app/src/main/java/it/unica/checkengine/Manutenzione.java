@@ -12,6 +12,7 @@ public class Manutenzione implements Serializable{
     private int kmUltimaRicorrenza;
     private int intervalloRicorrenza;
 
+
     public Manutenzione(String tipo, String messaggio, int kmUltimaRicorrenza, int intervalloRicorrenza){
         setTipo(tipo);
         setMessaggio(messaggio);
@@ -23,6 +24,7 @@ public class Manutenzione implements Serializable{
         setTipo(tipo);
         setKmUltimaRicorrenza(kmUltimaRicorrenza);
         setIntervalloRicorrenza(intervalloRicorrenza);
+
     }
 
     public Manutenzione(){
@@ -61,13 +63,16 @@ public class Manutenzione implements Serializable{
         this.intervalloRicorrenza = intervalloRicorrenza;
     }
 
-    public boolean isRed(int km){
-        return km>(getKmUltimaRicorrenza()+getIntervalloRicorrenza());
+
+    public boolean isScaduta(int km) {
+        return (this.getIntervalloRicorrenza() - (km - this.getKmUltimaRicorrenza()) <= 0);
     }
 
-    public boolean isOrange(int km){
-        return km > (getKmUltimaRicorrenza() + getIntervalloRicorrenza() - SOGLIA_AVVISO) && !isRed(km);
+    public int getKmAllaScadenza(int km){
+        return this.getIntervalloRicorrenza() - (km - this.getKmUltimaRicorrenza());
     }
-
-
+    public boolean isSogliaSuperata(int km){
+        return (this.getKmUltimaRicorrenza()+this.getIntervalloRicorrenza() <= km + SOGLIA_AVVISO)
+                && (!this.isScaduta(km));
+    }
 }

@@ -15,16 +15,8 @@
         android:text="Livello carburante"
         android:id="@+id/text_livello_carburante"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/semaforo"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/text_livello_carburante"
-        android:src="@drawable/semaforo_rosso"
-        android:paddingLeft="50dp" />
+        android:layout_toEndOf="@+id/semaforo"
+        android:paddingLeft="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,10 +24,8 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Residuo: 70.5 litri"
         android:id="@+id/text_carburante_residuo"
-        android:layout_below="@+id/semaforo"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="47dp"
-        android:layout_toStartOf="@+id/semaforo" />
+        android:layout_marginTop="47dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -91,7 +81,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/progressBar_carburante"
         android:layout_alignEnd="@+id/seekBar_preavviso"
-        android:layout_toEndOf="@+id/text_carburante_residuo"
+        android:layout_toEndOf="@+id/edittext_preavviso"
         android:indeterminate="false"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_above="@+id/text_rifornimento_previsto"
@@ -101,13 +91,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="AGGIORNA SOGLIA"
-        android:layout_alignEnd="@+id/seekBar_preavviso"
         android:id="@+id/button"
-        android:layout_marginTop="40dp"
         android:onClick="aggiornaSoglia"
-        android:layout_below="@+id/seekBar_preavviso"
-        android:layout_alignParentStart="true"
         android:background="@drawable/blue_button_style"
-        android:textColor="#fff"/>
+        android:textColor="#fff"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="57dp"
+        android:layout_alignEnd="@+id/seekBar_preavviso" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/semaforo"
+        android:src="@drawable/semaforo_rosso"
+        android:layout_alignTop="@+id/text_livello_carburante"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

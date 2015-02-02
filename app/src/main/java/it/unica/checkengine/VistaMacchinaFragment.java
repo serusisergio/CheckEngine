@@ -1,5 +1,6 @@
 package it.unica.checkengine;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -70,6 +71,9 @@ public class VistaMacchinaFragment extends Fragment {
                     ((MyCarActivity)getActivity()).switchFragment(1,0);
                 }
             });
+            iconFuel.setImageResource(R.drawable.icon_fuel_drawable);
+            AnimationDrawable frameAnimation = (AnimationDrawable) iconFuel.getDrawable();
+            frameAnimation.start();
 
         }
         if(auto.isOlioRed()){
@@ -81,6 +85,9 @@ public class VistaMacchinaFragment extends Fragment {
                     ((MyCarActivity)getActivity()).switchFragment(1,0);
                 }
             });
+            iconMotore.setImageResource(R.drawable.icon_motore_drawable);
+            AnimationDrawable frameAnimation = (AnimationDrawable) iconMotore.getDrawable();
+            frameAnimation.start();
         }
 
 
@@ -94,12 +101,18 @@ public class VistaMacchinaFragment extends Fragment {
                 }
             });
             //se trova un'avaria illumina l'icona e esce subito per evitare che richiami piu di una volta l'onClick
+            iconMotore.setImageResource(R.drawable.icon_motore_drawable);
+            AnimationDrawable frameAnimation = (AnimationDrawable) iconMotore.getDrawable();
+            frameAnimation.start();
         }
 
         for(Tributo t : auto.getTributi()){
             if (t.isRed()) {
                 iconTributi.setVisibility(View.VISIBLE);
                 flagAvaria = true;
+                iconTributi.setImageResource(R.drawable.icon_tributi_drawable);
+                AnimationDrawable frameAnimation = (AnimationDrawable) iconTributi.getDrawable();
+                frameAnimation.start();
             }
             iconTributi.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,11 +120,12 @@ public class VistaMacchinaFragment extends Fragment {
                     ((MyCarActivity)getActivity()).switchFragment(1,2);
                 }
             });
+
         }
 
         for(Manutenzione t : auto.getManutenzioni()){
-            if (t.isRed(auto.getKm())){
-                if(t.getTipo().equals("Gomme")){
+            if (t.isScaduta(auto.getKm())){
+                if(t.getTipo().equals("Cambio gomme")){
                     for( ImageView ruota : iconRuote ) {
                         ruota.setVisibility(View.VISIBLE);
                         ruota.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +134,9 @@ public class VistaMacchinaFragment extends Fragment {
                                 ((MyCarActivity)getActivity()).switchFragment(1,1);
                             }
                         });
+                        ruota.setImageResource(R.drawable.icon_ruote_drawable);
+                        AnimationDrawable frameAnimation = (AnimationDrawable) ruota.getDrawable();
+                        frameAnimation.start();
                     }
                 } else {
                     iconManutenzioni.setVisibility(View.VISIBLE);
@@ -129,6 +146,9 @@ public class VistaMacchinaFragment extends Fragment {
                             ((MyCarActivity)getActivity()).switchFragment(1,1);
                         }
                     });
+                    iconManutenzioni.setImageResource(R.drawable.icon_englishkey_drawable);
+                    AnimationDrawable frameAnimation = (AnimationDrawable) iconManutenzioni.getDrawable();
+                    frameAnimation.start();
                 }
                 flagAvaria = true;
             }
