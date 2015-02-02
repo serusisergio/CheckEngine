@@ -1,6 +1,8 @@
 package it.unica.checkengine;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,14 +10,20 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 
 public class DettaglioTributiActivity extends ActionBarActivity {
     public static final String ARG_GARAGE = "garage";
     private Garage garage;
+    protected int mYear;
+    protected int mMonth;
+    protected int mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +68,14 @@ public class DettaglioTributiActivity extends ActionBarActivity {
         bottone_paga.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openAlert(v);
+                showDialog(0);
             }
         });
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
 
     }
 
@@ -81,50 +94,51 @@ public class DettaglioTributiActivity extends ActionBarActivity {
 
     }
 
+    protected DatePickerDialog.OnDateSetListener mDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    mYear = year;
+                    mMonth = monthOfYear;
+                    mDay = dayOfMonth;
+                }
+            };
+
+    protected Dialog onCreateDialog(int id) {
+        return new DatePickerDialog(this,
+                mDateSetListener,
+                mYear, mMonth, mDay);
+    }
+/*
     private void openAlert(View view) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DettaglioTributiActivity.this);
 
-        alertDialogBuilder.setTitle(this.getTitle()+ " decision");
+        alertDialogBuilder.setTitle(this.getTitle()+ " - pagamento");
 
-        alertDialogBuilder.setMessage("Are you sure?");
+        alertDialogBuilder.setMessage("Inserisci la data: ");
 
         // set positive button: Yes message
-
-        alertDialogBuilder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton("Conferma",new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog,int id) {
-                // go to a new activity of the app
-                Intent positveActivity = new Intent(getApplicationContext(),
-                        PagaTributoAlertDialogActivity.class);
-                startActivity(positveActivity);
-            }
-        });
-        // set negative button: No message
-
-        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int id) {
-                // cancel the alert box and put a Toast to the user
+                // Ritorna all'activity padre
                 dialog.cancel();
-                Toast.makeText(getApplicationContext(), "You chose a negative answer",
+                Toast.makeText(getApplicationContext(), "Data pagamento aggiornata",
                         Toast.LENGTH_LONG).show();
             }
         });
-        // set neutral button: Exit the app message
-
-        alertDialogBuilder.setNeutralButton("Exit the app",new DialogInterface.OnClickListener() {
-
+        // set negative button: No message
+        alertDialogBuilder.setNegativeButton("Annulla",new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog,int id) {
-
-                // exit the app and go to the HOME
-
-                DettaglioTributiActivity.this.finish();
-
+                // cancel the alert box and put a Toast to the user
+                dialog.cancel();
+                Toast.makeText(getApplicationContext(), "Annullamento inserimento data",
+                        Toast.LENGTH_LONG).show();
             }
-
         });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-    }
+    }*/
 }
 
 
