@@ -169,11 +169,13 @@ public class Auto implements Serializable{
     }
 
     public int getAutonomiaGiorni() {
-        return (int) (getCarburante() / getConsumoMedio() * 100) / getKmGiornalieri();
+        return (int) ((getCarburante() - CARBURANTE_RISERVA) / getConsumoMedio() * 100) / getKmGiornalieri();
     }
 
     public int getAutonomiaKm() {
-        return (int) (getCarburante() / getConsumoMedio() * 100);
+        int km = (int) ((getCarburante() - CARBURANTE_RISERVA) / getConsumoMedio() * 100);
+        if (km < 0) km = 0;
+        return km;
     }
 
 }
