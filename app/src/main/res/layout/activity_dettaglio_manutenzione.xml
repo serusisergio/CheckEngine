@@ -37,15 +37,15 @@
         android:text="Manutenzione"
         android:id="@+id/text_sottotitolo"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_toEndOf="@+id/semaforo"
+        android:paddingLeft="10dp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/semaforo"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/text_sottotitolo"
         android:src="@drawable/semaforo_rosso"
-        android:paddingLeft="50dp" />
+        android:layout_alignTop="@+id/text_sottotitolo"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
