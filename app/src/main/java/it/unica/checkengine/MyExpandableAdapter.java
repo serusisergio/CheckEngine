@@ -93,9 +93,9 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         //Popolo la lista di manutenzioni
         for(Manutenzione m : auto.getManutenzioni()){
             manutenzioni.add(m.getTipo());
-            if(m.isOrange(auto.getKm())){
+            if(m.isSogliaSuperata(auto.getKm())){
                 semaforiManutenzioni.add("orange");
-            } else if(m.isRed(auto.getKm())){
+            } else if(m.isScaduta(auto.getKm())){
                 semaforiManutenzioni.add("red");
             } else {
                 semaforiManutenzioni.add("green");

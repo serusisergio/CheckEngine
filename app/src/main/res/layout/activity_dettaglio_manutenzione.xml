@@ -11,11 +11,12 @@
         android:layout_height="wrap_content"
         android:text="Chiama il meccanico"
         android:id="@+id/button_meccanico"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
         android:background="@drawable/blue_button_style"
-        android:textColor="#fff"/>
+        android:textColor="#fff"
+        android:layout_marginBottom="57dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/text_messaggio" />
 
     <TextView
         android:layout_width="wrap_content"

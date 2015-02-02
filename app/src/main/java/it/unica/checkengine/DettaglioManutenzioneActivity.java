@@ -52,10 +52,10 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
         messaggio.setText(manutenzione.getMessaggio());
         Button bottoneChiama = (Button) findViewById(R.id.button_meccanico);
 
-        switch (tipoManutenzione) {
-            case "Gomme":
-                bottoneChiama.setText("CHIAMA IL GOMMISTA");
-                bottoneChiama.setOnClickListener(new View.OnClickListener() {
+        if (tipoManutenzione.equals("Cambio gomme")){
+            if(coloreSemaforo.equals("red")|| coloreSemaforo.equals("orange")){
+            bottoneChiama.setText("CHIAMA IL GOMMISTA");
+            bottoneChiama.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getApplicationContext(), "Sto chiamando il gommista", Toast.LENGTH_SHORT).show();
@@ -65,13 +65,13 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                     //startActivity(intent);
                 }
             });
-                break;
-            case "Tagliando":
-            {
-                bottoneChiama.setVisibility(View.INVISIBLE);
-                break;
             }
-            default:
+            else{
+                bottoneChiama.setVisibility(View.INVISIBLE);
+            }
+        }else if(tipoManutenzione.equals("Tagliando")){
+            bottoneChiama.setVisibility(View.INVISIBLE);
+        }else
                 bottoneChiama.setText("CHIAMA IL MECCANICO");
                 bottoneChiama.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -85,7 +85,8 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                 });
         }
 
-    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

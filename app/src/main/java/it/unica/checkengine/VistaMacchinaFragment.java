@@ -110,8 +110,8 @@ public class VistaMacchinaFragment extends Fragment {
         }
 
         for(Manutenzione t : auto.getManutenzioni()){
-            if (t.isRed(auto.getKm())){
-                if(t.getTipo().equals("Gomme")){
+            if (t.isScaduta(auto.getKm())){
+                if(t.getTipo().equals("Cambio gomme")){
                     for( ImageView ruota : iconRuote ) {
                         ruota.setVisibility(View.VISIBLE);
                         ruota.setOnClickListener(new View.OnClickListener() {

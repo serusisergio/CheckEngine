@@ -52,15 +52,13 @@ public class JSONParser {
                         m.getInt("kmUltimaRicorrenza"),
                         m.getInt("kmIntervallo"));
 
-                if(manutenzione.getKmUltimaRicorrenza()+manutenzione.getIntervalloRicorrenza()>= auto.getKm() + 200){
-                    manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia");
-                } else if(manutenzione.getKmUltimaRicorrenza()+manutenzione.getIntervalloRicorrenza()>= auto.getKm()){
-                    manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire al più presto possibile. Prendi appuntamento col tuo professionista di fiducia");
+                if(manutenzione.isSogliaSuperata(auto.getKm())){
+                    manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
+                } else if(manutenzione.isScaduta(auto.getKm())){
+                    manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire al più presto possibile. Prendi appuntamento col tuo professionista di fiducia.");
                 } else {
-                    manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra " + (manutenzione.getIntervalloRicorrenza() - (auto.getKm()-manutenzione.getKmUltimaRicorrenza()))
-                                            + " km");
+                        manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra "+manutenzione.getKmAllaScadenza(auto.getKm())+" Km.");
                 }
-
                 auto.addManutenzione(manutenzione);
             }
 
@@ -68,7 +66,7 @@ public class JSONParser {
                 JSONObject a = jAvarie.getJSONObject(i);
                 avaria = new Avaria(a.getString("tipo"), a.getInt("urgenza"));
 
-                String messaggio = "L'auto ha segnalato un problema a " + avaria.getTipo() + ". Prendi appuntamento col tuo professionista di fiducia";
+                String messaggio = "L'auto ha segnalato un problema a " + avaria.getTipo() + ". Prendi appuntamento col tuo professionista di fiducia.";
                 avaria.setMessaggio(messaggio);
 
                 auto.addAvaria(avaria);
