@@ -1,9 +1,7 @@
 package it.unica.checkengine;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -13,17 +11,25 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
 
 public class DettaglioTributiActivity extends ActionBarActivity {
     public static final String ARG_GARAGE = "garage";
-    private Garage garage;
     protected int mYear;
     protected int mMonth;
     protected int mDay;
+    protected DatePickerDialog.OnDateSetListener mDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    mYear = year;
+                    mMonth = monthOfYear;
+                    mDay = dayOfMonth;
+                }
+            };
+    private Garage garage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +38,7 @@ public class DettaglioTributiActivity extends ActionBarActivity {
 
         garage = (Garage) getIntent().getSerializableExtra(ARG_GARAGE);
         Auto auto = garage.getAuto();
-        Tributo tributo = (Tributo)getIntent().getSerializableExtra("dettagliTributi");
+        Tributo tributo = (Tributo) getIntent().getSerializableExtra("dettagliTributi");
         String tipoTributo = tributo.getTipo();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,7 +52,7 @@ public class DettaglioTributiActivity extends ActionBarActivity {
 
         ImageView semaforo = (ImageView) findViewById(R.id.semaforo);
         String coloreSemaforo = getIntent().getStringExtra("coloreSemaforo");
-        switch(coloreSemaforo){
+        switch (coloreSemaforo) {
             case "red":
                 semaforo.setImageDrawable(this.getResources().getDrawable(R.drawable.semaforo_rosso));
                 break;
@@ -63,10 +69,9 @@ public class DettaglioTributiActivity extends ActionBarActivity {
         messaggio.setText(tributo.getMessaggio());
 
 
-
         Button bottone_paga = (Button) findViewById(R.id.button_paga);
         bottone_paga.setText("INSERISCI DATA RINNOVO");
-        bottone_paga.setOnClickListener( new View.OnClickListener() {
+        bottone_paga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(0);
@@ -87,6 +92,7 @@ public class DettaglioTributiActivity extends ActionBarActivity {
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(getApplicationContext(), MyCarActivity.class);
                 intent.putExtra(GarageActivity.EXTRA_MESSAGE, garage.getAuto().getTarga());
+                intent.putExtra("sezione", 1);
                 startActivity(intent);
                 return true;
             default:
@@ -94,16 +100,6 @@ public class DettaglioTributiActivity extends ActionBarActivity {
         }
 
     }
-
-    protected DatePickerDialog.OnDateSetListener mDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    mYear = year;
-                    mMonth = monthOfYear;
-                    mDay = dayOfMonth;
-                }
-            };
 
     protected Dialog onCreateDialog(int id) {
         return new DatePickerDialog(this,

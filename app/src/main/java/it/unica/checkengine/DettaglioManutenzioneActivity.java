@@ -106,6 +106,7 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(getApplicationContext(), MyCarActivity.class);
                 intent.putExtra(GarageActivity.EXTRA_MESSAGE, garage.getAuto().getTarga());
+                intent.putExtra("sezione", 1);
                 startActivity(intent);
                 return true;
             default:

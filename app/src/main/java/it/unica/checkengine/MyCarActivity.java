@@ -42,6 +42,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
     private JSONObject auto;
     private Garage garage;
     private Fragment fragmentLista;
+    private int sezione;
 
     private void disegnaUI() {
 
@@ -88,6 +89,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
         setContentView(R.layout.activity_my_car);
         targa = getIntent().getStringExtra(GarageActivity.EXTRA_MESSAGE);
         Log.d("mycar", "targa: " + targa);
+        sezione = getIntent().getIntExtra("sezione", -1);
         new GetJson(this).execute();
     }
 
@@ -281,6 +283,11 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
                 String modello = auto.getString("modello");
                 setTitle(modello + " - " + nome);
                 parent.disegnaUI();
+
+                //Se sto venendo da una activity dettaglio sezione sarà 1
+                //mi sposto sulla lista
+                if (sezione == 1) switchFragment(1, 4);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
