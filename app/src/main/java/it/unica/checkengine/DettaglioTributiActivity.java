@@ -65,6 +65,7 @@ public class DettaglioTributiActivity extends ActionBarActivity {
 
 
         Button bottone_paga = (Button) findViewById(R.id.button_paga);
+        bottone_paga.setText("INSERISCI DATA RINNOVO");
         bottone_paga.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,36 +110,7 @@ public class DettaglioTributiActivity extends ActionBarActivity {
                 mDateSetListener,
                 mYear, mMonth, mDay);
     }
-/*
-    private void openAlert(View view) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DettaglioTributiActivity.this);
 
-        alertDialogBuilder.setTitle(this.getTitle()+ " - pagamento");
-
-        alertDialogBuilder.setMessage("Inserisci la data: ");
-
-        // set positive button: Yes message
-        alertDialogBuilder.setPositiveButton("Conferma",new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int id) {
-                // Ritorna all'activity padre
-                dialog.cancel();
-                Toast.makeText(getApplicationContext(), "Data pagamento aggiornata",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-        // set negative button: No message
-        alertDialogBuilder.setNegativeButton("Annulla",new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int id) {
-                // cancel the alert box and put a Toast to the user
-                dialog.cancel();
-                Toast.makeText(getApplicationContext(), "Annullamento inserimento data",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }*/
 }
 
 
