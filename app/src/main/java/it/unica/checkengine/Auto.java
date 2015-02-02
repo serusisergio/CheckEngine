@@ -173,9 +173,7 @@ public class Auto implements Serializable{
     }
 
     public int getAutonomiaKm() {
-        int km = (int) ((getCarburante() - CARBURANTE_RISERVA) / getConsumoMedio() * 100);
-        if (km < 0) km = 0;
-        return km;
+        return (int) (getCarburante() / getConsumoMedio() * 100);
     }
 
 }

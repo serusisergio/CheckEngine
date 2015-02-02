@@ -84,7 +84,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
 
 
         if (giorniRimanenti < 1) {
-            testoRifornimentoPrevisto.setText("Rifornimento previsto oggi ! ");
+            testoRifornimentoPrevisto.setText("Rifornimento previsto oggi!");
         } else if (giorniRimanenti == 1) {
             testoRifornimentoPrevisto.setText("Rifornimento previsto tra: 1 giorno");
         } else {
