@@ -43,7 +43,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
     private Garage garage;
     private Fragment fragmentLista;
 
-    private void disegnaUI(){
+    private void disegnaUI() {
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -82,13 +82,12 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_car);
         targa = getIntent().getStringExtra(GarageActivity.EXTRA_MESSAGE);
-        Log.d("mycar","targa: " + targa);
+        Log.d("mycar", "targa: " + targa);
         new GetJson(this).execute();
     }
 
@@ -143,8 +142,9 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
         }
     }
 
-    public void switchFragment(int target, int sezioneDaAprire){
+    public void switchFragment(int target, int sezioneDaAprire) {
         Log.d("SwitchFragment", "Voglio aprire la sezione " + sezioneDaAprire);
+        //if(target==1) Toast.makeText(getApplicationContext(), "Clicca sulla lista per aprire il dettaglio", Toast.LENGTH_SHORT).show();
         ((VistaListaFragment) fragmentLista).settaSezioni(sezioneDaAprire);
         mViewPager.setCurrentItem(target);
     }
@@ -214,7 +214,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
 
         MyCarActivity parent;
 
-        public GetJson(MyCarActivity parent){
+        public GetJson(MyCarActivity parent) {
             this.parent = parent;
         }
 
@@ -235,7 +235,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
             ServiceHandler sh = new ServiceHandler();
 
             // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(url+targa, ServiceHandler.GET);
+            String jsonStr = sh.makeServiceCall(url + targa, ServiceHandler.GET);
 
             Log.d("doInbackground", targa);
             Log.d("Response: ", "> " + jsonStr);
@@ -253,7 +253,7 @@ public class MyCarActivity extends ActionBarActivity implements ActionBar.TabLis
                     JSONParser parser = new JSONParser();
                     garage = parser.parse(jsonS);
                     Log.d("mycaractivity-doinbackground", "prima del parse");
-                    if(garage==null){
+                    if (garage == null) {
                         Log.d("mycaractivity-parse", "ho parsato il json ma è null");
                     } else {
                         Log.d("mycaractivity-parse", "ho parsato il json e non è null padre pio");

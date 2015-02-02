@@ -66,22 +66,22 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         //Popolo la lista di segnalazioni
 
         segnalazioni.add("Livello Carburante");
-        if(auto.isCarburanteOrange()){
+        if (auto.isCarburanteOrange()) {
             semaforiSegnalazioni.add("orange");
-        } else if(auto.isCarburanteRed()){
+        } else if (auto.isCarburanteRed()) {
             semaforiSegnalazioni.add("red");
         } else {
             semaforiSegnalazioni.add("green");
         }
 
         segnalazioni.add("Livello Olio");
-        if(auto.isOlioRed()){
+        if (auto.isOlioRed()) {
             semaforiSegnalazioni.add("red");
         } else {
             semaforiSegnalazioni.add("green");
         }
 
-        for(Avaria a : auto.getAvarie()){
+        for (Avaria a : auto.getAvarie()) {
             segnalazioni.add(a.getTipo());
             if (a.isUrgenzaRed()) {
                 semaforiSegnalazioni.add("red");
@@ -91,11 +91,11 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         }
 
         //Popolo la lista di manutenzioni
-        for(Manutenzione m : auto.getManutenzioni()){
+        for (Manutenzione m : auto.getManutenzioni()) {
             manutenzioni.add(m.getTipo());
-            if(m.isSogliaSuperata(auto.getKm())){
+            if (m.isSogliaSuperata(auto.getKm())) {
                 semaforiManutenzioni.add("orange");
-            } else if(m.isScaduta(auto.getKm())){
+            } else if (m.isScaduta(auto.getKm())) {
                 semaforiManutenzioni.add("red");
             } else {
                 semaforiManutenzioni.add("green");
@@ -103,11 +103,11 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         }
 
         //popolo la lista dei tributi
-        for(Tributo t : auto.getTributi()){
+        for (Tributo t : auto.getTributi()) {
             tributi.add(t.getTipo());
-            if(t.isOrange()){
+            if (t.isOrange()) {
                 semaforiTributi.add("orange");
-            } else if(t.isRed()){
+            } else if (t.isRed()) {
                 semaforiTributi.add("red");
             } else {
                 semaforiTributi.add("green");
@@ -124,10 +124,10 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
             if (sezione.equals("Segnalazioni")) {
                 items = segnalazioni;
                 semafori = semaforiSegnalazioni;
-            } else if (sezione.equals("Manutenzioni")){
+            } else if (sezione.equals("Manutenzioni")) {
                 items = manutenzioni;
                 semafori = semaforiManutenzioni;
-            } else if (sezione.equals("Tributi")){
+            } else if (sezione.equals("Tributi")) {
                 items = tributi;
                 semafori = semaforiTributi;
             }
@@ -141,7 +141,6 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     }
 
 
-
     public Object getChild(int groupPosition, int childPosition) {
         return messageCollections.get(messaggi.get(groupPosition)).get(childPosition);
     }
@@ -149,6 +148,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     public String getSemaforo(int groupPosition, int childPosition) {
         return semaforiCollections.get(messaggi.get(groupPosition)).get(childPosition);
     }
+
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
@@ -172,12 +172,12 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
         ImageView ImageSemaforo = (ImageView) convertView.findViewById(R.id.semaforo);
 
-        switch(semaforo){
+        switch (semaforo) {
             case "red":
                 ImageSemaforo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.semaforo_rosso));
                 break;
             case "orange":
-            ImageSemaforo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.semaforo_arancio));
+                ImageSemaforo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.semaforo_arancio));
                 break;
             case "green":
                 ImageSemaforo.setImageDrawable(convertView.getResources().getDrawable(R.drawable.semaforo_verde));
@@ -214,43 +214,43 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 if (gruppo.equals("Segnalazioni")) {
-                    if(riga.equals("Livello Carburante")) {
+                    if (riga.equals("Livello Carburante")) {
                         Intent intent = new Intent(context, DettaglioCarburanteActivity.class);
                         intent.putExtra(DettaglioCarburanteActivity.ARG_GARAGE, garage);
                         context.startActivity(intent);
-                    }else if(riga.equals("Livello Olio")) {
+                    } else if (riga.equals("Livello Olio")) {
                         Intent intent = new Intent(context, DettaglioAvarieActivity.class);
                         intent.putExtra(DettaglioAvarieActivity.ARG_GARAGE, garage);
-                        intent.putExtra("coloreSemaforo",semaforo);
+                        intent.putExtra("coloreSemaforo", semaforo);
                         Avaria avariaOlio = new Avaria("Livello Olio", autoEsterna.getMessaggioLivelloOlio());
-                        intent.putExtra("dettagliAvarie",avariaOlio);
+                        intent.putExtra("dettagliAvarie", avariaOlio);
                         context.startActivity(intent);
 
-                    }else{
+                    } else {
                         Intent intent = new Intent(context, DettaglioAvarieActivity.class);
                         intent.putExtra(DettaglioAvarieActivity.ARG_GARAGE, garage);
-                        intent.putExtra("coloreSemaforo",semaforo);
-                        for(Avaria a : listaAvarie){
-                            if (riga.equals(a.getTipo())){
-                                intent.putExtra("dettagliAvarie",a);
+                        intent.putExtra("coloreSemaforo", semaforo);
+                        for (Avaria a : listaAvarie) {
+                            if (riga.equals(a.getTipo())) {
+                                intent.putExtra("dettagliAvarie", a);
                                 break;
                             }
                         }
                         context.startActivity(intent);
 
                     }
-                }else if(gruppo.equals("Manutenzioni")){
+                } else if (gruppo.equals("Manutenzioni")) {
                     Intent intent = new Intent(context, DettaglioManutenzioneActivity.class);
                     intent.putExtra(DettaglioManutenzioneActivity.ARG_GARAGE, garage);
-                    intent.putExtra("coloreSemaforo",semaforo);
-                    for(Manutenzione man : listaManutenzioni){
-                        if (riga.equals(man.getTipo())){
-                            intent.putExtra("dettagliManutenzione",man);
+                    intent.putExtra("coloreSemaforo", semaforo);
+                    for (Manutenzione man : listaManutenzioni) {
+                        if (riga.equals(man.getTipo())) {
+                            intent.putExtra("dettagliManutenzione", man);
                             break;
                         }
                     }
                     context.startActivity(intent);
-                }else if(gruppo.equals("Tributi")) {
+                } else if (gruppo.equals("Tributi")) {
                     Intent intent = new Intent(context, DettaglioTributiActivity.class);
                     intent.putExtra(DettaglioTributiActivity.ARG_GARAGE, garage);
                     intent.putExtra("coloreSemaforo", semaforo);
