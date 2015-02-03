@@ -52,12 +52,36 @@ public class JSONParser {
                         m.getInt("kmUltimaRicorrenza"),
                         m.getInt("kmIntervallo"));
 
-                if(manutenzione.isSogliaSuperata(auto.getKm())){
-                    manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
+                if(manutenzione.isSogliaSuperata(auto.getKm())) {
+                    if (manutenzione.getTipo().equals("Tagliando")){
+                        manutenzione.setMessaggio("Il "+manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
+                    }else if(manutenzione.getTipo().equals("Cambio gomme")){
+                        manutenzione.setMessaggio("Il "+manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo gommista di fiducia.");
+                    }else if(manutenzione.getTipo().equals("Cambio olio")){
+                        manutenzione.setMessaggio("Il "+manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo meccanico di fiducia.");
+                    }else{
+                        manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
+                    }
                 } else if(manutenzione.isScaduta(auto.getKm())){
-                    manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire al più presto possibile. Prendi appuntamento col tuo professionista di fiducia.");
+                    if(manutenzione.getTipo().equals("Tagliando")) {
+                        manutenzione.setMessaggio("Il tagliando è da eseguire al più presto possibile. Prendi appuntamento col tuo meccanico di fiducia.");
+                    }else if(manutenzione.getTipo().equals("Cambio gomme")){
+                        manutenzione.setMessaggio("Il cambio gomme è da eseguire tra meno di 200 km. Prendi appuntamento col tuo gommista di fiducia.");
+                    }else if(manutenzione.getTipo().equals("Cambio olio")){
+                        manutenzione.setMessaggio("Il cambio olio è da eseguire tra meno di 200 km. Prendi appuntamento col tuo meccanico di fiducia.");
+                    }else{
+                        manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
+                    }
                 } else {
-                        manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra "+manutenzione.getKmAllaScadenza(auto.getKm())+" Km.");
+                    if(manutenzione.getTipo().equals("Tagliando")){
+                        manutenzione.setMessaggio("Il tagliando è da eseguire tra "+manutenzione.getKmAllaScadenza(auto.getKm())+" Km.");
+                    }else if(manutenzione.getTipo().equals("Cambio gomme")){
+                        manutenzione.setMessaggio("Il cambio gomme è da eseguire tra "+manutenzione.getKmAllaScadenza(auto.getKm())+" Km.");
+                    }else if(manutenzione.getTipo().equals("Cambio olio")){
+                        manutenzione.setMessaggio("Il cambio olio è da eseguire tra "+manutenzione.getKmAllaScadenza(auto.getKm())+" Km.");
+                    }else{
+                        manutenzione.setMessaggio(manutenzione.getTipo() +" è da eseguire tra "+manutenzione.getKmAllaScadenza(auto.getKm())+" Km.");
+                    }
                 }
                 auto.addManutenzione(manutenzione);
             }
