@@ -18,13 +18,18 @@ public class DettaglioAvarieActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dettaglio_avarie);
+        //setContentView(R.layout.activity_dettaglio_avarie);
 
 
         garage = (Garage) getIntent().getSerializableExtra(ARG_GARAGE);
         Auto auto = garage.getAuto();
         Avaria avaria = (Avaria)getIntent().getSerializableExtra("dettagliAvarie");
         String tipoAvaria = avaria.getTipo();
+        if(avaria.getTipo().equals("Foratura Gomme")){
+            setContentView(R.layout.activity_dettaglio_avarie_gommista);
+        }else{
+            setContentView(R.layout.activity_dettaglio_avarie);
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -52,26 +57,41 @@ public class DettaglioAvarieActivity extends ActionBarActivity {
 
         TextView messaggio = (TextView) findViewById(R.id.text_messaggio);
         messaggio.setText(avaria.getMessaggio());
-
-
-        Button bottoneChiama = (Button) findViewById(R.id.button_meccanico);
+        Button bottoneChiama;
+        if(avaria.getTipo().equals("Foratura Gomme")){
+            bottoneChiama = (Button) findViewById(R.id.button_gommista);
+        }else {
+            bottoneChiama = (Button) findViewById(R.id.button_meccanico);
+        }
 
         //Se si tratta di un avaria dell'olio e il suo semaforo è verde il bottone per contattare il meccanico non appare
         if(tipoAvaria.equals("Livello Olio") && coloreSemaforo.equals("green"))
         {
             bottoneChiama.setVisibility(View.INVISIBLE);
         }else{
-            bottoneChiama.setText("CHIAMA IL MECCANICO");
-            bottoneChiama.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Sto chiamando il meccanico", Toast.LENGTH_SHORT).show();
-                    String numM = "tel:" + garage.getNumMeccanico();
-                    //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
-                    //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
-                    //startActivity(intent);
-                }
-            });
+            if(tipoAvaria.equals("Foratura Gomme")) {
+                bottoneChiama.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "Sto chiamando il gommista", Toast.LENGTH_SHORT).show();
+                        String numM = "tel:" + garage.getNumGommista();
+                        //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
+                        //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
+                        //startActivity(intent);
+                    }
+                });
+            }else{
+                bottoneChiama.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "Sto chiamando il meccanico", Toast.LENGTH_SHORT).show();
+                        String numM = "tel:" + garage.getNumMeccanico();
+                        //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
+                        //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
+                        //startActivity(intent);
+                    }
+                });
+            }
         }
 
     }
