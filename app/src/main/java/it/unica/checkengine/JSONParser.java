@@ -89,8 +89,18 @@ public class JSONParser {
             for(int i=0; i<jAvarie.length(); i++){
                 JSONObject a = jAvarie.getJSONObject(i);
                 avaria = new Avaria(a.getString("tipo"), a.getInt("urgenza"));
-
-                String messaggio = "L'auto ha segnalato un problema a " + avaria.getTipo() + ". Prendi appuntamento col tuo professionista di fiducia.";
+                String messaggio;
+                if(avaria.getTipo().equals("Avaria luci")) {
+                    messaggio = "L'auto ha segnalato un problema all'impianto luci. Prendi appuntamento col tuo meccanico o elettrauto di fiducia.";
+                }else if(avaria.getTipo().equals("Avaria freni")){
+                    messaggio = "L'auto ha segnalato un problema all'impianto freni. Prendi appuntamento col tuo meccanico di fiducia.";
+                }else if(avaria.getTipo().equals("Foratura Gomme")){
+                    messaggio= "L'auto ha segnalato un problema alle gomme, pressione insufficiente, possibile foratura. Prendi appuntamento col tuo gommista di fiducia.";
+                }else if(avaria.getTipo().equals("Avaria batteria")){
+                    messaggio= "L'auto ha segnalato un problema di bassa tensione della batteria. Prendi appuntamento col tuo meccanico di fiducia.";
+                }else{
+                    messaggio = "L'auto ha segnalato un problema a " + avaria.getTipo() + ". Prendi appuntamento col tuo professionista di fiducia.";
+                }
                 avaria.setMessaggio(messaggio);
 
                 auto.addAvaria(avaria);
@@ -113,11 +123,11 @@ public class JSONParser {
                     tributo.setMessaggio(tributo.getTipo() + " scadrà tra meno di 30 giorni. Ricordati che l'importo da pagare è "+tributo.getImporto()+"€");
                 } else if(dataOggi.after(dataScadenza)){
                     if(tributo.getTipo().equals("Revisione")) {
-                        tributo.setMessaggio("La " + tributo.getTipo() + " è scaduta. L'importo è circa " + tributo.getImporto() + "€");
+                        tributo.setMessaggio("La " + tributo.getTipo() + " è scaduta. L'importo da pagare è circa " + tributo.getImporto() + "€");
                     }else if(tributo.getTipo().equals("Bollo" )){
-                        tributo.setMessaggio("Il " + tributo.getTipo() + " è scaduto. L'importo è circa " + tributo.getImporto() + "€");
+                        tributo.setMessaggio("Il " + tributo.getTipo() + " è scaduto. L'importo da pagare è circa " + tributo.getImporto() + "€");
                     }else if(tributo.getTipo().equals("Assicurazione")){
-                        tributo.setMessaggio("L'" + tributo.getTipo() + " è scaduta. L'importo è circa " + tributo.getImporto() + "€");
+                        tributo.setMessaggio("L'" + tributo.getTipo() + " è scaduta. L'importo da pagare è circa " + tributo.getImporto() + "€");
                     }else{
                         tributo.setMessaggio(tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllScadenza() + ". L'importo è circa" + tributo.getImporto() + "€");
 
