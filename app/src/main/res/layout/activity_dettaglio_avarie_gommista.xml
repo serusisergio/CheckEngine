@@ -9,7 +9,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chiama Gommista"
+        android:text="----Chiama Gommista"
         android:id="@+id/button_gommista"
         android:background="@drawable/blue_button_style_gommista"
         android:textColor="#fff"

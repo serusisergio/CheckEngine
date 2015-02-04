@@ -70,6 +70,7 @@ public class DettaglioAvarieActivity extends ActionBarActivity {
             bottoneChiama.setVisibility(View.INVISIBLE);
         }else{
             if(tipoAvaria.equals("Foratura Gomme")) {
+                bottoneChiama.setText("CHIAMA IL GOMMISTA");
                 bottoneChiama.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -81,6 +82,7 @@ public class DettaglioAvarieActivity extends ActionBarActivity {
                     }
                 });
             }else{
+                bottoneChiama.setText("CHIAMA IL MECCANICO");
                 bottoneChiama.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
