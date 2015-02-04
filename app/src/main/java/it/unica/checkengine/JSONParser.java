@@ -95,7 +95,7 @@ public class JSONParser {
                 }else if(avaria.getTipo().equals("Avaria freni")){
                     messaggio = "L'auto ha segnalato un problema all'impianto freni. Prendi appuntamento col tuo meccanico di fiducia.";
                 }else if(avaria.getTipo().equals("Foratura Gomme")){
-                    messaggio= "L'auto ha segnalato un problema alle gomme, pressione insufficiente, possibile foratura. Prendi appuntamento col tuo gommista di fiducia.";
+                    messaggio= "L'auto ha segnalato un problema alla pressione dei pneumatici, possibile foratura. Prendi appuntamento col tuo gommista di fiducia.";
                 }else if(avaria.getTipo().equals("Avaria batteria")){
                     messaggio= "L'auto ha segnalato un problema di bassa tensione della batteria. Prendi appuntamento col tuo meccanico di fiducia.";
                 }else{
