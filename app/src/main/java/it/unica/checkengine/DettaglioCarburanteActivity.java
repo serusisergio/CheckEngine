@@ -90,7 +90,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         } else {
             testoRifornimentoPrevisto.setText("Rifornimento previsto tra: " + giorniRimanenti + " giorni");
         }
-        testoKmRimanenti.setText("Km rimanenti stimati: " + kmRimanenti + " Km");
+        testoKmRimanenti.setText("Chilometri rimanenti stimati: " + kmRimanenti + " km");
         testoSogliaPreavviso.setText("Soglia preavviso: ");
 
         //impostazioni seekbar e editText

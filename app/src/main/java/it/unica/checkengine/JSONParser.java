@@ -84,13 +84,13 @@ public class JSONParser {
                 } else {
                     switch (manutenzione.getTipo().toLowerCase()) {
                         case "tagliando":
-                            manutenzione.setMessaggio("Il tagliando è da eseguire tra " + manutenzione.getKmAllaScadenza(auto.getKm()) + " Km.");
+                            manutenzione.setMessaggio("Il tagliando è da eseguire tra " + manutenzione.getKmAllaScadenza(auto.getKm()) + " km.");
                             break;
                         case "cambio gomme":
-                            manutenzione.setMessaggio("Il cambio gomme è da eseguire tra " + manutenzione.getKmAllaScadenza(auto.getKm()) + " Km.");
+                            manutenzione.setMessaggio("Il cambio gomme è da eseguire tra " + manutenzione.getKmAllaScadenza(auto.getKm()) + " km.");
                             break;
                         case "cambio olio":
-                            manutenzione.setMessaggio("Il cambio olio è da eseguire tra " + manutenzione.getKmAllaScadenza(auto.getKm()) + " Km.");
+                            manutenzione.setMessaggio("Il cambio olio è da eseguire tra " + manutenzione.getKmAllaScadenza(auto.getKm()) + " km.");
                             break;
                         default:
                             manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
