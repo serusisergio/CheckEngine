@@ -20,7 +20,6 @@ public class DettaglioAvarieActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_dettaglio_avarie);
 
-
         garage = (Garage) getIntent().getSerializableExtra(ARG_GARAGE);
         Auto auto = garage.getAuto();
         Avaria avaria = (Avaria)getIntent().getSerializableExtra("dettagliAvarie");
