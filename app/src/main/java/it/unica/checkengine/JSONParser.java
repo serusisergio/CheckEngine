@@ -137,34 +137,34 @@ public class JSONParser {
                 Long l = new Long((dataScadenza.getTime() - dataOggi.getTime())/86400000l);
                 tributo.setGiorniAllaScadenza(l.intValue());
                 if(dataOggi.after(dataAvviso) && !dataOggi.after(dataScadenza)){
-                    tributo.setMessaggio(tributo.getTipo() + " scadrà tra meno di 30 giorni. Ricordati che l'importo da pagare è "+tributo.getImporto()+"€");
+                    tributo.setMessaggio(tributo.getTipo() + " scadrà tra meno di 30 giorni. Ricordati che l'importo da pagare è " + tributo.getImporto() + "€.");
                 } else if(dataOggi.after(dataScadenza)){
                     switch ((tributo.getTipo().toLowerCase())) {
                         case "revisione":
-                            tributo.setMessaggio("La " + tributo.getTipo() + " è scaduta. L'importo da pagare è circa " + tributo.getImporto() + "€");
+                            tributo.setMessaggio("La " + tributo.getTipo() + " è scaduta. L'importo da pagare è " + tributo.getImporto() + "€.");
                             break;
                         case "bollo":
-                            tributo.setMessaggio("Il " + tributo.getTipo() + " è scaduto. L'importo da pagare è circa " + tributo.getImporto() + "€");
+                            tributo.setMessaggio("Il " + tributo.getTipo() + " è scaduto. L'importo da pagare è " + tributo.getImporto() + "€.");
                             break;
                         case "assicurazione":
-                            tributo.setMessaggio("L'" + tributo.getTipo() + " è scaduta. L'importo da pagare è circa " + tributo.getImporto() + "€");
+                            tributo.setMessaggio("L'" + tributo.getTipo() + " è scaduta. L'importo da pagare è  " + tributo.getImporto() + "€.");
                             break;
                         default:
-                            tributo.setMessaggio(tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è circa " + tributo.getImporto() + "€");
+                            tributo.setMessaggio(tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è " + tributo.getImporto() + "€.");
                     }
                 } else {
                     switch ((tributo.getTipo().toLowerCase())) {
                         case "revisione":
-                            tributo.setMessaggio("La " + tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è circa " + tributo.getImporto() + "€");
+                            tributo.setMessaggio("La " + tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è " + tributo.getImporto() + "€.");
                             break;
                         case "bollo":
-                            tributo.setMessaggio("Il " + tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è circa " + tributo.getImporto() + "€");
+                            tributo.setMessaggio("Il " + tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è " + tributo.getImporto() + "€.");
                             break;
                         case "assicurazione":
-                            tributo.setMessaggio("L'" + tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è circa " + tributo.getImporto() + "€");
+                            tributo.setMessaggio("L'" + tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è " + tributo.getImporto() + "€.");
                             break;
                         default:
-                            tributo.setMessaggio(tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è circa " + tributo.getImporto() + "€");
+                            tributo.setMessaggio(tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è " + tributo.getImporto() + "€.");
                     }
                 }
 
