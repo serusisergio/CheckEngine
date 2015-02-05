@@ -14,7 +14,7 @@
         android:layout_above="@+id/button_eseguita"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="23dp"
         android:background="@drawable/blue_button_style"
         android:text="CHIAMA IL MECCANICO"
         android:textColor="#fff" />

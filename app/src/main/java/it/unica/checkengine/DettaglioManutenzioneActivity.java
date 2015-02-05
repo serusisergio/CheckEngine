@@ -2,6 +2,7 @@ package it.unica.checkengine;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -67,8 +68,8 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "Sto chiamando il gommista", Toast.LENGTH_SHORT).show();
                     String numG = "tel:" + garage.getNumGommista();
                     //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
-                    //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numG));
-                    //startActivity(intent);
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numG));
+                    startActivity(intent);
                 }
             });
         } else {
@@ -78,8 +79,8 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "Sto chiamando il meccanico", Toast.LENGTH_SHORT).show();
                     String numM = "tel:" + garage.getNumMeccanico();
                     //commento le prossime 2 righe per il momento che mi partono chiamate quando testo il bottone
-                    //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
-                    //startActivity(intent);
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(numM));
+                    startActivity(intent);
                 }
             });
         }
