@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -22,13 +23,14 @@ public class DettaglioTributiActivity extends ActionBarActivity {
     protected int mDay;
     protected DatePickerDialog.OnDateSetListener mDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                     mYear = year;
                     mMonth = monthOfYear;
                     mDay = dayOfMonth;
+                    Toast.makeText(getApplicationContext(), "La nuova data inserita è "+mDay+"/"+mMonth+"/"+mYear+".", Toast.LENGTH_SHORT).show();
                 }
             };
+
     private Garage garage;
 
     @Override
@@ -102,9 +104,7 @@ public class DettaglioTributiActivity extends ActionBarActivity {
     }
 
     protected Dialog onCreateDialog(int id) {
-        return new DatePickerDialog(this,
-                mDateSetListener,
-                mYear, mMonth, mDay);
+        return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
     }
 
 }
