@@ -3,6 +3,7 @@ package it.unica.checkengine;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,18 +26,23 @@ public class DettaglioTributiActivity extends ActionBarActivity {
     protected int mMonth;
     protected int mDay;
     String tipoTributo;
-    protected DatePickerDialog.OnDateSetListener mDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    mYear = year;
-                    mMonth = monthOfYear + 1;
-                    mDay = dayOfMonth;
-                    url = "http://checkengine.matta.ga/datatributo.php?nome=" + tipoTributo + "&targa=" + auto.getTarga() + "&data=" + mYear + "-" + mMonth + "-" + mDay;
-                    url = url.replace(" ", "%20");
-                    Log.d("DettaglioTributiAct", url);
-                    new aggiornaDataThread(me).execute();
+    boolean isFineClicked = true;
+
+    protected DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                  public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                      /*Log.d("sono dentro","onDateSetListener");
+                    if(isFineClicked) {
+                        mYear = year;
+                        mMonth = monthOfYear + 1;
+                        mDay = dayOfMonth;
+                        url = "http://checkengine.matta.ga/datatributo.php?nome=" + tipoTributo + "&targa=" + auto.getTarga() + "&data=" + mYear + "-" + mMonth + "-" + mDay;
+                        url = url.replace(" ", "%20");
+                        new aggiornaDataThread(me).execute();
+                    }
+                    else{}*/
                 }
             };
+
     Auto auto;
     private ProgressDialog pDialog;
     private String output, url;
@@ -117,7 +123,26 @@ public class DettaglioTributiActivity extends ActionBarActivity {
     }
 
     protected Dialog onCreateDialog(int id) {
-        return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+
+        DatePickerDialog dataPicker = new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+        dataPicker.setButton(DialogInterface.BUTTON_NEGATIVE, "Annulla", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d("sono dentro","onClick negativo");
+                dialog.cancel();
+            }
+        });
+        dataPicker.setButton(DialogInterface.BUTTON_POSITIVE, "OK cavallo", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d("sono dentro","onClick positivo");
+                url = "http://checkengine.matta.ga/datatributo.php?nome=" + tipoTributo + "&targa=" + auto.getTarga() + "&data=" + mYear + "-" + (mMonth+1) + "-" + mDay;
+                url = url.replace(" ", "%20");
+                Log.d("Dettagliotributiactivity",url);
+                new aggiornaDataThread(me).execute();
+
+                dialog.cancel();
+            }
+        });
+        return dataPicker;
     }
 
     public void dataAggiornata() {
