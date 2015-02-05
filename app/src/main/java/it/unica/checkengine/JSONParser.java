@@ -130,15 +130,15 @@ public class JSONParser {
 
                 Date dataOggi = new Date();
 
-                //2592000000l = 30 giorni
-                Date dataAvviso = new Date(tributo.getUltimaRicorrenza().getTime() + tributo.getIntervalloPagameto()*86400000l - 2592000000l);
-                Date dataScadenza = new Date(tributo.getUltimaRicorrenza().getTime() + tributo.getIntervalloPagameto()*86400000l);
+
+                Date dataScadenza = new Date(tributo.getUltimaRicorrenza().getTime() + tributo.getIntervalloPagamento() * 86400000l);
 
                 Long l = new Long((dataScadenza.getTime() - dataOggi.getTime())/86400000l);
                 tributo.setGiorniAllaScadenza(l.intValue());
-                if(dataOggi.after(dataAvviso) && !dataOggi.after(dataScadenza)){
+
+                if (tributo.isOrange()) {
                     tributo.setMessaggio(tributo.getTipo() + " scadrà tra meno di 30 giorni. Ricordati che l'importo da pagare è " + tributo.getImporto() + "€.");
-                } else if(dataOggi.after(dataScadenza)){
+                } else if (tributo.isRed()) {
                     switch ((tributo.getTipo().toLowerCase())) {
                         case "revisione":
                             tributo.setMessaggio("La " + tributo.getTipo() + " è scaduta. L'importo da pagare è " + tributo.getImporto() + "€.");

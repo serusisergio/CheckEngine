@@ -13,18 +13,18 @@ public class Tributo implements Serializable{
     private String messaggio;
     private double importo;
     private Date ultimaRicorrenza;
-    private int intervalloPagameto;
+    private int intervalloPagamento;
     private int giorniAllaScadenza;
 
     public Tributo(){
 
     }
 
-    public Tributo(String tipo, double importo, Date ultimaRicorrenza, int intervalloPagameto){
+    public Tributo(String tipo, double importo, Date ultimaRicorrenza, int intervalloPagamento) {
         setTipo(tipo);
         setImporto(importo);
         setUltimaRicorrenza(ultimaRicorrenza);
-        setIntervalloPagameto(intervalloPagameto);
+        setIntervalloPagamento(intervalloPagamento);
     }
 
     public String getTipo() {
@@ -43,12 +43,12 @@ public class Tributo implements Serializable{
         this.ultimaRicorrenza = ultimaRicorrenza;
     }
 
-    public int getIntervalloPagameto() {
-        return intervalloPagameto;
+    public int getIntervalloPagamento() {
+        return intervalloPagamento;
     }
 
-    public void setIntervalloPagameto(int intervalloPagameto) {
-        this.intervalloPagameto = intervalloPagameto;
+    public void setIntervalloPagamento(int intervalloPagamento) {
+        this.intervalloPagamento = intervalloPagamento;
     }
 
     public double getImporto() {
@@ -77,18 +77,18 @@ public class Tributo implements Serializable{
 
     public boolean isRed(){
         Date dataOggi = new Date();
-        Date dataScadenza = new Date(getUltimaRicorrenza().getTime() + getIntervalloPagameto()*86400000l);
+        Date dataScadenza = new Date(getUltimaRicorrenza().getTime() + getIntervalloPagamento() * 86400000l);
         //return dataOggi.after(dataScadenza);
         Log.d("dataoggi", ""+dataOggi.getTime());
         Log.d("datascadenza", ""+dataScadenza.getTime());
-        Log.d("intervallopagamento", ""+getIntervalloPagameto());
+        Log.d("intervallopagamento", "" + getIntervalloPagamento());
         return dataOggi.getTime()>dataScadenza.getTime();
     }
 
     public boolean isOrange(){
         Date dataOggi = new Date();
         //2592000000l = 30 giorni in unix time
-        Date dataAvviso = new Date(getUltimaRicorrenza().getTime() + getIntervalloPagameto()*86400000l - 2592000000l);
+        Date dataAvviso = new Date(getUltimaRicorrenza().getTime() + getIntervalloPagamento() * 86400000l - 2592000000l);
         return dataOggi.getTime() > dataAvviso.getTime() && !isRed();
     }
 }

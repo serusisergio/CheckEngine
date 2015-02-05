@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,27 +21,26 @@ import java.util.Calendar;
 
 public class DettaglioTributiActivity extends ActionBarActivity {
     public static final String ARG_GARAGE = "garage";
-    private ProgressDialog pDialog;
-    private String output, url;
-    String tipoTributo;
-    Auto auto;
     protected int mYear;
     protected int mMonth;
     protected int mDay;
-    private DettaglioTributiActivity me;
-
+    String tipoTributo;
     protected DatePickerDialog.OnDateSetListener mDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                     mYear = year;
-                    mMonth = monthOfYear;
+                    mMonth = monthOfYear + 1;
                     mDay = dayOfMonth;
-                    url = "http://checkengine.matta.ga/datatributo.php?nome="+tipoTributo+"&targa="+auto.getTarga()+"&data="+mYear+"/"+mMonth+"/"+mDay;
+                    url = "http://checkengine.matta.ga/datatributo.php?nome=" + tipoTributo + "&targa=" + auto.getTarga() + "&data=" + mYear + "-" + mMonth + "-" + mDay;
                     url = url.replace(" ", "%20");
+                    Log.d("DettaglioTributiAct", url);
                     new aggiornaDataThread(me).execute();
                 }
             };
-
+    Auto auto;
+    private ProgressDialog pDialog;
+    private String output, url;
+    private DettaglioTributiActivity me;
     private Garage garage;
 
     @Override
@@ -122,11 +120,24 @@ public class DettaglioTributiActivity extends ActionBarActivity {
         return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
     }
 
+    public void dataAggiornata() {
+
+        if (new String("ok").equals(output)) {
+            Toast.makeText(getApplicationContext(), "La nuova data inserita è " + mDay + "/" + mMonth + "/" + mYear + ".", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), MyCarActivity.class);
+            intent.putExtra(GarageActivity.EXTRA_MESSAGE, garage.getAuto().getTarga());
+            startActivity(intent);
+
+        } else {
+            Toast.makeText(this, "Errore", Toast.LENGTH_LONG).show();
+        }
+    }
+
     private class aggiornaDataThread extends AsyncTask<Void, Void, Void> {
 
         DettaglioTributiActivity parent;
 
-        public aggiornaDataThread(DettaglioTributiActivity parent){
+        public aggiornaDataThread(DettaglioTributiActivity parent) {
             this.parent = parent;
         }
 
@@ -150,7 +161,7 @@ public class DettaglioTributiActivity extends ActionBarActivity {
                 ServiceHandler sh = new ServiceHandler();
 
                 // Making a request to url and getting response
-                output =sh.makeServiceCall(url, ServiceHandler.GET).toString();
+                output = sh.makeServiceCall(url, ServiceHandler.GET).toString();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -165,19 +176,6 @@ public class DettaglioTributiActivity extends ActionBarActivity {
                 pDialog.dismiss();
 
             parent.dataAggiornata();
-        }
-    }
-
-    public void dataAggiornata() {
-
-        if (new String("ok").equals(output)) {
-            Toast.makeText(getApplicationContext(), "La nuova data inserita è "+mDay+"/"+mMonth+"/"+mYear+".", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), MyCarActivity.class);
-            intent.putExtra(GarageActivity.EXTRA_MESSAGE, garage.getAuto().getTarga());
-            startActivity(intent);
-
-        } else {
-            Toast.makeText(this, "Errore", Toast.LENGTH_LONG).show();
         }
     }
 
