@@ -73,7 +73,7 @@ public class JSONParser {
                             manutenzione.setMessaggio("Il tagliando è da eseguire il più presto possibile. Prendi appuntamento col tuo meccanico di fiducia.");
                             break;
                         case "cambio gomme":
-                            manutenzione.setMessaggio("Il cambio gomme è da eseguire il più presto possibile.. Prendi appuntamento col tuo gommista di fiducia.");
+                            manutenzione.setMessaggio("Il cambio gomme è da eseguire il più presto possibile. Prendi appuntamento col tuo gommista di fiducia.");
                             break;
                         case "cambio olio":
                             manutenzione.setMessaggio("Il cambio olio è da eseguire tra meno di 200 km. Prendi appuntamento col tuo meccanico di fiducia.");
