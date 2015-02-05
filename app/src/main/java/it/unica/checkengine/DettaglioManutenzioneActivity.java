@@ -42,7 +42,7 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
 
         ImageView semaforo = (ImageView) findViewById(R.id.semaforo);
         String coloreSemaforo = getIntent().getStringExtra("coloreSemaforo");
-        switch(coloreSemaforo){
+        switch (coloreSemaforo) {
             case "red":
                 semaforo.setImageDrawable(this.getResources().getDrawable(R.drawable.semaforo_rosso));
                 break;
@@ -58,9 +58,8 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
         messaggio.setText(manutenzione.getMessaggio());
         Button bottoneChiama = (Button) findViewById(R.id.button_meccanico);
         bottoneChiama.setVisibility(View.INVISIBLE);
-        Button bottoneEseguita = (Button) findViewById(R.id.button_eseguita);
 
-        if (tipoManutenzione.equals("Cambio gomme")){
+        if (tipoManutenzione.equals("Cambio gomme")) {
             bottoneChiama.setText("CHIAMA IL GOMMISTA");
             bottoneChiama.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,7 +71,7 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                     //startActivity(intent);
                 }
             });
-        }else {
+        } else {
             bottoneChiama.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -92,8 +91,6 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
         //mostro sempre bottoneEseguita perché l'utente potrebbe eseguire la manutenzione anche prima della scadenza
 
     }
-
-
 
 
     @Override

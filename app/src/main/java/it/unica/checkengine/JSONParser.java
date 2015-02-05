@@ -53,34 +53,47 @@ public class JSONParser {
                         m.getInt("kmIntervallo"));
 
                 if(manutenzione.isSogliaSuperata(auto.getKm())) {
-                    if (manutenzione.getTipo().equals("Tagliando")){
-                        manutenzione.setMessaggio("Il "+manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
-                    }else if(manutenzione.getTipo().equals("Cambio gomme")){
-                        manutenzione.setMessaggio("Il "+manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo gommista di fiducia.");
-                    }else if(manutenzione.getTipo().equals("Cambio olio")){
-                        manutenzione.setMessaggio("Il "+manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo meccanico di fiducia.");
-                    }else{
-                        manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
+                    switch (manutenzione.getTipo().toLowerCase()) {
+                        case "tagliando":
+                            manutenzione.setMessaggio("Il " + manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
+                            break;
+                        case "cambio gomme":
+                            manutenzione.setMessaggio("Il " + manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo gommista di fiducia.");
+                            break;
+                        case "cambio olio":
+                            manutenzione.setMessaggio("Il " + manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo meccanico di fiducia.");
+                            break;
+                        default:
+                            manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
                     }
+
                 } else if(manutenzione.isScaduta(auto.getKm())){
-                    if(manutenzione.getTipo().equals("Tagliando")) {
-                        manutenzione.setMessaggio("Il tagliando è da eseguire il più presto possibile. Prendi appuntamento col tuo meccanico di fiducia.");
-                    }else if(manutenzione.getTipo().equals("Cambio gomme")){
-                        manutenzione.setMessaggio("Il cambio gomme è da eseguire tra meno di 200 km. Prendi appuntamento col tuo gommista di fiducia.");
-                    }else if(manutenzione.getTipo().equals("Cambio olio")){
-                        manutenzione.setMessaggio("Il cambio olio è da eseguire tra meno di 200 km. Prendi appuntamento col tuo meccanico di fiducia.");
-                    }else{
-                        manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
+                    switch (manutenzione.getTipo().toLowerCase()) {
+                        case "tagliando":
+                            manutenzione.setMessaggio("Il tagliando è da eseguire il più presto possibile. Prendi appuntamento col tuo meccanico di fiducia.");
+                            break;
+                        case "cambio gomme":
+                            manutenzione.setMessaggio("Il cambio gomme è da eseguire il più presto possibile.. Prendi appuntamento col tuo gommista di fiducia.");
+                            break;
+                        case "cambio olio":
+                            manutenzione.setMessaggio("Il cambio olio è da eseguire tra meno di 200 km. Prendi appuntamento col tuo meccanico di fiducia.");
+                            break;
+                        default:
+                            manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
                     }
                 } else {
-                    if(manutenzione.getTipo().equals("Tagliando")){
-                        manutenzione.setMessaggio("Il tagliando è da eseguire tra "+manutenzione.getKmAllaScadenza(auto.getKm())+" Km.");
-                    }else if(manutenzione.getTipo().equals("Cambio gomme")){
-                        manutenzione.setMessaggio("Il cambio gomme è da eseguire tra "+manutenzione.getKmAllaScadenza(auto.getKm())+" Km.");
-                    }else if(manutenzione.getTipo().equals("Cambio olio")){
-                        manutenzione.setMessaggio("Il cambio olio è da eseguire tra "+manutenzione.getKmAllaScadenza(auto.getKm())+" Km.");
-                    }else{
-                        manutenzione.setMessaggio(manutenzione.getTipo() +" è da eseguire tra "+manutenzione.getKmAllaScadenza(auto.getKm())+" Km.");
+                    switch (manutenzione.getTipo().toLowerCase()) {
+                        case "tagliando":
+                            manutenzione.setMessaggio("Il tagliando è da eseguire tra " + manutenzione.getKmAllaScadenza(auto.getKm()) + " Km.");
+                            break;
+                        case "cambio gomme":
+                            manutenzione.setMessaggio("Il cambio gomme è da eseguire tra " + manutenzione.getKmAllaScadenza(auto.getKm()) + " Km.");
+                            break;
+                        case "cambio olio":
+                            manutenzione.setMessaggio("Il cambio olio è da eseguire tra " + manutenzione.getKmAllaScadenza(auto.getKm()) + " Km.");
+                            break;
+                        default:
+                            manutenzione.setMessaggio(manutenzione.getTipo() + " è da eseguire tra meno di 200 km. Prendi appuntamento col tuo professionista di fiducia.");
                     }
                 }
                 auto.addManutenzione(manutenzione);
@@ -90,19 +103,23 @@ public class JSONParser {
                 JSONObject a = jAvarie.getJSONObject(i);
                 avaria = new Avaria(a.getString("tipo"), a.getInt("urgenza"));
                 String messaggio;
-                if(avaria.getTipo().equals("Avaria luci")) {
-                    messaggio = "L'auto ha segnalato un problema all'impianto luci. Prendi appuntamento col tuo meccanico di fiducia.";
-                }else if(avaria.getTipo().equals("Avaria freni")){
-                    messaggio = "L'auto ha segnalato un problema all'impianto freni. Prendi appuntamento col tuo meccanico di fiducia.";
-                }else if(avaria.getTipo().equals("Foratura Gomme")){
-                    messaggio= "L'auto ha segnalato un problema alla pressione dei pneumatici, possibile foratura. Prendi appuntamento col tuo gommista di fiducia.";
-                }else if(avaria.getTipo().equals("Avaria batteria")){
-                    messaggio= "L'auto ha segnalato un problema di bassa tensione della batteria. Prendi appuntamento col tuo meccanico di fiducia.";
-                }else{
-                    messaggio = "L'auto ha segnalato un problema a " + avaria.getTipo() + ". Prendi appuntamento col tuo professionista di fiducia.";
+                switch (avaria.getTipo().toLowerCase()) {
+                    case "avaria luci":
+                        messaggio = "L'auto ha segnalato un problema all'impianto luci. Prendi appuntamento col tuo meccanico di fiducia.";
+                        break;
+                    case "avaria freni":
+                        messaggio = "L'auto ha segnalato un problema all'impianto freni. Prendi appuntamento col tuo meccanico di fiducia.";
+                        break;
+                    case "foratura gomme":
+                        messaggio = "L'auto ha segnalato un problema alla pressione dei pneumatici, possibile foratura. Prendi appuntamento col tuo gommista di fiducia.";
+                        break;
+                    case "avaria batteria":
+                        messaggio = "L'auto ha segnalato un problema di bassa tensione della batteria. Prendi appuntamento col tuo meccanico di fiducia.";
+                        break;
+                    default:
+                        messaggio = "L'auto ha segnalato un problema a " + avaria.getTipo() + ". Prendi appuntamento col tuo professionista di fiducia.";
                 }
                 avaria.setMessaggio(messaggio);
-
                 auto.addAvaria(avaria);
             }
 
@@ -122,25 +139,32 @@ public class JSONParser {
                 if(dataOggi.after(dataAvviso) && !dataOggi.after(dataScadenza)){
                     tributo.setMessaggio(tributo.getTipo() + " scadrà tra meno di 30 giorni. Ricordati che l'importo da pagare è "+tributo.getImporto()+"€");
                 } else if(dataOggi.after(dataScadenza)){
-                    if(tributo.getTipo().equals("Revisione")) {
-                        tributo.setMessaggio("La " + tributo.getTipo() + " è scaduta. L'importo da pagare è circa " + tributo.getImporto() + "€");
-                    }else if(tributo.getTipo().equals("Bollo")){
-                        tributo.setMessaggio("Il " + tributo.getTipo() + " è scaduto. L'importo da pagare è circa " + tributo.getImporto() + "€");
-                    }else if(tributo.getTipo().equals("Assicurazione")){
-                        tributo.setMessaggio("L'" + tributo.getTipo() + " è scaduta. L'importo da pagare è circa " + tributo.getImporto() + "€");
-                    }else{
-                        tributo.setMessaggio(tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza())+". L'importo è circa " + tributo.getImporto() + "€");
-
+                    switch ((tributo.getTipo().toLowerCase())) {
+                        case "revisione":
+                            tributo.setMessaggio("La " + tributo.getTipo() + " è scaduta. L'importo da pagare è circa " + tributo.getImporto() + "€");
+                            break;
+                        case "bollo":
+                            tributo.setMessaggio("Il " + tributo.getTipo() + " è scaduto. L'importo da pagare è circa " + tributo.getImporto() + "€");
+                            break;
+                        case "assicurazione":
+                            tributo.setMessaggio("L'" + tributo.getTipo() + " è scaduta. L'importo da pagare è circa " + tributo.getImporto() + "€");
+                            break;
+                        default:
+                            tributo.setMessaggio(tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è circa " + tributo.getImporto() + "€");
                     }
                 } else {
-                    if(tributo.getTipo().equals("Revisione")) {
-                        tributo.setMessaggio("La "+ tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza())+ ". L'importo è circa " + tributo.getImporto() + "€");
-                    }else if(tributo.getTipo().equals("Bollo")){
-                        tributo.setMessaggio("Il "+ tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza())+ ". L'importo è circa " + tributo.getImporto() + "€");
-                    }else if(tributo.getTipo().equals("Assicurazione")){
-                        tributo.setMessaggio("L'"+ tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza())+ ". L'importo è circa " + tributo.getImporto() + "€");
-                    }else{
-                        tributo.setMessaggio(tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza())+ ". L'importo è circa " + tributo.getImporto() + "€");
+                    switch ((tributo.getTipo().toLowerCase())) {
+                        case "revisione":
+                            tributo.setMessaggio("La " + tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è circa " + tributo.getImporto() + "€");
+                            break;
+                        case "bollo":
+                            tributo.setMessaggio("Il " + tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è circa " + tributo.getImporto() + "€");
+                            break;
+                        case "assicurazione":
+                            tributo.setMessaggio("L'" + tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è circa " + tributo.getImporto() + "€");
+                            break;
+                        default:
+                            tributo.setMessaggio(tributo.getTipo() + " è da pagare tra " + tributo.getGiorniAllaScadenza() + isPlurale(tributo.getGiorniAllaScadenza()) + ". L'importo è circa " + tributo.getImporto() + "€");
                     }
                 }
 
