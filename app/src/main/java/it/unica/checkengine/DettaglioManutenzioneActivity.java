@@ -1,8 +1,11 @@
 package it.unica.checkengine;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +17,9 @@ import android.widget.Toast;
 public class DettaglioManutenzioneActivity extends ActionBarActivity {
     public static final String ARG_GARAGE = "garage";
     private Garage garage;
+    private ProgressDialog pDialog;
+    private String output, url;
+    private Manutenzione manutenzione;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +28,7 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
 
         garage = (Garage) getIntent().getSerializableExtra(ARG_GARAGE);
         Auto auto = garage.getAuto();
-        Manutenzione manutenzione = (Manutenzione)getIntent().getSerializableExtra("dettagliManutenzione");
+        manutenzione = (Manutenzione) getIntent().getSerializableExtra("dettagliManutenzione");
         String tipoManutenzione = manutenzione.getTipo();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,9 +57,10 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
         TextView messaggio = (TextView) findViewById(R.id.text_messaggio);
         messaggio.setText(manutenzione.getMessaggio());
         Button bottoneChiama = (Button) findViewById(R.id.button_meccanico);
+        bottoneChiama.setVisibility(View.INVISIBLE);
+        Button bottoneEseguita = (Button) findViewById(R.id.button_eseguita);
 
         if (tipoManutenzione.equals("Cambio gomme")){
-            if(coloreSemaforo.equals("red")|| coloreSemaforo.equals("orange")){
             bottoneChiama.setText("CHIAMA IL GOMMISTA");
             bottoneChiama.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -65,24 +72,7 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                     //startActivity(intent);
                 }
             });
-            }
-            else{
-                bottoneChiama.setVisibility(View.INVISIBLE);
-            }
-        }else if(tipoManutenzione.equals("Tagliando")) {
-            if(coloreSemaforo.equals("red")){
-                bottoneChiama.setText("SEGNALA TAGLIANDO ESEGUITO");
-                bottoneChiama.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(), "Salvo i km attuali", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }else{
-                bottoneChiama.setVisibility(View.INVISIBLE);
-            }
         }else {
-            bottoneChiama.setText("CHIAMA IL MECCANICO");
             bottoneChiama.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,6 +84,13 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                 }
             });
         }
+
+        if (coloreSemaforo.equals("red") || coloreSemaforo.equals("orange")) {
+            bottoneChiama.setVisibility(View.VISIBLE);
+        }
+
+        //mostro sempre bottoneEseguita perché l'utente potrebbe eseguire la manutenzione anche prima della scadenza
+
     }
 
 
@@ -111,6 +108,82 @@ public class DettaglioManutenzioneActivity extends ActionBarActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void kmAggiornati() {
+
+        if (new String("ok").equals(output)) {
+            Toast.makeText(this, "Manutenzione segnata come eseguita!", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplicationContext(), MyCarActivity.class);
+            intent.putExtra(GarageActivity.EXTRA_MESSAGE, garage.getAuto().getTarga());
+            startActivity(intent);
+
+        } else {
+            Toast.makeText(this, "Errore", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void aggiornaKm(View view) {
+        Log.d("dettaglioCarburante", "premuto aggiorna soglia");
+
+        String targa = garage.getAuto().getTarga();
+        String km = "" + (garage.getAuto().getKm());
+        String tipo = manutenzione.getTipo();
+
+        url = "http://checkengine.matta.ga/kmmanutenzione.php?targa=" + targa + "&km=" + km + "&tipo=" + tipo;
+        url = url.replace(" ", "%20");
+
+        new impostaKmTread(this).execute();
+
+    }
+
+    private class impostaKmTread extends AsyncTask<Void, Void, Void> {
+
+        DettaglioManutenzioneActivity parent;
+
+        public impostaKmTread(DettaglioManutenzioneActivity parent) {
+            this.parent = parent;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            // Showing progress dialog
+            pDialog = new ProgressDialog(DettaglioManutenzioneActivity.this);
+            pDialog.setMessage("Attendi...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            try {
+                // Creating service handler class instance
+                ServiceHandler sh = new ServiceHandler();
+
+                // Making a request to url and getting response
+                Log.d("dettaglioCarburante url", ">" + url + "<");
+                output = sh.makeServiceCall(url, ServiceHandler.GET).toString();
+
+                Log.d("dettaglioCarburante output", ">" + output + "<");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+
+            parent.kmAggiornati();
         }
     }
 
