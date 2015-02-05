@@ -14,7 +14,7 @@ public class Tributo implements Serializable{
     private double importo;
     private Date ultimaRicorrenza;
     private int intervalloPagameto;
-    private int giorniAllScadenza;
+    private int giorniAllaScadenza;
 
     public Tributo(){
 
@@ -67,12 +67,12 @@ public class Tributo implements Serializable{
         this.messaggio = messaggio;
     }
 
-    public int getGiorniAllScadenza() {
-        return giorniAllScadenza;
+    public int getGiorniAllaScadenza() {
+        return giorniAllaScadenza;
     }
 
-    public void setGiorniAllScadenza(int giorniAllScadenza) {
-        this.giorniAllScadenza = giorniAllScadenza;
+    public void setGiorniAllaScadenza(int giorniAllaScadenza) {
+        this.giorniAllaScadenza = giorniAllaScadenza;
     }
 
     public boolean isRed(){
