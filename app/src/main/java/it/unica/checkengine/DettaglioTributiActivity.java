@@ -26,11 +26,12 @@ public class DettaglioTributiActivity extends ActionBarActivity {
     protected int mMonth;
     protected int mDay;
     String tipoTributo;
-    boolean isFineClicked = true;
+    boolean isFineClicked = false;
 
+    //Nel momento in cui viene premuto il tasto conferma nel datePickerDialog viene inviata al DB la data. se viene selezionato il tasto annulla mostra un messaggio di operazione annullata
     protected DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
                   public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                      /*Log.d("sono dentro","onDateSetListener");
+                      Log.d("sono dentro","onDateSetListener");
                     if(isFineClicked) {
                         mYear = year;
                         mMonth = monthOfYear + 1;
@@ -39,7 +40,9 @@ public class DettaglioTributiActivity extends ActionBarActivity {
                         url = url.replace(" ", "%20");
                         new aggiornaDataThread(me).execute();
                     }
-                    else{}*/
+                    else{
+                      Toast.makeText(getApplicationContext(),"Inserimento annullato", Toast.LENGTH_SHORT).show();
+                    }
                 }
             };
 
@@ -48,6 +51,7 @@ public class DettaglioTributiActivity extends ActionBarActivity {
     private String output, url;
     private DettaglioTributiActivity me;
     private Garage garage;
+    final Calendar c = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +66,13 @@ public class DettaglioTributiActivity extends ActionBarActivity {
         Tributo tributo = (Tributo) getIntent().getSerializableExtra("dettagliTributi");
         tipoTributo = tributo.getTipo();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Attributi necessari per il datePicker
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        //imposto il titolo della actionbar come da prototipo
+        //visualizzo la actionBar e imposto il titolo della actionbar come da prototipo
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(auto.getModello() + " - " + auto.getNome());
 
 
@@ -89,7 +97,7 @@ public class DettaglioTributiActivity extends ActionBarActivity {
         TextView messaggio = (TextView) findViewById(R.id.text_messaggio);
         messaggio.setText(tributo.getMessaggio());
 
-
+        //gestisco la creazione del datePickerDialog a seguito della pressione del pulsante "INSERISCI DATA RINNOVO"
         Button bottone_paga = (Button) findViewById(R.id.button_paga);
         bottone_paga.setText("INSERISCI DATA RINNOVO");
         bottone_paga.setOnClickListener(new View.OnClickListener() {
@@ -98,10 +106,7 @@ public class DettaglioTributiActivity extends ActionBarActivity {
                 showDialog(0);
             }
         });
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
+
 
 
     }
@@ -128,18 +133,13 @@ public class DettaglioTributiActivity extends ActionBarActivity {
         dataPicker.setButton(DialogInterface.BUTTON_NEGATIVE, "Annulla", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Log.d("sono dentro","onClick negativo");
-                dialog.cancel();
+                isFineClicked = false;
             }
         });
-        dataPicker.setButton(DialogInterface.BUTTON_POSITIVE, "OK cavallo", new DialogInterface.OnClickListener() {
+        dataPicker.setButton(DialogInterface.BUTTON_POSITIVE, "Conferma", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Log.d("sono dentro","onClick positivo");
-                url = "http://checkengine.matta.ga/datatributo.php?nome=" + tipoTributo + "&targa=" + auto.getTarga() + "&data=" + mYear + "-" + (mMonth+1) + "-" + mDay;
-                url = url.replace(" ", "%20");
-                Log.d("Dettagliotributiactivity",url);
-                new aggiornaDataThread(me).execute();
-
-                dialog.cancel();
+                isFineClicked = true;
             }
         });
         return dataPicker;
