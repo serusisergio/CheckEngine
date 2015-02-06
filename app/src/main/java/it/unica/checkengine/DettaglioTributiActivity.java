@@ -22,12 +22,12 @@ import java.util.Calendar;
 
 public class DettaglioTributiActivity extends ActionBarActivity {
     public static final String ARG_GARAGE = "garage";
+    final Calendar c = Calendar.getInstance();
     protected int mYear;
     protected int mMonth;
     protected int mDay;
     String tipoTributo;
     boolean isFineClicked = false;
-
     //Nel momento in cui viene premuto il tasto conferma nel datePickerDialog viene inviata al DB la data. se viene selezionato il tasto annulla mostra un messaggio di operazione annullata
     protected DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
                   public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -45,13 +45,11 @@ public class DettaglioTributiActivity extends ActionBarActivity {
                     }
                 }
             };
-
     Auto auto;
     private ProgressDialog pDialog;
     private String output, url;
     private DettaglioTributiActivity me;
     private Garage garage;
-    final Calendar c = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,19 +127,24 @@ public class DettaglioTributiActivity extends ActionBarActivity {
 
     protected Dialog onCreateDialog(int id) {
 
-        DatePickerDialog dataPicker = new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+        final DatePickerDialog dataPicker = new DatePickerDialog(this, null, mYear, mMonth, mDay);
         dataPicker.setButton(DialogInterface.BUTTON_NEGATIVE, "Annulla", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Log.d("sono dentro","onClick negativo");
                 isFineClicked = false;
+                DatePicker datePicker = dataPicker.getDatePicker();
+                mDateSetListener.onDateSet(datePicker, datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
             }
         });
         dataPicker.setButton(DialogInterface.BUTTON_POSITIVE, "Conferma", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Log.d("sono dentro","onClick positivo");
                 isFineClicked = true;
+                DatePicker datePicker = dataPicker.getDatePicker();
+                mDateSetListener.onDateSet(datePicker, datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
             }
         });
+
         return dataPicker;
     }
 
