@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
+import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,8 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.TextView;
 
 public class DettaglioCarburanteActivity extends ActionBarActivity {
 
@@ -121,7 +122,16 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                valoreSogliaUtente = Integer.parseInt(textSogliaPreavviso.getText().toString());
+
+                try {
+                    valoreSogliaUtente = Integer.parseInt(textSogliaPreavviso.getText().toString());
+                } catch(NumberFormatException e) {
+                    valoreSogliaUtente = 0;
+                }
+
+                if(valoreSogliaUtente > SOGLIA_AVVISO_MAX) valoreSogliaUtente = SOGLIA_AVVISO_MAX;
+
+
             }
 
             @Override
