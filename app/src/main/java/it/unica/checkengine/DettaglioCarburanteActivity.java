@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
-import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,8 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
-import android.widget.Toast;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DettaglioCarburanteActivity extends ActionBarActivity {
 
@@ -63,22 +62,20 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         valoreSogliaUtente = auto.getSogliaAvvisoCarburante();
 
         //a seconda della quantità di carburante imposto il colore del semaforo e della progress bar
-        ImageView semaforo = (ImageView)findViewById(R.id.semaforo);
-        ProgressBar progBarCarburante = (ProgressBar)findViewById(R.id.progressBar_carburante);
+        ImageView semaforo = (ImageView) findViewById(R.id.semaforo);
+        ProgressBar progBarCarburante = (ProgressBar) findViewById(R.id.progressBar_carburante);
         progBarCarburante.setMax(DIMENSIONE_SERBATOIO);
-        progBarCarburante.setProgress((int)auto.getCarburante());
+        progBarCarburante.setProgress((int) auto.getCarburante());
 
-        if(auto.isCarburanteRed()){
+        if (auto.isCarburanteRed()) {
             semaforo.setImageDrawable(this.getResources().getDrawable(R.drawable.semaforo_rosso));
-            progBarCarburante.getProgressDrawable().setColorFilter(Color.RED,android.graphics.PorterDuff.Mode.MULTIPLY);
-        }
-        else if(auto.isCarburanteOrange()){
+            progBarCarburante.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.MULTIPLY);
+        } else if (auto.isCarburanteOrange()) {
             semaforo.setImageDrawable(this.getResources().getDrawable(R.drawable.semaforo_arancio));
-            progBarCarburante.getProgressDrawable().setColorFilter(Color.YELLOW,android.graphics.PorterDuff.Mode.MULTIPLY);
-        }
-        else{
+            progBarCarburante.getProgressDrawable().setColorFilter(Color.YELLOW, android.graphics.PorterDuff.Mode.MULTIPLY);
+        } else {
             semaforo.setImageDrawable(this.getResources().getDrawable(R.drawable.semaforo_verde));
-            progBarCarburante.getProgressDrawable().setColorFilter(Color.GREEN,android.graphics.PorterDuff.Mode.MULTIPLY);
+            progBarCarburante.getProgressDrawable().setColorFilter(Color.GREEN, android.graphics.PorterDuff.Mode.MULTIPLY);
         }
 
         testoCarburanteResiduo.setText("Residuo: " + auto.getCarburante() + " litri");
@@ -110,26 +107,29 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
 
         textSogliaPreavviso.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 try {
                     valoreSogliaUtente = Integer.parseInt(textSogliaPreavviso.getText().toString());
-                } catch(NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     valoreSogliaUtente = 0;
                 }
 
-                if(valoreSogliaUtente > SOGLIA_AVVISO_MAX) valoreSogliaUtente = SOGLIA_AVVISO_MAX;
+                if (valoreSogliaUtente > SOGLIA_AVVISO_MAX) valoreSogliaUtente = SOGLIA_AVVISO_MAX;
 
 
             }
@@ -169,7 +169,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
 
     }
 
-   @Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -184,11 +184,11 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
         }
     }
 
-    private class aggiornaSogliaThread extends AsyncTask<Void, Void, Void>{
+    private class aggiornaSogliaThread extends AsyncTask<Void, Void, Void> {
 
         DettaglioCarburanteActivity parent;
 
-        public aggiornaSogliaThread(DettaglioCarburanteActivity parent){
+        public aggiornaSogliaThread(DettaglioCarburanteActivity parent) {
             this.parent = parent;
         }
 
@@ -212,10 +212,10 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
                 ServiceHandler sh = new ServiceHandler();
 
                 // Making a request to url and getting response
-                Log.d("dettaglioCarburante url", ">"+url+"<");
-                output =sh.makeServiceCall(url, ServiceHandler.GET).toString();
+                Log.d("dettaglioCarburante url", ">" + url + "<");
+                output = sh.makeServiceCall(url, ServiceHandler.GET).toString();
 
-                Log.d("dettaglioCarburante output", ">"+output+"<");
+                Log.d("dettaglioCarburante", ">" + output + "<");
 
             } catch (Exception e) {
                 e.printStackTrace();
