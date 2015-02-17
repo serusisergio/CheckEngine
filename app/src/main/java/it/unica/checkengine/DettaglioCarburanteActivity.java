@@ -6,9 +6,8 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -115,7 +114,7 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
             }
         });
 
-        textSogliaPreavviso.addTextChangedListener(new TextWatcher() {
+        /*textSogliaPreavviso.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -137,6 +136,21 @@ public class DettaglioCarburanteActivity extends ActionBarActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 seekbarSoglia.setProgress(valoreSogliaUtente);
+            }
+        });*/
+
+        textSogliaPreavviso.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                try {
+                    valoreSogliaUtente = Integer.parseInt(textSogliaPreavviso.getText().toString());
+                } catch (NumberFormatException e) {
+                    valoreSogliaUtente = 0;
+                }
+
+                if (valoreSogliaUtente > SOGLIA_AVVISO_MAX) valoreSogliaUtente = SOGLIA_AVVISO_MAX;
+                seekbarSoglia.setProgress(valoreSogliaUtente);
+                return false;
             }
         });
 
