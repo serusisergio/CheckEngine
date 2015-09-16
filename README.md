@@ -1,12 +1,16 @@
-# CheckEngine
 CheckEngine
+===============
+Progetto di Interazione Uomo Macchina 2014-2015
 
-This application has the purpose of helping you with your vehicle.
+Gruppo
+----------------
+* Stefano Lande
+* Isadora Sanna
+* Riccardo Scasseddu
+* Sergio Serusi
 
-To make the system operative you need to:
+Licenza
+--------------
+L'applicazione è distribuita sotto licenza GPLv2
 
-  connect your phone to an obd interface
 
-License
-
-The application is distributed under the GPLv2 license.
